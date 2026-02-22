@@ -5,6 +5,7 @@ using ApexWebAPI.DTOs.DepartmentDTOs;
 using ApexWebAPI.DTOs.EducationLevelDTOs;
 using ApexWebAPI.DTOs.FaqDTO.cs;
 using ApexWebAPI.DTOs.FeatureDTOs;
+using ApexWebAPI.DTOs.FooterDTOs;
 using ApexWebAPI.DTOs.InformationDTOs;
 using ApexWebAPI.DTOs.MessageDTOs;
 using ApexWebAPI.DTOs.MessageDTOs.cs;
@@ -193,6 +194,12 @@ namespace ApexWebAPI.Mapping
             CreateMap<Contact, ResultContactDto>().ReverseMap();
             CreateMap<Contact, UpdateContactDto>().ReverseMap();
             CreateMap<Contact, GetByIdContactDto>().ReverseMap();
+
+            //Footer
+            CreateMap<CreateFooterDto, Contact>().ReverseMap();
+            CreateMap<Contact, ResultFooterDto>().ReverseMap();
+            CreateMap<Contact, UpdateFooterDto>().ReverseMap();
+            CreateMap<Contact, GetByIdFooterDto>().ReverseMap();
 
 
 

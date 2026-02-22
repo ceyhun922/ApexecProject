@@ -134,16 +134,31 @@ namespace ApexWebAPI.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FbUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("InstaUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LnUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OtherUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("XUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
