@@ -9,6 +9,7 @@ using ApexWebAPI.DTOs.FooterDTOs;
 using ApexWebAPI.DTOs.InformationDTOs;
 using ApexWebAPI.DTOs.MessageDTOs;
 using ApexWebAPI.DTOs.MessageDTOs.cs;
+using ApexWebAPI.DTOs.SummerSchoolDTOs;
 using ApexWebAPI.DTOs.TestimonialDTOs;
 using ApexWebAPI.Entities;
 using AutoMapper;
@@ -35,15 +36,15 @@ namespace ApexWebAPI.Mapping
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
 
             // About
- CreateMap<About, ResultAboutDto>()
-    .ForMember(dest => dest.Title, opt => opt.Ignore())
-    .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
-    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
+            CreateMap<About, ResultAboutDto>()
+               .ForMember(dest => dest.Title, opt => opt.Ignore())
+               .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
+               .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
 
-CreateMap<About, GetByIdAboutDto>()
-    .ForMember(dest => dest.Title, opt => opt.Ignore())
-    .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
-    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
+            CreateMap<About, GetByIdAboutDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
 
             CreateMap<CreateAboutDto, About>()
                 .ForMember(dest => dest.AboutTranslations, opt => opt.Ignore());
@@ -53,8 +54,8 @@ CreateMap<About, GetByIdAboutDto>()
 
             // Testimonial
             CreateMap<Testimonial, ResultTestimonialDto>()
-      .ForMember(dest => dest.Comment, opt => opt.Ignore())
-      .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
+                .ForMember(dest => dest.Comment, opt => opt.Ignore())
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
 
             CreateMap<Testimonial, GetByIdTestimonialDto>()
                 .ForMember(dest => dest.Comment, opt => opt.Ignore())
@@ -125,6 +126,39 @@ CreateMap<About, GetByIdAboutDto>()
                     new() { Language = "tr", Name = src.NameTr },
                 }));
 
+            //SummerSchool
+               CreateMap<CreateSummerSchoolDto, SummerSchool>()
+                .ForMember(dest => dest.Translations, opt => opt.MapFrom(src => new List<SummerSchoolTranslation>
+                {
+                    new() { Language = "az", Title = src.TitleAz, SubTitle = src.SubTitleAz },
+                    new() { Language = "en", Title = src.TitleEn, SubTitle = src.SubTitleEn },
+                    new() { Language = "ru", Title = src.TitleRu, SubTitle = src.SubTitleRu },
+                    new() { Language = "tr", Title = src.TitleTr, SubTitle = src.SubTitleTr },
+                }));
+
+            CreateMap<UpdateSummerSchoolDto, SummerSchool>()
+                .ForMember(dest => dest.Translations, opt => opt.MapFrom(src => new List<SummerSchoolTranslation>
+                {
+                    new() { Language = "az", Title = src.TitleAz, SubTitle = src.SubTitleAz },
+                    new() { Language = "en", Title = src.TitleEn, SubTitle = src.SubTitleEn },
+                    new() { Language = "ru", Title = src.TitleRu, SubTitle = src.SubTitleRu },
+                    new() { Language = "tr", Title = src.TitleTr, SubTitle = src.SubTitleTr },
+                }));
+
+            CreateMap<SummerSchool, ResultSummerSchoolDto>()
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src =>
+                    src.Translations.FirstOrDefault(t => t.Language == "az").Title ?? string.Empty))
+                .ForMember(dest => dest.SubTitle, opt => opt.MapFrom(src =>
+                    src.Translations.FirstOrDefault(t => t.Language == "az").SubTitle ?? string.Empty));
+
+            CreateMap<SummerSchool, GetByIdSchoolSummerDto>()
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src =>
+                    src.Translations.FirstOrDefault(t => t.Language == "az").Title ?? string.Empty))
+                .ForMember(dest => dest.SubTitle, opt => opt.MapFrom(src =>
+                    src.Translations.FirstOrDefault(t => t.Language == "az").SubTitle ?? string.Empty))
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+
             // EducationLevel
             CreateMap<EducationLevel, ResultEducationLevelDto>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
@@ -194,11 +228,11 @@ CreateMap<About, GetByIdAboutDto>()
             // Contact
             CreateMap<CreateContactDto, Contact>().ReverseMap();
 
-         CreateMap<Contact, ResultContactDto>()
-    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
+            CreateMap<Contact, ResultContactDto>()
+       .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
 
-CreateMap<Contact, GetByIdContactDto>()
-    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
+            CreateMap<Contact, GetByIdContactDto>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
 
             CreateMap<Contact, UpdateContactDto>().ReverseMap();
 

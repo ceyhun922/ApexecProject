@@ -23,6 +23,8 @@ namespace ApexWebAPI.Concrete
         public DbSet<AppUser> Users {get;set;}
         public DbSet<Department>? Departments {get;set;}
         public DbSet<DepartmentTranslation>? DepartmentTranslations {get;set;}
+        public DbSet<SummerSchool>? SummerSchools { get; set; }
+        public DbSet<SummerSchoolTranslation>? SummerSchoolTranslations { get; set; }
 
     }
 }

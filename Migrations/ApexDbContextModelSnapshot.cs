@@ -410,6 +410,58 @@ namespace ApexWebAPI.Migrations
                     b.ToTable("HeroTranslations");
                 });
 
+            modelBuilder.Entity("ApexWebAPI.Entities.SummerSchool", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("SummerSchools");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.SummerSchoolTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SummerSchoolId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SummerSchoolId");
+
+                    b.ToTable("SummerSchoolTranslations");
+                });
+
             modelBuilder.Entity("ApexWebAPI.Entities.Testimonial", b =>
                 {
                     b.Property<int>("Id")
@@ -551,6 +603,28 @@ namespace ApexWebAPI.Migrations
                     b.Navigation("Hero");
                 });
 
+            modelBuilder.Entity("ApexWebAPI.Entities.SummerSchool", b =>
+                {
+                    b.HasOne("ApexWebAPI.Entities.Country", "Country")
+                        .WithMany("SummerSchools")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.SummerSchoolTranslation", b =>
+                {
+                    b.HasOne("ApexWebAPI.Entities.SummerSchool", "SummerSchool")
+                        .WithMany("Translations")
+                        .HasForeignKey("SummerSchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SummerSchool");
+                });
+
             modelBuilder.Entity("ApexWebAPI.Entities.TestimonialTranslation", b =>
                 {
                     b.HasOne("ApexWebAPI.Entities.Testimonial", "Testimonial")
@@ -572,6 +646,8 @@ namespace ApexWebAPI.Migrations
                     b.Navigation("CountryTranslations");
 
                     b.Navigation("EducationLevels");
+
+                    b.Navigation("SummerSchools");
                 });
 
             modelBuilder.Entity("ApexWebAPI.Entities.Department", b =>
@@ -592,6 +668,11 @@ namespace ApexWebAPI.Migrations
                 });
 
             modelBuilder.Entity("ApexWebAPI.Entities.Hero", b =>
+                {
+                    b.Navigation("Translations");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.SummerSchool", b =>
                 {
                     b.Navigation("Translations");
                 });
