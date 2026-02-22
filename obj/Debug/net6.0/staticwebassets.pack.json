@@ -1,0 +1,53 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/ceyhunyusif/Documents/ApexWebAPI/wwwroot/images/201bc35f-d99f-48a0-8e86-a8637afd920f.jpg",
+      "PackagePath": "staticwebassets/images/201bc35f-d99f-48a0-8e86-a8637afd920f.jpg"
+    },
+    {
+      "Id": "/Users/ceyhunyusif/Documents/ApexWebAPI/wwwroot/images/45e94b6b-b42c-4acd-bf76-f3800bdf18a2.jpg",
+      "PackagePath": "staticwebassets/images/45e94b6b-b42c-4acd-bf76-f3800bdf18a2.jpg"
+    },
+    {
+      "Id": "/Users/ceyhunyusif/Documents/ApexWebAPI/wwwroot/images/about.jpg",
+      "PackagePath": "staticwebassets/images/about.jpg"
+    },
+    {
+      "Id": "/Users/ceyhunyusif/Documents/ApexWebAPI/wwwroot/images/aboutcopy.jpg",
+      "PackagePath": "staticwebassets/images/aboutcopy.jpg"
+    },
+    {
+      "Id": "/Users/ceyhunyusif/Documents/ApexWebAPI/wwwroot/images/bef936b1-da02-4649-855a-b16a2121e3f3.jpg",
+      "PackagePath": "staticwebassets/images/bef936b1-da02-4649-855a-b16a2121e3f3.jpg"
+    },
+    {
+      "Id": "/Users/ceyhunyusif/Documents/ApexWebAPI/wwwroot/images/d96157cd-75f3-4612-b59e-d48953a29215.jpg",
+      "PackagePath": "staticwebassets/images/d96157cd-75f3-4612-b59e-d48953a29215.jpg"
+    },
+    {
+      "Id": "/Users/ceyhunyusif/Documents/ApexWebAPI/wwwroot/images/f0908959-529e-4041-9208-188d0fbd8639.jpg",
+      "PackagePath": "staticwebassets/images/f0908959-529e-4041-9208-188d0fbd8639.jpg"
+    },
+    {
+      "Id": "/Users/ceyhunyusif/Documents/ApexWebAPI/wwwroot/videos/Ekran Kaydı 2026-02-21 19.24.30.mov",
+      "PackagePath": "staticwebassets/videos/Ekran Kaydı 2026-02-21 19.24.30.mov"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.ApexWebAPI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.build.ApexWebAPI.props",
+      "PackagePath": "build\\ApexWebAPI.props"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.buildMultiTargeting.ApexWebAPI.props",
+      "PackagePath": "buildMultiTargeting\\ApexWebAPI.props"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.buildTransitive.ApexWebAPI.props",
+      "PackagePath": "buildTransitive\\ApexWebAPI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

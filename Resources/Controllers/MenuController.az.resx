@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Home" xml:space="preserve">
+    <value>Ana səhifə</value>
+  </data>
+  <data name="CountriesAndUniversities" xml:space="preserve">
+    <value>Ölkələr və Universitetlər</value>
+  </data>
+  <data name="LanguageCourses" xml:space="preserve">
+    <value>Dil kursları</value>
+  </data>
+  <data name="WriteSchools" xml:space="preserve">
+    <value>Yaz məktəbləri</value>
+  </data>
+  <data name="FivePProgram" xml:space="preserve">
+    <value>5P proqramı</value>
+  </data>
+  <data name="Courses" xml:space="preserve">
+    <value>Kurslar</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Əlaqə</value>
+  </data>
+</root>
