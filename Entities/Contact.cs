@@ -14,6 +14,11 @@ namespace ApexWebAPI.Entities
         public string? InstaUrl { get; set; } = "https://www.instagram.com/";
         public string? LnUrl { get; set; } = "https://www.linkedin.com/company/";
         public string? XUrl { get; set; } = "https://x.com/";
+
+        public string? Title {get;set;}
+        public string? SubTitle {get;set;}
+        public string? ImageUrl {get;set;}
+
         public string? OtherUrl { get; set; }
         public string? Message { get; set; }
     }

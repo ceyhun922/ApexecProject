@@ -26,6 +26,8 @@ namespace ApexWebAPI.Controllers
         {
             var contacts = _mapper.Map<Contact>(dto);
 
+            contacts.ImageUrl =dto.ImageUrl;
+
             await _context.Contacts.AddAsync(contacts);
             await _context.SaveChangesAsync();
 
@@ -68,6 +70,7 @@ namespace ApexWebAPI.Controllers
             }
 
             _mapper.Map(dto, contact);
+            contact.ImageUrl =dto.ImageUrl;
 
             _context.Contacts.Update(contact);
             await _context.SaveChangesAsync();

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ApexWebAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+38e3aacf95863d6df3b840a36aac7a994df35edc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+651602890769c012b31820181068eacad71a09f5")]
 [assembly: System.Reflection.AssemblyProductAttribute("ApexWebAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ApexWebAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

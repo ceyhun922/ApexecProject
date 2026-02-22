@@ -21,12 +21,16 @@ namespace ApexWebAPI.Mapping
         {
             //Feature
             CreateMap<Hero, ResultHeroDto>()
-                .ForMember(dest => dest.Title, opt => opt.Ignore())
-                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+      .ForMember(dest => dest.Title, opt => opt.Ignore())
+      .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
+      .ForMember(dest => dest.VideoUrl, opt => opt.MapFrom(src =>
+          src.VideoUrl != null ? $"https://api.apexec.az{src.VideoUrl}" : null));
 
             CreateMap<Hero, GetByIdHeroDto>()
                 .ForMember(dest => dest.Title, opt => opt.Ignore())
-                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
+                .ForMember(dest => dest.VideoUrl, opt => opt.MapFrom(src =>
+                    src.VideoUrl != null ? $"https://api.apexec.az{src.VideoUrl}" : null));
 
             CreateMap<CreateHeroDto, Hero>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
@@ -37,11 +41,15 @@ namespace ApexWebAPI.Mapping
             //About
             CreateMap<About, ResultAboutDto>()
                 .ForMember(dest => dest.Title, opt => opt.Ignore())
-                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
+                .ForMember(dest =>dest.ImageUrl, opt =>opt.MapFrom(src =>
+                    src.ImageUrl != null ? $"https://api.apexec.az{src.ImageUrl}" : null));
 
             CreateMap<About, GetByIdAboutDto>()
                 .ForMember(dest => dest.Title, opt => opt.Ignore())
-                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
+                .ForMember(dest =>dest.ImageUrl, opt =>opt.MapFrom(src =>
+                    src.ImageUrl != null ? $"https://api.apexec.az{src.ImageUrl}" : null));;
 
             CreateMap<CreateAboutDto, About>()
                 .ForMember(dest => dest.AboutTranslations, opt => opt.Ignore());
@@ -51,10 +59,14 @@ namespace ApexWebAPI.Mapping
 
             //Testimonial
             CreateMap<Testimonial, ResultTestimonialDto>()
-                .ForMember(dest => dest.Comment, opt => opt.Ignore());
+            .ForMember(dest => dest.Comment, opt => opt.Ignore())
+            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src =>
+                src.ImageUrl != null ? $"https://api.apexec.az{src.ImageUrl}" : null));
 
             CreateMap<Testimonial, GetByIdTestimonialDto>()
-                .ForMember(dest => dest.Comment, opt => opt.Ignore());
+                .ForMember(dest => dest.Comment, opt => opt.Ignore())
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src =>
+                    src.ImageUrl != null ? $"https://api.apexec.az{src.ImageUrl}" : null));
 
             CreateMap<CreateTestimonialDto, Testimonial>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
@@ -147,11 +159,11 @@ namespace ApexWebAPI.Mapping
                     new EducationLevelTranslation { Language = "ru",  Name = src.NameRu },
                     new EducationLevelTranslation { Language = "tr",  Name = src.NameTr },
                }));
-            
+
             //Department
             CreateMap<Department, ResultDepartmentDto>()
-                .ForMember(dest =>dest.Name, opt => opt.MapFrom(src =>
-                src.DepartmentTranslations.FirstOrDefault(d=>d.Language =="az").Name ?? string.Empty ));
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
+                src.DepartmentTranslations.FirstOrDefault(d => d.Language == "az").Name ?? string.Empty));
 
             CreateMap<Department, GetByIdDepartmentDto>()
               .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
@@ -165,15 +177,15 @@ namespace ApexWebAPI.Mapping
                         new DepartmentTranslation { Language = "ru", Name = src.NameRu},
                         new DepartmentTranslation { Language = "tr", Name = src.NameTr}
                 }));
-            
-             CreateMap<CreateDepartmentDto, Department>()
-               .ForMember(dest => dest.DepartmentTranslations, opt => opt.MapFrom(src => new List<DepartmentTranslation>
-               {
+
+            CreateMap<CreateDepartmentDto, Department>()
+              .ForMember(dest => dest.DepartmentTranslations, opt => opt.MapFrom(src => new List<DepartmentTranslation>
+              {
                     new DepartmentTranslation { Language = "az",  Name = src.NameAz },
                     new DepartmentTranslation { Language = "en",  Name = src.NameEn },
                     new DepartmentTranslation { Language = "ru",  Name = src.NameRu },
                     new DepartmentTranslation { Language = "tr",  Name = src.NameTr },
-               }));
+              }));
 
             //Information
 
@@ -196,10 +208,15 @@ namespace ApexWebAPI.Mapping
             CreateMap<Contact, GetByIdContactDto>().ReverseMap();
 
             //Footer
-            CreateMap<CreateFooterDto, Contact>().ReverseMap();
+            CreateMap<Contact, ResultContactDto>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src =>
+                    src.ImageUrl != null ? $"https://api.apexec.az{src.ImageUrl}" : null));
+
+            CreateMap<Contact, GetByIdContactDto>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src =>
+                    src.ImageUrl != null ? $"https://api.apexec.az{src.ImageUrl}" : null));
             CreateMap<Contact, ResultFooterDto>().ReverseMap();
             CreateMap<Contact, UpdateFooterDto>().ReverseMap();
-            CreateMap<Contact, GetByIdFooterDto>().ReverseMap();
 
 
 

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "VdcTQ+s5kGSMUnyvIhwmx4m/ioDaR2P92TjtBPD1ba0=",
+  "Hash": "xblUk4N0uq5goZGfHbFQOpgOLBn2XUxnIqdOdlJ/kYs=",
   "Source": "ApexWebAPI",
   "BasePath": "_content/ApexWebAPI",
   "Mode": "Default",
@@ -148,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/f0908959-529e-4041-9208-188d0fbd8639.jpg"
+    },
+    {
+      "Identity": "/Users/ceyhunyusif/Documents/ApexWebAPI/wwwroot/videos/14d2aa49-7d81-4df7-9004-04880c6712a4.mov",
+      "SourceId": "ApexWebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/ceyhunyusif/Documents/ApexWebAPI/wwwroot/",
+      "BasePath": "_content/ApexWebAPI",
+      "RelativePath": "videos/14d2aa49-7d81-4df7-9004-04880c6712a4.mov",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/videos/14d2aa49-7d81-4df7-9004-04880c6712a4.mov"
     },
     {
       "Identity": "/Users/ceyhunyusif/Documents/ApexWebAPI/wwwroot/videos/Ekran Kaydı 2026-02-21 19.24.30.mov",
