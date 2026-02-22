@@ -19,18 +19,14 @@ namespace ApexWebAPI.Mapping
     {
         public GeneralMapping()
         {
-            //Feature
+            // Hero
             CreateMap<Hero, ResultHeroDto>()
-      .ForMember(dest => dest.Title, opt => opt.Ignore())
-      .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
-      .ForMember(dest => dest.VideoUrl, opt => opt.MapFrom(src =>
-          src.VideoUrl != null ? $"https://api.apexec.az{src.VideoUrl}" : null));
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
 
             CreateMap<Hero, GetByIdHeroDto>()
                 .ForMember(dest => dest.Title, opt => opt.Ignore())
-                .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
-                .ForMember(dest => dest.VideoUrl, opt => opt.MapFrom(src =>
-                    src.VideoUrl != null ? $"https://api.apexec.az{src.VideoUrl}" : null));
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
 
             CreateMap<CreateHeroDto, Hero>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
@@ -38,18 +34,16 @@ namespace ApexWebAPI.Mapping
             CreateMap<UpdateHeroDto, Hero>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
 
-            //About
-            CreateMap<About, ResultAboutDto>()
-                .ForMember(dest => dest.Title, opt => opt.Ignore())
-                .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
-                .ForMember(dest =>dest.ImageUrl, opt =>opt.MapFrom(src =>
-                    src.ImageUrl != null ? $"https://api.apexec.az{src.ImageUrl}" : null));
+            // About
+ CreateMap<About, ResultAboutDto>()
+    .ForMember(dest => dest.Title, opt => opt.Ignore())
+    .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
+    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
 
-            CreateMap<About, GetByIdAboutDto>()
-                .ForMember(dest => dest.Title, opt => opt.Ignore())
-                .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
-                .ForMember(dest =>dest.ImageUrl, opt =>opt.MapFrom(src =>
-                    src.ImageUrl != null ? $"https://api.apexec.az{src.ImageUrl}" : null));;
+CreateMap<About, GetByIdAboutDto>()
+    .ForMember(dest => dest.Title, opt => opt.Ignore())
+    .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
+    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
 
             CreateMap<CreateAboutDto, About>()
                 .ForMember(dest => dest.AboutTranslations, opt => opt.Ignore());
@@ -57,16 +51,14 @@ namespace ApexWebAPI.Mapping
             CreateMap<UpdateAboutDto, About>()
                 .ForMember(dest => dest.AboutTranslations, opt => opt.Ignore());
 
-            //Testimonial
+            // Testimonial
             CreateMap<Testimonial, ResultTestimonialDto>()
-            .ForMember(dest => dest.Comment, opt => opt.Ignore())
-            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src =>
-                src.ImageUrl != null ? $"https://api.apexec.az{src.ImageUrl}" : null));
+      .ForMember(dest => dest.Comment, opt => opt.Ignore())
+      .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
 
             CreateMap<Testimonial, GetByIdTestimonialDto>()
                 .ForMember(dest => dest.Comment, opt => opt.Ignore())
-                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src =>
-                    src.ImageUrl != null ? $"https://api.apexec.az{src.ImageUrl}" : null));
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
 
             CreateMap<CreateTestimonialDto, Testimonial>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
@@ -74,23 +66,23 @@ namespace ApexWebAPI.Mapping
             CreateMap<UpdateTestimonialDto, Testimonial>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
 
-            //Faq
+            // Faq
             CreateMap<CreateFaqDto, Faq>()
                 .ForMember(dest => dest.FaqTranslations, opt => opt.MapFrom(src => new List<FaqTranslation>
                 {
-                    new FaqTranslation { Language = "az", Title = src.TitleAz, Content = src.ContentAz },
-                    new FaqTranslation { Language = "en", Title = src.TitleEn, Content = src.ContentEn },
-                    new FaqTranslation { Language = "ru", Title = src.TitleRu, Content = src.ContentRu },
-                    new FaqTranslation { Language = "tr", Title = src.TitleTr, Content = src.ContentTr },
+                    new() { Language = "az", Title = src.TitleAz, Content = src.ContentAz },
+                    new() { Language = "en", Title = src.TitleEn, Content = src.ContentEn },
+                    new() { Language = "ru", Title = src.TitleRu, Content = src.ContentRu },
+                    new() { Language = "tr", Title = src.TitleTr, Content = src.ContentTr },
                 }));
 
             CreateMap<UpdateFaqDto, Faq>()
                 .ForMember(dest => dest.FaqTranslations, opt => opt.MapFrom(src => new List<FaqTranslation>
                 {
-                        new FaqTranslation { Language = "az", Title = src.TitleAz, Content = src.ContentAz },
-                        new FaqTranslation { Language = "en", Title = src.TitleEn, Content = src.ContentEn },
-                        new FaqTranslation { Language = "ru", Title = src.TitleRu, Content = src.ContentRu },
-                        new FaqTranslation { Language = "tr", Title = src.TitleTr, Content = src.ContentTr }
+                    new() { Language = "az", Title = src.TitleAz, Content = src.ContentAz },
+                    new() { Language = "en", Title = src.TitleEn, Content = src.ContentEn },
+                    new() { Language = "ru", Title = src.TitleRu, Content = src.ContentRu },
+                    new() { Language = "tr", Title = src.TitleTr, Content = src.ContentTr },
                 }));
 
             CreateMap<Faq, ResultFaqDto>()
@@ -106,121 +98,113 @@ namespace ApexWebAPI.Mapping
                     src.FaqTranslations.FirstOrDefault(t => t.Language == "az").Content ?? string.Empty))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
 
-            //Country
+            // Country
             CreateMap<Country, ResultCountryDto>()
-               .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
-                   src.CountryTranslations.FirstOrDefault(t => t.Language == "az").Name ?? string.Empty));
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
+                    src.CountryTranslations.FirstOrDefault(t => t.Language == "az").Name ?? string.Empty));
 
             CreateMap<Country, GetByIdCountryDto>()
-               .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
-                   src.CountryTranslations.FirstOrDefault(t => t.Language == "az").Name ?? string.Empty));
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
+                    src.CountryTranslations.FirstOrDefault(t => t.Language == "az").Name ?? string.Empty));
+
+            CreateMap<CreateCountryDto, Country>()
+                .ForMember(dest => dest.CountryTranslations, opt => opt.MapFrom(src => new List<CountryTranslation>
+                {
+                    new() { Language = "az", Name = src.NameAz },
+                    new() { Language = "en", Name = src.NameEn },
+                    new() { Language = "ru", Name = src.NameRu },
+                    new() { Language = "tr", Name = src.NameTr },
+                }));
 
             CreateMap<UpdateCountryDto, Country>()
                 .ForMember(dest => dest.CountryTranslations, opt => opt.MapFrom(src => new List<CountryTranslation>
                 {
-                        new CountryTranslation { Language = "az",  Name= src.NameAz},
-                        new CountryTranslation { Language = "en", Name = src.NameEn},
-                        new CountryTranslation { Language = "ru", Name = src.NameRu},
-                        new CountryTranslation { Language = "tr", Name = src.NameTr}
+                    new() { Language = "az", Name = src.NameAz },
+                    new() { Language = "en", Name = src.NameEn },
+                    new() { Language = "ru", Name = src.NameRu },
+                    new() { Language = "tr", Name = src.NameTr },
                 }));
 
-            CreateMap<CreateCountryDto, Country>()
-               .ForMember(dest => dest.CountryTranslations, opt => opt.MapFrom(src => new List<CountryTranslation>
-               {
-                    new CountryTranslation { Language = "az",  Name = src.NameAz },
-                    new CountryTranslation { Language = "en",  Name = src.NameEn },
-                    new CountryTranslation { Language = "ru",  Name = src.NameRu },
-                    new CountryTranslation { Language = "tr",  Name = src.NameTr },
-               }));
-
-            //EducationLevel
+            // EducationLevel
             CreateMap<EducationLevel, ResultEducationLevelDto>()
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
-                src.EducationLevelTranslations.FirstOrDefault(t => t.Language == "az").Name ?? string.Empty));
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
+                    src.EducationLevelTranslations.FirstOrDefault(t => t.Language == "az").Name ?? string.Empty));
 
             CreateMap<EducationLevel, GetByIdEducationLevelDto>()
-              .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
-                  src.EducationLevelTranslations.FirstOrDefault(t => t.Language == "az").Name ?? string.Empty));
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
+                    src.EducationLevelTranslations.FirstOrDefault(t => t.Language == "az").Name ?? string.Empty));
+
+            CreateMap<CreateEducationLevelDto, EducationLevel>()
+                .ForMember(dest => dest.EducationLevelTranslations, opt => opt.MapFrom(src => new List<EducationLevelTranslation>
+                {
+                    new() { Language = "az", Name = src.NameAz },
+                    new() { Language = "en", Name = src.NameEn },
+                    new() { Language = "ru", Name = src.NameRu },
+                    new() { Language = "tr", Name = src.NameTr },
+                }));
 
             CreateMap<UpdateEducationLevelDto, EducationLevel>()
                 .ForMember(dest => dest.EducationLevelTranslations, opt => opt.MapFrom(src => new List<EducationLevelTranslation>
                 {
-                        new EducationLevelTranslation { Language = "az",  Name= src.NameAz},
-                        new EducationLevelTranslation { Language = "en", Name = src.NameEn},
-                        new EducationLevelTranslation { Language = "ru", Name = src.NameRu},
-                        new EducationLevelTranslation { Language = "tr", Name = src.NameTr}
+                    new() { Language = "az", Name = src.NameAz },
+                    new() { Language = "en", Name = src.NameEn },
+                    new() { Language = "ru", Name = src.NameRu },
+                    new() { Language = "tr", Name = src.NameTr },
                 }));
 
-            CreateMap<CreateEducationLevelDto, EducationLevel>()
-               .ForMember(dest => dest.EducationLevelTranslations, opt => opt.MapFrom(src => new List<EducationLevelTranslation>
-               {
-                    new EducationLevelTranslation { Language = "az",  Name = src.NameAz },
-                    new EducationLevelTranslation { Language = "en",  Name = src.NameEn },
-                    new EducationLevelTranslation { Language = "ru",  Name = src.NameRu },
-                    new EducationLevelTranslation { Language = "tr",  Name = src.NameTr },
-               }));
-
-            //Department
+            // Department
             CreateMap<Department, ResultDepartmentDto>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
-                src.DepartmentTranslations.FirstOrDefault(d => d.Language == "az").Name ?? string.Empty));
+                    src.DepartmentTranslations.FirstOrDefault(d => d.Language == "az").Name ?? string.Empty));
 
             CreateMap<Department, GetByIdDepartmentDto>()
-              .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
-                  src.DepartmentTranslations.FirstOrDefault(t => t.Language == "az").Name ?? string.Empty));
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
+                    src.DepartmentTranslations.FirstOrDefault(t => t.Language == "az").Name ?? string.Empty));
+
+            CreateMap<CreateDepartmentDto, Department>()
+                .ForMember(dest => dest.DepartmentTranslations, opt => opt.MapFrom(src => new List<DepartmentTranslation>
+                {
+                    new() { Language = "az", Name = src.NameAz },
+                    new() { Language = "en", Name = src.NameEn },
+                    new() { Language = "ru", Name = src.NameRu },
+                    new() { Language = "tr", Name = src.NameTr },
+                }));
 
             CreateMap<UpdateDepartmentDto, Department>()
                 .ForMember(dest => dest.DepartmentTranslations, opt => opt.MapFrom(src => new List<DepartmentTranslation>
                 {
-                        new DepartmentTranslation { Language = "az",  Name= src.NameAz},
-                        new DepartmentTranslation { Language = "en", Name = src.NameEn},
-                        new DepartmentTranslation { Language = "ru", Name = src.NameRu},
-                        new DepartmentTranslation { Language = "tr", Name = src.NameTr}
+                    new() { Language = "az", Name = src.NameAz },
+                    new() { Language = "en", Name = src.NameEn },
+                    new() { Language = "ru", Name = src.NameRu },
+                    new() { Language = "tr", Name = src.NameTr },
                 }));
 
-            CreateMap<CreateDepartmentDto, Department>()
-              .ForMember(dest => dest.DepartmentTranslations, opt => opt.MapFrom(src => new List<DepartmentTranslation>
-              {
-                    new DepartmentTranslation { Language = "az",  Name = src.NameAz },
-                    new DepartmentTranslation { Language = "en",  Name = src.NameEn },
-                    new DepartmentTranslation { Language = "ru",  Name = src.NameRu },
-                    new DepartmentTranslation { Language = "tr",  Name = src.NameTr },
-              }));
-
-            //Information
-
+            // Information
             CreateMap<CreateInformationDto, Contact>().ReverseMap();
             CreateMap<Contact, ResultInformationDto>().ReverseMap();
             CreateMap<Contact, UpdateInformationDto>().ReverseMap();
             CreateMap<Contact, GetByIdInformationDto>().ReverseMap();
 
-            //Message
-
+            // Message
             CreateMap<CreateMessageDto, Contact>().ReverseMap();
             CreateMap<Contact, ResultMessageDto>().ReverseMap();
             CreateMap<Contact, UpdateMessageDto>().ReverseMap();
             CreateMap<Contact, GetByIdMessageDto>().ReverseMap();
 
-            //Contact
+            // Contact
             CreateMap<CreateContactDto, Contact>().ReverseMap();
-            CreateMap<Contact, ResultContactDto>().ReverseMap();
+
+         CreateMap<Contact, ResultContactDto>()
+    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
+
+CreateMap<Contact, GetByIdContactDto>()
+    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
+
             CreateMap<Contact, UpdateContactDto>().ReverseMap();
-            CreateMap<Contact, GetByIdContactDto>().ReverseMap();
 
-            //Footer
-            CreateMap<Contact, ResultContactDto>()
-                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src =>
-                    src.ImageUrl != null ? $"https://api.apexec.az{src.ImageUrl}" : null));
-
-            CreateMap<Contact, GetByIdContactDto>()
-                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src =>
-                    src.ImageUrl != null ? $"https://api.apexec.az{src.ImageUrl}" : null));
+            // Footer
             CreateMap<Contact, ResultFooterDto>().ReverseMap();
             CreateMap<Contact, UpdateFooterDto>().ReverseMap();
-
-
-
-
         }
     }
 }

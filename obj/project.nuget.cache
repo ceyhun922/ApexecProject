@@ -1,12 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "ZXwT9CBqPa0=",
+  "dgSpecHash": "tPTXPpY+DZw=",
   "success": true,
   "projectFilePath": "/Users/ceyhunyusif/Documents/ApexWebAPI/ApexWebAPI.csproj",
   "expectedPackageFiles": [
     "/Users/ceyhunyusif/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/Users/ceyhunyusif/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "/Users/ceyhunyusif/.nuget/packages/bcrypt.net-next/4.1.0/bcrypt.net-next.4.1.0.nupkg.sha512",
+    "/Users/ceyhunyusif/.nuget/packages/fluentvalidation/11.5.1/fluentvalidation.11.5.1.nupkg.sha512",
+    "/Users/ceyhunyusif/.nuget/packages/fluentvalidation.aspnetcore/11.3.0/fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
+    "/Users/ceyhunyusif/.nuget/packages/fluentvalidation.dependencyinjectionextensions/11.5.1/fluentvalidation.dependencyinjectionextensions.11.5.1.nupkg.sha512",
     "/Users/ceyhunyusif/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/Users/ceyhunyusif/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/6.0.36/microsoft.aspnetcore.authentication.jwtbearer.6.0.36.nupkg.sha512",
     "/Users/ceyhunyusif/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",

@@ -28,6 +28,10 @@ namespace ApexWebAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == dto.Username);
             if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
                 return Unauthorized("Usrname veya sifr yalnış");
@@ -79,9 +83,7 @@ namespace ApexWebAPI.Controllers
                 FullName = user.FullName,
                 Email = user.Email,
                 Username = user.Username,
-                ProfileImageUrl = user.ProfileImageUrl != null
-        ? $"https://api.apexec.az{user.ProfileImageUrl}"
-        : null
+                ProfileImageUrl = user.ProfileImageUrl
             });
         }
 
@@ -134,13 +136,16 @@ namespace ApexWebAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)
                      ?? User.FindFirst("sub")
                      ?? User.FindFirst("nameid");
-            if (userIdClaim == null) return Unauthorized("Token c bulunamadı");
+
+            if (userIdClaim == null) return Unauthorized("Token claim tapılmadı");
+
             var userId = int.Parse(userIdClaim.Value);
             var user = await _context.Users.FindAsync(userId);
             if (user == null) return NotFound();
 
             user.ProfileImageUrl = dto.ImageUrl;
             await _context.SaveChangesAsync();
+
             return Ok(new { imageUrl = user.ProfileImageUrl });
         }
 
