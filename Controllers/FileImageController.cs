@@ -12,10 +12,12 @@ namespace ApexWebAPI.Controllers
     public class FileImagesController : ControllerBase
     {
         private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _configuration;
 
-        public FileImagesController(IWebHostEnvironment env)
+        public FileImagesController(IWebHostEnvironment env, IConfiguration configuration)
         {
             _env = env;
+            _configuration = configuration;
         }
 
         [HttpPost]
@@ -66,7 +68,8 @@ namespace ApexWebAPI.Controllers
             await using var stream = System.IO.File.Create(fullPath);
             await file.CopyToAsync(stream);
 
-            var url = $"https://api.apexec.az{publicPath}/{fileName}";
+            var baseUrl = _configuration["App:BaseUrl"]?.TrimEnd('/') ?? string.Empty;
+            var url = $"{baseUrl}{publicPath}/{fileName}";
             return Ok(url);
         }
     }

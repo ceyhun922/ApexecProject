@@ -3,7 +3,7 @@ namespace ApexWebAPI.DTOs.FeatureDTOs
     public class UpdateHeroDto
     {
         public int Id { get; set; }
-         public string? VideoUrl { get; set; }
+          public IFormFile? Video { get; set; }
         public string? TitleAz { get; set; }
         public string? TitleEn { get; set; }
         public string? TitleRu { get; set; }

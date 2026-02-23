@@ -25,7 +25,8 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(string lang)
+        [ProducesResponseType(typeof(IEnumerable<ResultAboutDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ResultAboutDto>>> GetAll(string lang)
         {
             var about =await _context.Abouts.Include(x=>x.AboutTranslations).ToListAsync();
 
@@ -43,7 +44,9 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(string lang, int id)
+        [ProducesResponseType(typeof(GetByIdAboutDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<GetByIdAboutDto>> GetById(string lang, int id)
         {
             var about = await _context.Abouts
                 .Include(f => f.AboutTranslations)
@@ -62,6 +65,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(201)]
         public async Task<IActionResult> Create(CreateAboutDto dto)
         {
             var about = _mapper.Map<About>(dto);
@@ -82,6 +86,8 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Update(UpdateAboutDto dto)
         {
             var about = await _context.Abouts
@@ -124,7 +130,9 @@ namespace ApexWebAPI.Controllers
             await _context.SaveChangesAsync();
             return Ok(new { message = _localizer["Updated"].Value });
         }
-         [HttpDelete("{id}")]
+        [HttpDelete("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
             var about = await _context.Abouts

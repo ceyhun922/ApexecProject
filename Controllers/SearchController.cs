@@ -3,27 +3,35 @@ using ApexWebAPI.DTOs.CountryDTOs;
 using ApexWebAPI.DTOs.DepartmentDTOs;
 using ApexWebAPI.DTOs.EducationLevelDTOs;
 using ApexWebAPI.DTOs.SearchDTOs;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApexWebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-
+    [Route("api/{lang}/[controller]")]
     public class SearchController : ControllerBase
     {
         private readonly ApexDbContext _context;
+        private readonly IValidator<SearchFilterDto> _validator;
 
-        public SearchController(ApexDbContext context)
+        public SearchController(ApexDbContext context, IValidator<SearchFilterDto> validator)
         {
             _context = context;
+            _validator = validator;
         }
 
-
         [HttpGet]
-        public async Task<ActionResult<SearchResultDto>> Search([FromQuery] SearchFilterDto filter)
+        [ProducesResponseType(typeof(SearchResultDto), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<SearchResultDto>> Search([FromRoute] string lang, [FromQuery] SearchFilterDto filter)
         {
+            var validation = await _validator.ValidateAsync(filter);
+            if (!validation.IsValid)
+                return BadRequest(validation.Errors.Select(e => e.ErrorMessage));
+
             var query = _context.Departments
                 .Include(d => d.DepartmentTranslations)
                 .Include(d => d.EducationLevel)
@@ -58,21 +66,21 @@ namespace ApexWebAPI.Controllers
                 {
                     Id = d.EducationLevel!.Country!.Id,
                     Name = d.EducationLevel.Country.CountryTranslations?
-                        .FirstOrDefault(t => t.Language == filter.Language)?.Name
+                        .FirstOrDefault(t => t.Language == lang)?.Name
                 },
                 EducationLevel = new ResultEducationLevelDto
                 {
                     Id = d.EducationLevel.Id,
                     CountryId = d.EducationLevel.CountryId,
                     Name = d.EducationLevel.EducationLevelTranslations?
-                        .FirstOrDefault(t => t.Language == filter.Language)?.Name
+                        .FirstOrDefault(t => t.Language == lang)?.Name
                 },
                 Department = new ResultDepartmentDto
                 {
                     Id = d.Id,
                     EducationLevelId = d.EducationLevelId,
                     Name = d.DepartmentTranslations?
-                        .FirstOrDefault(t => t.Language == filter.Language)?.Name
+                        .FirstOrDefault(t => t.Language == lang)?.Name
                 }
             }).ToList();
 

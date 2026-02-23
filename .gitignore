@@ -1,0 +1,64 @@
+## .NET / C#
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Sensitive config files - NEVER commit these
+appsettings.Production.json
+appsettings.Staging.json
+secrets.json
+
+# User-specific files
+*.rsuser
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/
+!**/[Pp]ackages/build/
+*.nuspec
+project.assets.json
+**/packages/*
+!**/packages/repositories.config
+*.ncrunch*
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Publish
+publish/
+wwwroot/images/
+wwwroot/videos/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Logs
+logs/
+*.log
+
+# dotnet user-secrets (local only)
+# secrets are stored in ~/.microsoft/usersecrets/<guid>/secrets.json

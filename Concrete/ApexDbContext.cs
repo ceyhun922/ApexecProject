@@ -1,8 +1,27 @@
 using ApexWebAPI.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace ApexWebAPI.Concrete
 {
+    public class ApexDbContextFactory : IDesignTimeDbContextFactory<ApexDbContext>
+    {
+        public ApexDbContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<ApexDbContext>();
+
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false)
+                .AddJsonFile("appsettings.Development.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
+
+            optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+            return new ApexDbContext(optionsBuilder.Options);
+        }
+    }
+
     public class ApexDbContext : DbContext
     {
         public ApexDbContext(DbContextOptions<ApexDbContext> options) : base(options) {}

@@ -24,7 +24,8 @@ namespace ApexWebAPI.Controllers
 
 
         [HttpGet("messages-list")]
-        public async Task<IActionResult> GetMessages()
+        [ProducesResponseType(typeof(List<ResultMessageDto>), 200)]
+        public async Task<ActionResult<List<ResultMessageDto>>> GetMessages()
         {
             var messages = await _context.Contacts.ToListAsync();
 
@@ -34,60 +35,57 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdMessage(int id)
+        [ProducesResponseType(typeof(GetByIdMessageDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<GetByIdMessageDto>> GetByIdMessage(int id)
         {
             var message = await _context.Contacts.FindAsync(id);
 
             if (message == null)
-            {
-                return Ok(new { message = "NotFount" });
-            }
+                return NotFound(new { message = "Mesaj tapılmadı" });
 
-            var mapper = _mapper.Map<GetByIdMessageDto>(message);
-            return Ok(mapper);
+            var dto = _mapper.Map<GetByIdMessageDto>(message);
+            return Ok(dto);
         }
 
         [HttpPost("message-create")]
+        [ProducesResponseType(201)]
         public async Task<IActionResult> SubmitMessage([FromBody] CreateMessageDto messageDto)
         {
-
-            var dto = _mapper.Map<Contact>(messageDto);
-
-            _context.Contacts.Add(dto);
+            var entity = _mapper.Map<Contact>(messageDto);
+            _context.Contacts.Add(entity);
             await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Message successfully submitted" });
+            return StatusCode(201, new { message = "Mesaj uğurla göndərildi" });
         }
 
         [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Update(UpdateMessageDto dto)
         {
             var message = await _context.Contacts.FindAsync(dto.Id);
 
             if (message == null)
-            {
-                return Ok(new { message = "NotFount" });
-            }
+                return NotFound(new { message = "Mesaj tapılmadı" });
 
             _mapper.Map(dto, message);
             await _context.SaveChangesAsync();
-            return Ok(new { message = "Message successfully updated" });
+            return Ok(new { message = "Mesaj uğurla yeniləndi" });
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
             var message = await _context.Contacts.FindAsync(id);
 
             if (message == null)
-            {
-                return Ok(new { message = "NotFount" });
-            }
+                return NotFound(new { message = "Mesaj tapılmadı" });
 
             _context.Contacts.Remove(message);
             await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Message successfully deleted" });
+            return Ok(new { message = "Mesaj uğurla silindi" });
         }
 
     }

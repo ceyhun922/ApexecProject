@@ -22,25 +22,33 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(string lang)
+        [ProducesResponseType(typeof(IEnumerable<ResultDepartmentDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ResultDepartmentDto>>> GetAll(string lang, [FromQuery] int? educationLevelId = null)
         {
-            var departments = await _context.Departments.Include(d => d.DepartmentTranslations).ToListAsync();
+            var query = _context.Departments
+                .Include(d => d.DepartmentTranslations)
+                .AsQueryable();
+
+            if (educationLevelId.HasValue)
+                query = query.Where(d => d.EducationLevelId == educationLevelId.Value);
+
+            var departments = await query.ToListAsync();
 
             var result = departments.Select(d =>
-              {
-                  var dto = _mapper.Map<ResultDepartmentDto>(d);
-                  dto.Name = d.DepartmentTranslations.FirstOrDefault(c => c.Language == lang)?.Name
-                      ?? d.DepartmentTranslations.FirstOrDefault(c => c.Language == "az")?.Name;
-
-                  return dto;
-              });
+            {
+                var dto = _mapper.Map<ResultDepartmentDto>(d);
+                dto.Name = d.DepartmentTranslations.FirstOrDefault(t => t.Language == lang)?.Name
+                    ?? d.DepartmentTranslations.FirstOrDefault(t => t.Language == "az")?.Name;
+                return dto;
+            });
 
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-
-        public async Task<IActionResult> GetByIdDepartmentLevel(string lang, int id)
+        [ProducesResponseType(typeof(GetByIdDepartmentDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<GetByIdDepartmentDto>> GetByIdDepartmentLevel(string lang, int id)
         {
             var education = await _context.Departments.Include(ed => ed.DepartmentTranslations).FirstOrDefaultAsync(ed => ed.Id == id);
             if (education == null) return NotFound();
@@ -51,6 +59,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(201)]
         public async Task<IActionResult> Create(CreateDepartmentDto dto)
         {
             var educations = _mapper.Map<Department>(dto);
@@ -69,6 +78,8 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Update(UpdateDepartmentDto dto)
         {
             var department = await _context.Departments
@@ -116,7 +127,9 @@ namespace ApexWebAPI.Controllers
             return Ok(new { message = "Updated" });
         }
 
-          [HttpDelete("{id}")]
+        [HttpDelete("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
             var department = await _context.Departments

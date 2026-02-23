@@ -125,8 +125,8 @@ namespace ApexWebAPI.Migrations
                     b.Property<string>("Adress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ClassOrYear")
-                        .HasColumnType("int");
+                    b.Property<string>("ClassOrYear")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Education")
                         .HasColumnType("nvarchar(max)");
@@ -367,12 +367,6 @@ namespace ApexWebAPI.Migrations
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
-
-                    b.Property<string>("SubTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VideoUrl")
                         .HasColumnType("nvarchar(max)");

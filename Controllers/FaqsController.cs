@@ -2,12 +2,10 @@ using System.Threading.Tasks;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.FaqDTO.cs;
 using Microsoft.AspNetCore.Mvc;
-using ApexWebAPI.DTOs.TestimonialDTOs;
 using ApexWebAPI.Entities;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using ApexWebAPI.DTOs.FeatureDTOs;
 
 namespace ApexWebAPI.Controllers
 {
@@ -27,7 +25,8 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetALL(string lang)
+        [ProducesResponseType(typeof(IEnumerable<ResultFaqDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ResultFaqDto>>> GetALL(string lang)
         {
             var testimonials = await _context.Faqs
                 .Include(t => t.FaqTranslations).ToListAsync();
@@ -47,8 +46,10 @@ namespace ApexWebAPI.Controllers
             return Ok(result);
         } 
 
-         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(string lang, int id)
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(GetByIdFaqDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<GetByIdFaqDto>> GetById(string lang, int id)
         {
             var feature = await _context.Faqs
                 .Include(f => f.FaqTranslations)
@@ -57,17 +58,18 @@ namespace ApexWebAPI.Controllers
             if (feature == null)
                 return NotFound(new { message = _localizer["NotFound"].Value });
 
-            var dto = _mapper.Map<GetByIdHeroDto>(feature);
+            var dto = _mapper.Map<GetByIdFaqDto>(feature);
             dto.Title = feature.FaqTranslations.FirstOrDefault(t => t.Language == lang)?.Title
                         ?? feature.FaqTranslations.FirstOrDefault(t => t.Language == "az")?.Title;
-            dto.SubTitle = feature.FaqTranslations.FirstOrDefault(t => t.Language == lang)?.Content
-                           ?? feature.FaqTranslations.FirstOrDefault(t => t.Language == "az")?.Content;
+            dto.Content = feature.FaqTranslations.FirstOrDefault(t => t.Language == lang)?.Content
+                          ?? feature.FaqTranslations.FirstOrDefault(t => t.Language == "az")?.Content;
 
             return Ok(dto);
         }
 
 
         [HttpPost]
+        [ProducesResponseType(201)]
         public async Task<IActionResult> Create(CreateFaqDto dto)
         {
             var faq = _mapper.Map<Faq>(dto);
@@ -87,6 +89,8 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Update(UpdateFaqDto dto)
         {
             var feature = await _context.Faqs
@@ -129,7 +133,9 @@ namespace ApexWebAPI.Controllers
             return Ok(new { message = _localizer["Updated"].Value });
         }
 
-         [HttpDelete("{id}")]
+        [HttpDelete("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
             var faq = await _context.Faqs

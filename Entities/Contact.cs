@@ -9,11 +9,11 @@ namespace ApexWebAPI.Entities
         public string? Email { get; set; }
         public string? Adress { get; set; }
         public string? Education { get; set; }
-        public int ClassOrYear { get; set; }
-        public string? FbUrl { get; set; } = "https://www.facebook.com/";
-        public string? InstaUrl { get; set; } = "https://www.instagram.com/";
-        public string? LnUrl { get; set; } = "https://www.linkedin.com/company/";
-        public string? XUrl { get; set; } = "https://x.com/";
+        public string? ClassOrYear { get; set; }
+        public string? FbUrl { get; set; }
+        public string? InstaUrl { get; set; }
+        public string? LnUrl { get; set; }
+        public string? XUrl { get; set; }
 
         public string? Title {get;set;}
         public string? SubTitle {get;set;}

@@ -24,7 +24,8 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromRoute] string lang)
+        [ProducesResponseType(typeof(IEnumerable<ResultHeroDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ResultHeroDto>>> GetAll([FromRoute] string lang)
         {
             var heroes = await _context.Heroes
                 .Include(h => h.Translations)
@@ -50,7 +51,9 @@ namespace ApexWebAPI.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromRoute] string lang, int id)
+        [ProducesResponseType(typeof(GetByIdHeroDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<GetByIdHeroDto>> GetById([FromRoute] string lang, int id)
         {
             var hero = await _context.Heroes
                 .Include(h => h.Translations)
@@ -70,12 +73,51 @@ namespace ApexWebAPI.Controllers
 
             return Ok(dto);
         }
-        [HttpPost]
-        public async Task<IActionResult> Create([FromRoute] string lang, [FromBody] CreateHeroDto dto)
+
+
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Delete(int id)
         {
+            var hero = await _context.Heroes
+                .Include(f => f.Translations)
+                .FirstOrDefaultAsync(f => f.Id == id);
+
+            if (hero == null)
+                return NotFound(new { message = _localizer["NotFound"].Value });
+
+            _context.Heroes.Remove(hero);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = _localizer["Deleted"].Value });
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        [ProducesResponseType(201)]
+        public async Task<IActionResult> Create([FromRoute] string lang, [FromForm] CreateHeroDto dto)
+        {
+            string? videoUrl = null;
+
+            if (dto.Video != null && dto.Video.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos");
+                Directory.CreateDirectory(uploadsFolder);
+
+                var fileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.Video.FileName)}";
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                using var stream = new FileStream(filePath, FileMode.Create);
+                await dto.Video.CopyToAsync(stream);
+
+                videoUrl = $"/videos/{fileName}";
+            }
+
             var hero = new Hero
             {
-                VideoUrl = dto.VideoUrl,
+                VideoUrl = videoUrl,
                 Status = true,
                 CreatedDate = DateTime.UtcNow,
                 Translations = new List<HeroTranslation>
@@ -94,7 +136,10 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromRoute] string lang, [FromBody] UpdateHeroDto dto)
+        [Consumes("multipart/form-data")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Update([FromRoute] string lang, [FromForm] UpdateHeroDto dto)
         {
             var hero = await _context.Heroes
                 .Include(h => h.Translations)
@@ -103,8 +148,27 @@ namespace ApexWebAPI.Controllers
             if (hero == null)
                 return NotFound(new { message = _localizer["NotFound"].Value });
 
-            if (!string.IsNullOrEmpty(dto.VideoUrl))
-                hero.VideoUrl = dto.VideoUrl;
+            if (dto.Video != null && dto.Video.Length > 0)
+            {
+                if (!string.IsNullOrEmpty(hero.VideoUrl))
+                {
+                    var oldPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", hero.VideoUrl.TrimStart('/'));
+                    if (System.IO.File.Exists(oldPath))
+                        System.IO.File.Delete(oldPath);
+                }
+
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos");
+                Directory.CreateDirectory(uploadsFolder);
+
+                var fileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.Video.FileName)}";
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                using var stream = new FileStream(filePath, FileMode.Create);
+                await dto.Video.CopyToAsync(stream);
+
+                hero.VideoUrl = $"/videos/{fileName}";
+            }
+
             hero.Status = dto.Status;
 
             var translations = new Dictionary<string, (string? Title, string? SubTitle)>
@@ -136,22 +200,6 @@ namespace ApexWebAPI.Controllers
 
             await _context.SaveChangesAsync();
             return Ok(new { message = _localizer["Updated"].Value });
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var hero = await _context.Heroes
-                .Include(f => f.Translations)
-                .FirstOrDefaultAsync(f => f.Id == id);
-
-            if (hero == null)
-                return NotFound(new { message = _localizer["NotFound"].Value });
-
-            _context.Heroes.Remove(hero);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = _localizer["Deleted"].Value });
         }
     }
 }

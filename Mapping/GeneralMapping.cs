@@ -23,11 +23,13 @@ namespace ApexWebAPI.Mapping
             // Hero
             CreateMap<Hero, ResultHeroDto>()
                 .ForMember(dest => dest.Title, opt => opt.Ignore())
-                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
+                .ForMember(dest => dest.VideoUrl, opt => opt.MapFrom(src => src.VideoUrl));
 
             CreateMap<Hero, GetByIdHeroDto>()
                 .ForMember(dest => dest.Title, opt => opt.Ignore())
-                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
+                .ForMember(dest => dest.VideoUrl, opt => opt.MapFrom(src => src.VideoUrl));
 
             CreateMap<CreateHeroDto, Hero>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
@@ -226,15 +228,39 @@ namespace ApexWebAPI.Mapping
             CreateMap<Contact, GetByIdMessageDto>().ReverseMap();
 
             // Contact
-            CreateMap<CreateContactDto, Contact>().ReverseMap();
+            CreateMap<CreateContactDto, Contact>()
+                .ForMember(dest => dest.FbUrl, opt => opt.MapFrom(src =>
+                    string.IsNullOrWhiteSpace(src.FbUsername) ? null : "https://www.facebook.com/" + src.FbUsername.TrimStart('/')))
+                .ForMember(dest => dest.InstaUrl, opt => opt.MapFrom(src =>
+                    string.IsNullOrWhiteSpace(src.InstaUsername) ? null : "https://www.instagram.com/" + src.InstaUsername.TrimStart('/')))
+                .ForMember(dest => dest.LnUrl, opt => opt.MapFrom(src =>
+                    string.IsNullOrWhiteSpace(src.LnUsername) ? null : "https://www.linkedin.com/company/" + src.LnUsername.TrimStart('/')))
+                .ForMember(dest => dest.XUrl, opt => opt.MapFrom(src =>
+                    string.IsNullOrWhiteSpace(src.XUsername) ? null : "https://x.com/" + src.XUsername.TrimStart('/')));
+
+            CreateMap<UpdateContactDto, Contact>()
+                .ForMember(dest => dest.FbUrl, opt => opt.MapFrom(src =>
+                    string.IsNullOrWhiteSpace(src.FbUsername) ? null : "https://www.facebook.com/" + src.FbUsername.TrimStart('/')))
+                .ForMember(dest => dest.InstaUrl, opt => opt.MapFrom(src =>
+                    string.IsNullOrWhiteSpace(src.InstaUsername) ? null : "https://www.instagram.com/" + src.InstaUsername.TrimStart('/')))
+                .ForMember(dest => dest.LnUrl, opt => opt.MapFrom(src =>
+                    string.IsNullOrWhiteSpace(src.LnUsername) ? null : "https://www.linkedin.com/company/" + src.LnUsername.TrimStart('/')))
+                .ForMember(dest => dest.XUrl, opt => opt.MapFrom(src =>
+                    string.IsNullOrWhiteSpace(src.XUsername) ? null : "https://x.com/" + src.XUsername.TrimStart('/')));
 
             CreateMap<Contact, ResultContactDto>()
-       .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
+                .ForMember(dest => dest.FbUrl, opt => opt.MapFrom(src => src.FbUrl))
+                .ForMember(dest => dest.InstaUrl, opt => opt.MapFrom(src => src.InstaUrl))
+                .ForMember(dest => dest.LnUrl, opt => opt.MapFrom(src => src.LnUrl))
+                .ForMember(dest => dest.XUrl, opt => opt.MapFrom(src => src.XUrl));
 
             CreateMap<Contact, GetByIdContactDto>()
-                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
-
-            CreateMap<Contact, UpdateContactDto>().ReverseMap();
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
+                .ForMember(dest => dest.FbUrl, opt => opt.MapFrom(src => src.FbUrl))
+                .ForMember(dest => dest.InstaUrl, opt => opt.MapFrom(src => src.InstaUrl))
+                .ForMember(dest => dest.LnUrl, opt => opt.MapFrom(src => src.LnUrl))
+                .ForMember(dest => dest.XUrl, opt => opt.MapFrom(src => src.XUrl));
 
             // Footer
             CreateMap<Contact, ResultFooterDto>().ReverseMap();

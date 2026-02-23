@@ -10,5 +10,9 @@ namespace ApexWebAPI.DTOs.ContactDTOs
         public string? PhoneNumber2 { get; set; }
         public string? Email { get; set; }
         public string? Adress { get; set; }
+        public string? FbUrl { get; set; }
+        public string? InstaUrl { get; set; }
+        public string? LnUrl { get; set; }
+        public string? XUrl { get; set; }
     }
 }

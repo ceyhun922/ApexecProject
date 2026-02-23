@@ -25,25 +25,33 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(string lang)
+        [ProducesResponseType(typeof(IEnumerable<ResultEducationLevelDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ResultEducationLevelDto>>> GetAll(string lang, [FromQuery] int? countryId = null)
         {
-            var educations = await _context.EducationLevels.Include(el => el.EducationLevelTranslations).ToListAsync();
+            var query = _context.EducationLevels
+                .Include(el => el.EducationLevelTranslations)
+                .AsQueryable();
 
-            var dto = _mapper.Map<List<ResultEducationLevelDto>>(educations);
+            if (countryId.HasValue)
+                query = query.Where(el => el.CountryId == countryId.Value);
+
+            var educations = await query.ToListAsync();
+
             var result = educations.Select(c =>
-           {
-               var dto = _mapper.Map<ResultEducationLevelDto>(c);
-               dto.Name = c.EducationLevelTranslations.FirstOrDefault(c => c.Language == lang)?.Name
-                   ?? c.EducationLevelTranslations.FirstOrDefault(c => c.Language == "az")?.Name;
+            {
+                var dto = _mapper.Map<ResultEducationLevelDto>(c);
+                dto.Name = c.EducationLevelTranslations.FirstOrDefault(t => t.Language == lang)?.Name
+                    ?? c.EducationLevelTranslations.FirstOrDefault(t => t.Language == "az")?.Name;
+                return dto;
+            });
 
-               return dto;
-           });
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-
-        public async Task<IActionResult> GetByIdEducationLevel(string lang, int id)
+        [ProducesResponseType(typeof(GetByIdEducationLevelDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<GetByIdEducationLevelDto>> GetByIdEducationLevel(string lang, int id)
         {
             var education = await _context.EducationLevels.Include(ed => ed.EducationLevelTranslations).FirstOrDefaultAsync(ed => ed.Id == id);
             if (education == null)
@@ -55,6 +63,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(201)]
         public async Task<IActionResult> Create(CreateEducationLevelDto dto)
         {
             var educations = _mapper.Map<EducationLevel>(dto);
@@ -72,7 +81,9 @@ namespace ApexWebAPI.Controllers
             return StatusCode(201, new { message = "Created" });
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
             var education = await _context.EducationLevels
@@ -89,6 +100,8 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Update(UpdateEducationLevelDto dto)
         {
             var education = await _context.EducationLevels

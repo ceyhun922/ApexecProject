@@ -34,7 +34,7 @@ namespace ApexWebAPI.Controllers
             }
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == dto.Username);
             if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
-                return Unauthorized("Usrname veya sifr yalnış");
+                return Unauthorized(new { message = "İstifadəçi adı və ya şifrə yanlışdır" });
 
             var token = GenerateToken(user);
             return Ok(new { token });
@@ -115,7 +115,7 @@ namespace ApexWebAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)
                 ?? User.FindFirst("sub")
                 ?? User.FindFirst("nameid");
-            if (userIdClaim == null) return Unauthorized("Token c bulunmadı");
+            if (userIdClaim == null) return Unauthorized(new { message = "Token claim tapılmadı" });
             var userId = int.Parse(userIdClaim.Value);
 
             var user = await _context.Users.FindAsync(userId);

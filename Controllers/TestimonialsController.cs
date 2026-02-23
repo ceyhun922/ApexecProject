@@ -25,7 +25,8 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetALL(string lang)
+        [ProducesResponseType(typeof(IEnumerable<ResultTestimonialDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ResultTestimonialDto>>> GetALL(string lang)
         {
             var testimonials = await _context.Testimonials
                 .Include(t => t.Translations).ToListAsync();
@@ -42,7 +43,9 @@ namespace ApexWebAPI.Controllers
             return Ok(result);
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(string lang, int id)
+        [ProducesResponseType(typeof(GetByIdTestimonialDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<GetByIdTestimonialDto>> GetById(string lang, int id)
         {
             var feature = await _context.Testimonials
                 .Include(f => f.Translations)
@@ -59,6 +62,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(201)]
         public async Task<IActionResult> Create(CreateTestimonialDto dto)
         {
             var testimonial = _mapper.Map<Testimonial>(dto);
@@ -79,6 +83,8 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Update(UpdateTestimonialDto dto)
         {
             var testimonial = await _context.Testimonials
@@ -124,6 +130,8 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
             var testimonial = await _context.Testimonials
