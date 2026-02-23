@@ -1,4 +1,6 @@
 using ApexWebAPI.DTOs.AboutDTOs;
+using ApexWebAPI.DTOs.PresentationDTOs;
+using ApexWebAPI.DTOs.StatisticDTOs;
 using ApexWebAPI.DTOs.ContactDTOs;
 using ApexWebAPI.DTOs.CountryDTOs;
 using ApexWebAPI.DTOs.DepartmentDTOs;
@@ -265,6 +267,40 @@ namespace ApexWebAPI.Mapping
             // Footer
             CreateMap<Contact, ResultFooterDto>().ReverseMap();
             CreateMap<Contact, UpdateFooterDto>().ReverseMap();
+
+            // Statistic
+            CreateMap<Statistic, ResultStatisticDto>()
+                .ForMember(dest => dest.Text1, opt => opt.Ignore())
+                .ForMember(dest => dest.Text2, opt => opt.Ignore())
+                .ForMember(dest => dest.Text3, opt => opt.Ignore())
+                .ForMember(dest => dest.Text4, opt => opt.Ignore());
+
+            CreateMap<Statistic, GetByIdStatisticDto>()
+                .ForMember(dest => dest.Text1, opt => opt.Ignore())
+                .ForMember(dest => dest.Text2, opt => opt.Ignore())
+                .ForMember(dest => dest.Text3, opt => opt.Ignore())
+                .ForMember(dest => dest.Text4, opt => opt.Ignore());
+
+            CreateMap<CreateStatisticDto, Statistic>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            CreateMap<UpdateStatisticDto, Statistic>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            // Presentation
+            CreateMap<Presentation, ResultPresentationDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+
+            CreateMap<Presentation, GetByIdPresentationDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+
+            CreateMap<CreatePresentationDto, Presentation>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            CreateMap<UpdatePresentationDto, Presentation>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
         }
     }
 }

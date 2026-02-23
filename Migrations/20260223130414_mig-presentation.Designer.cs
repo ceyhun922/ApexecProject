@@ -4,6 +4,7 @@ using ApexWebAPI.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApexWebAPI.Migrations
 {
     [DbContext(typeof(ApexDbContext))]
-    partial class ApexDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260223130414_mig-presentation")]
+    partial class migpresentation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -418,105 +420,18 @@ namespace ApexWebAPI.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<string>("YouTubeUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Presentations");
-                });
-
-            modelBuilder.Entity("ApexWebAPI.Entities.PresentationTranslation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PresentationId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SubTitle")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("PresentationId");
-
-                    b.ToTable("PresentationTranslations");
-                });
-
-            modelBuilder.Entity("ApexWebAPI.Entities.Statistic", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Count1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Count2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Count3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Count4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Statistics");
-                });
-
-            modelBuilder.Entity("ApexWebAPI.Entities.StatisticTranslation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StatisticId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Text2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Text3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Text4")
+                    b.Property<string>("YouTubeUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StatisticId");
-
-                    b.ToTable("StatisticTranslations");
+                    b.ToTable("Presentations");
                 });
 
             modelBuilder.Entity("ApexWebAPI.Entities.SummerSchool", b =>
@@ -712,28 +627,6 @@ namespace ApexWebAPI.Migrations
                     b.Navigation("Hero");
                 });
 
-            modelBuilder.Entity("ApexWebAPI.Entities.PresentationTranslation", b =>
-                {
-                    b.HasOne("ApexWebAPI.Entities.Presentation", "Presentation")
-                        .WithMany("Translations")
-                        .HasForeignKey("PresentationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Presentation");
-                });
-
-            modelBuilder.Entity("ApexWebAPI.Entities.StatisticTranslation", b =>
-                {
-                    b.HasOne("ApexWebAPI.Entities.Statistic", "Statistic")
-                        .WithMany("Translations")
-                        .HasForeignKey("StatisticId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Statistic");
-                });
-
             modelBuilder.Entity("ApexWebAPI.Entities.SummerSchool", b =>
                 {
                     b.HasOne("ApexWebAPI.Entities.Country", "Country")
@@ -799,16 +692,6 @@ namespace ApexWebAPI.Migrations
                 });
 
             modelBuilder.Entity("ApexWebAPI.Entities.Hero", b =>
-                {
-                    b.Navigation("Translations");
-                });
-
-            modelBuilder.Entity("ApexWebAPI.Entities.Presentation", b =>
-                {
-                    b.Navigation("Translations");
-                });
-
-            modelBuilder.Entity("ApexWebAPI.Entities.Statistic", b =>
                 {
                     b.Navigation("Translations");
                 });

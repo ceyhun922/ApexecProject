@@ -44,6 +44,10 @@ namespace ApexWebAPI.Concrete
         public DbSet<DepartmentTranslation>? DepartmentTranslations {get;set;}
         public DbSet<SummerSchool>? SummerSchools { get; set; }
         public DbSet<SummerSchoolTranslation>? SummerSchoolTranslations { get; set; }
+        public DbSet<Presentation>? Presentations { get; set; }
+        public DbSet<PresentationTranslation>? PresentationTranslations { get; set; }
+        public DbSet<Statistic>? Statistics { get; set; }
+        public DbSet<StatisticTranslation>? StatisticTranslations { get; set; }
 
     }
 }
