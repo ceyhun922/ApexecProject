@@ -1,5 +1,5 @@
 using ApexWebAPI.Concrete;
-using ApexWebAPI.DTOs.ContactDTOs;
+using ApexWebAPI.DTOs.ContactInfoDTOs;
 using ApexWebAPI.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -9,33 +9,33 @@ namespace ApexWebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ContactsController : ControllerBase
+    public class ContactInfosController : ControllerBase
     {
         private readonly ApexDbContext _context;
         private readonly IMapper _mapper;
 
-        public ContactsController(ApexDbContext context, IMapper mapper)
+        public ContactInfosController(ApexDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(ResultContactDto), 200)]
+        [ProducesResponseType(typeof(ResultContactInfoDto), 200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<ResultContactDto>> Get()
+        public async Task<ActionResult<ResultContactInfoDto>> Get()
         {
             var contact = await _context.Contacts!.FirstOrDefaultAsync();
 
             if (contact == null)
                 return NotFound(new { message = "Əlaqə məlumatı tapılmadı" });
 
-            return Ok(_mapper.Map<ResultContactDto>(contact));
+            return Ok(_mapper.Map<ResultContactInfoDto>(contact));
         }
 
         [HttpPost]
         [ProducesResponseType(201)]
-        public async Task<IActionResult> Create(CreateContactDto dto)
+        public async Task<IActionResult> Create(CreateContactInfoDto dto)
         {
             var existing = await _context.Contacts!.ToListAsync();
             _context.Contacts!.RemoveRange(existing);
@@ -49,7 +49,7 @@ namespace ApexWebAPI.Controllers
         [HttpPut]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Update(UpdateContactDto dto)
+        public async Task<IActionResult> Update(UpdateContactInfoDto dto)
         {
             var contact = await _context.Contacts!.FirstOrDefaultAsync();
 

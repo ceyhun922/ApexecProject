@@ -1,13 +1,13 @@
-using ApexWebAPI.DTOs.ContactDTOs;
+using ApexWebAPI.DTOs.ContactInfoDTOs;
 
 namespace ApexWebAPI.Services.Interfaces
 {
     public interface IContactService
     {
-        Task<IEnumerable<ResultContactDto>> GetAllAsync();
+        Task<IEnumerable<ResultContactInfoDto>> GetAllAsync();
         Task<GetByIdContactDto?> GetByIdAsync(int id);
-        Task CreateAsync(CreateContactDto dto);
-        Task UpdateAsync(UpdateContactDto dto);
+        Task CreateAsync(CreateContactInfoDto dto);
+        Task UpdateAsync(UpdateContactInfoDto dto);
         Task DeleteAsync(int id);
     }
 }

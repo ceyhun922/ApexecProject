@@ -2,7 +2,6 @@ using ApexWebAPI.DTOs.AboutDTOs;
 using ApexWebAPI.DTOs.ContactHeaderDTOs;
 using ApexWebAPI.DTOs.PresentationDTOs;
 using ApexWebAPI.DTOs.StatisticDTOs;
-using ApexWebAPI.DTOs.ContactDTOs;
 using ApexWebAPI.DTOs.CountryDTOs;
 using ApexWebAPI.DTOs.DepartmentDTOs;
 using ApexWebAPI.DTOs.EducationLevelDTOs;
@@ -16,6 +15,7 @@ using ApexWebAPI.DTOs.SummerSchoolDTOs;
 using ApexWebAPI.DTOs.TestimonialDTOs;
 using ApexWebAPI.Entities;
 using AutoMapper;
+using ApexWebAPI.DTOs.ContactInfoDTOs;
 
 namespace ApexWebAPI.Mapping
 {
@@ -230,28 +230,19 @@ namespace ApexWebAPI.Mapping
             CreateMap<Contact, UpdateMessageDto>().ReverseMap();
             CreateMap<Contact, GetByIdMessageDto>().ReverseMap();
 
-            // Contact
-            CreateMap<CreateContactDto, Contact>()
-                .ForMember(dest => dest.FbUrl, opt => opt.MapFrom(src =>
-                    string.IsNullOrWhiteSpace(src.FbUsername) ? null : "https://www.facebook.com/" + src.FbUsername.TrimStart('/')))
-                .ForMember(dest => dest.InstaUrl, opt => opt.MapFrom(src =>
-                    string.IsNullOrWhiteSpace(src.InstaUsername) ? null : "https://www.instagram.com/" + src.InstaUsername.TrimStart('/')))
-                .ForMember(dest => dest.LnUrl, opt => opt.MapFrom(src =>
-                    string.IsNullOrWhiteSpace(src.LnUsername) ? null : "https://www.linkedin.com/company/" + src.LnUsername.TrimStart('/')))
-                .ForMember(dest => dest.XUrl, opt => opt.MapFrom(src =>
-                    string.IsNullOrWhiteSpace(src.XUsername) ? null : "https://x.com/" + src.XUsername.TrimStart('/')));
+            // ContactInfo
+            CreateMap<CreateContactInfoDto, Contact>()
+            .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
+            .ForMember(dest => dest.PhoneNumber2, opt => opt.MapFrom(src => src.PhoneNumber2))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.Adress, opt => opt.MapFrom(src => src.Adress)); 
+              CreateMap<UpdateContactInfoDto, Contact>()
+            .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
+            .ForMember(dest => dest.PhoneNumber2, opt => opt.MapFrom(src => src.PhoneNumber2))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.Adress, opt => opt.MapFrom(src => src.Adress));
 
-            CreateMap<UpdateContactDto, Contact>()
-                .ForMember(dest => dest.FbUrl, opt => opt.MapFrom(src =>
-                    string.IsNullOrWhiteSpace(src.FbUsername) ? null : "https://www.facebook.com/" + src.FbUsername.TrimStart('/')))
-                .ForMember(dest => dest.InstaUrl, opt => opt.MapFrom(src =>
-                    string.IsNullOrWhiteSpace(src.InstaUsername) ? null : "https://www.instagram.com/" + src.InstaUsername.TrimStart('/')))
-                .ForMember(dest => dest.LnUrl, opt => opt.MapFrom(src =>
-                    string.IsNullOrWhiteSpace(src.LnUsername) ? null : "https://www.linkedin.com/company/" + src.LnUsername.TrimStart('/')))
-                .ForMember(dest => dest.XUrl, opt => opt.MapFrom(src =>
-                    string.IsNullOrWhiteSpace(src.XUsername) ? null : "https://x.com/" + src.XUsername.TrimStart('/')));
-
-            CreateMap<Contact, ResultContactDto>();
+            CreateMap<Contact, ResultContactInfoDto>();
 
             CreateMap<Contact, GetByIdContactDto>();
 

@@ -1,5 +1,5 @@
 using ApexWebAPI.Concrete;
-using ApexWebAPI.DTOs.ContactDTOs;
+using ApexWebAPI.DTOs.ContactInfoDTOs;
 using ApexWebAPI.Entities;
 using ApexWebAPI.Services.Interfaces;
 using AutoMapper;
@@ -18,10 +18,10 @@ namespace ApexWebAPI.Services.Concrete
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ResultContactDto>> GetAllAsync()
+        public async Task<IEnumerable<ResultContactInfoDto>> GetAllAsync()
         {
             var contacts = await _context.Contacts!.ToListAsync();
-            return _mapper.Map<List<ResultContactDto>>(contacts);
+            return _mapper.Map<List<ResultContactInfoDto>>(contacts);
         }
 
         public async Task<GetByIdContactDto?> GetByIdAsync(int id)
@@ -30,14 +30,14 @@ namespace ApexWebAPI.Services.Concrete
             return contact == null ? null : _mapper.Map<GetByIdContactDto>(contact);
         }
 
-        public async Task CreateAsync(CreateContactDto dto)
+        public async Task CreateAsync(CreateContactInfoDto dto)
         {
             var contact = _mapper.Map<Contact>(dto);
             await _context.Contacts!.AddAsync(contact);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(UpdateContactDto dto)
+        public async Task UpdateAsync(UpdateContactInfoDto dto)
         {
             var contact = await _context.Contacts!.FirstOrDefaultAsync()
                 ?? throw new KeyNotFoundException("Contact not found");
