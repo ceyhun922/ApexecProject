@@ -41,8 +41,6 @@ namespace ApexWebAPI.Controllers
             _context.Contacts!.RemoveRange(existing);
 
             var contact = _mapper.Map<Contact>(dto);
-            contact.ImageUrl = dto.ImageUrl;
-
             await _context.Contacts.AddAsync(contact);
             await _context.SaveChangesAsync();
             return StatusCode(201, new { message = "Yaradıldı" });
@@ -59,8 +57,6 @@ namespace ApexWebAPI.Controllers
                 return NotFound(new { message = "Əlaqə tapılmadı" });
 
             _mapper.Map(dto, contact);
-            contact.ImageUrl = dto.ImageUrl;
-
             await _context.SaveChangesAsync();
             return Ok(new { message = "Yeniləndi" });
         }

@@ -3,9 +3,6 @@ namespace ApexWebAPI.DTOs.ContactDTOs
     public class GetByIdContactDto
     {
         public int Id { get; set; }
-        public string? Title { get; set; }
-        public string? SubTitle { get; set; }
-        public string? ImageUrl { get; set; }
         public string? PhoneNumber { get; set; }
         public string? PhoneNumber2 { get; set; }
         public string? Email { get; set; }
@@ -14,5 +11,10 @@ namespace ApexWebAPI.DTOs.ContactDTOs
         public string? InstaUrl { get; set; }
         public string? LnUrl { get; set; }
         public string? XUrl { get; set; }
+        public string? OtherUrl { get; set; }
+        public string? FbUsername { get; set; }
+        public string? InstaUsername { get; set; }
+        public string? LnUsername { get; set; }
+        public string? XUsername { get; set; }
     }
 }

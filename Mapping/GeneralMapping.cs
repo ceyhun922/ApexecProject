@@ -1,4 +1,5 @@
 using ApexWebAPI.DTOs.AboutDTOs;
+using ApexWebAPI.DTOs.ContactHeaderDTOs;
 using ApexWebAPI.DTOs.PresentationDTOs;
 using ApexWebAPI.DTOs.StatisticDTOs;
 using ApexWebAPI.DTOs.ContactDTOs;
@@ -250,19 +251,9 @@ namespace ApexWebAPI.Mapping
                 .ForMember(dest => dest.XUrl, opt => opt.MapFrom(src =>
                     string.IsNullOrWhiteSpace(src.XUsername) ? null : "https://x.com/" + src.XUsername.TrimStart('/')));
 
-            CreateMap<Contact, ResultContactDto>()
-                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
-                .ForMember(dest => dest.FbUrl, opt => opt.MapFrom(src => src.FbUrl))
-                .ForMember(dest => dest.InstaUrl, opt => opt.MapFrom(src => src.InstaUrl))
-                .ForMember(dest => dest.LnUrl, opt => opt.MapFrom(src => src.LnUrl))
-                .ForMember(dest => dest.XUrl, opt => opt.MapFrom(src => src.XUrl));
+            CreateMap<Contact, ResultContactDto>();
 
-            CreateMap<Contact, GetByIdContactDto>()
-                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
-                .ForMember(dest => dest.FbUrl, opt => opt.MapFrom(src => src.FbUrl))
-                .ForMember(dest => dest.InstaUrl, opt => opt.MapFrom(src => src.InstaUrl))
-                .ForMember(dest => dest.LnUrl, opt => opt.MapFrom(src => src.LnUrl))
-                .ForMember(dest => dest.XUrl, opt => opt.MapFrom(src => src.XUrl));
+            CreateMap<Contact, GetByIdContactDto>();
 
             // Footer
             CreateMap<Contact, ResultFooterDto>().ReverseMap();
@@ -301,6 +292,18 @@ namespace ApexWebAPI.Mapping
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
 
             CreateMap<UpdatePresentationDto, Presentation>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            // ContactHeader
+            CreateMap<ContactHeader, ResultContactHeaderDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+            CreateMap<ContactHeader, GetByIdContactHeaderDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+            CreateMap<CreateContactHeaderDto, ContactHeader>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+            CreateMap<UpdateContactHeaderDto, ContactHeader>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
         }
     }

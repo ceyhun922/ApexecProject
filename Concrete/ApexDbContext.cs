@@ -48,6 +48,8 @@ namespace ApexWebAPI.Concrete
         public DbSet<PresentationTranslation>? PresentationTranslations { get; set; }
         public DbSet<Statistic>? Statistics { get; set; }
         public DbSet<StatisticTranslation>? StatisticTranslations { get; set; }
+        public DbSet<ContactHeader>? ContactHeaders { get; set; }
+        public DbSet<ContactHeaderTranslation>? ContactHeaderTranslations { get; set; }
 
     }
 }

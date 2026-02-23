@@ -14,12 +14,11 @@ namespace ApexWebAPI.Entities
         public string? InstaUrl { get; set; }
         public string? LnUrl { get; set; }
         public string? XUrl { get; set; }
-
-        public string? Title {get;set;}
-        public string? SubTitle {get;set;}
-        public string? ImageUrl {get;set;}
-
         public string? OtherUrl { get; set; }
         public string? Message { get; set; }
+        public string? FbUsername { get; set; }
+        public string? InstaUsername { get; set; }
+        public string? LnUsername { get; set; }
+        public string? XUsername { get; set; }
     }
 }

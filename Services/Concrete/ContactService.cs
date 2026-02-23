@@ -33,7 +33,6 @@ namespace ApexWebAPI.Services.Concrete
         public async Task CreateAsync(CreateContactDto dto)
         {
             var contact = _mapper.Map<Contact>(dto);
-            contact.ImageUrl = dto.ImageUrl;
             await _context.Contacts!.AddAsync(contact);
             await _context.SaveChangesAsync();
         }
@@ -44,7 +43,6 @@ namespace ApexWebAPI.Services.Concrete
                 ?? throw new KeyNotFoundException("Contact not found");
 
             _mapper.Map(dto, contact);
-            contact.ImageUrl = dto.ImageUrl;
             _context.Contacts.Update(contact);
             await _context.SaveChangesAsync();
         }
