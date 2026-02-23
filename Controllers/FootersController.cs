@@ -33,10 +33,23 @@ namespace ApexWebAPI.Controllers
             return Ok(_mapper.Map<ResultFooterDto>(footer));
         }
 
+        [HttpPost]
+        [ProducesResponseType(201)]
+        public async Task<IActionResult> Create([FromBody] CreateFooterDto dto)
+        {
+            var existing = await _context.Contacts!.ToListAsync();
+            _context.Contacts!.RemoveRange(existing);
+
+            var footer = _mapper.Map<Contact>(dto);
+            await _context.Contacts.AddAsync(footer);
+            await _context.SaveChangesAsync();
+            return StatusCode(201, new { message = "Footer yaradıldı" });
+        }
+
         [HttpPut]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Update(UpdateFooterDto dto)
+        public async Task<IActionResult> Update([FromBody] UpdateFooterDto dto)
         {
             var footer = await _context.Contacts!.FirstOrDefaultAsync();
 
@@ -46,6 +59,21 @@ namespace ApexWebAPI.Controllers
             _mapper.Map(dto, footer);
             await _context.SaveChangesAsync();
             return Ok(new { message = "Footer uğurla yeniləndi" });
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Delete()
+        {
+            var footer = await _context.Contacts!.FirstOrDefaultAsync();
+
+            if (footer == null)
+                return NotFound(new { message = "Footer tapılmadı" });
+
+            _context.Contacts.Remove(footer);
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "Footer silindi" });
         }
     }
 }

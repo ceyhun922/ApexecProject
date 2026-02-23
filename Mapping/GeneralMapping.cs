@@ -267,6 +267,7 @@ namespace ApexWebAPI.Mapping
             // Footer
             CreateMap<Contact, ResultFooterDto>().ReverseMap();
             CreateMap<Contact, UpdateFooterDto>().ReverseMap();
+            CreateMap<CreateFooterDto, Contact>();
 
             // Statistic
             CreateMap<Statistic, ResultStatisticDto>()
