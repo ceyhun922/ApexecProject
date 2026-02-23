@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.AboutDTOs;
 using ApexWebAPI.Entities;
@@ -25,42 +24,22 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ResultAboutDto>), 200)]
-        public async Task<ActionResult<IEnumerable<ResultAboutDto>>> GetAll(string lang)
-        {
-            var about =await _context.Abouts.Include(x=>x.AboutTranslations).ToListAsync();
-
-            var result = about.Select(f =>
-            {
-                var dto = _mapper.Map<ResultAboutDto>(f);
-                dto.Title = f.AboutTranslations.FirstOrDefault(t => t.Language == lang)?.Title
-                            ?? f.AboutTranslations.FirstOrDefault(t => t.Language == "az")?.Title;
-                dto.SubTitle = f.AboutTranslations.FirstOrDefault(t => t.Language == lang)?.SubTitle
-                               ?? f.AboutTranslations.FirstOrDefault(t => t.Language == "az")?.SubTitle;
-                return dto;
-            });
-
-            return Ok(result);
-        }
-
-        [HttpGet("{id}")]
-        [ProducesResponseType(typeof(GetByIdAboutDto), 200)]
+        [ProducesResponseType(typeof(ResultAboutDto), 200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<GetByIdAboutDto>> GetById(string lang, int id)
+        public async Task<ActionResult<ResultAboutDto>> Get(string lang)
         {
-            var about = await _context.Abouts
-                .Include(f => f.AboutTranslations)
-                .FirstOrDefaultAsync(f => f.Id == id);
+            var about = await _context.Abouts!
+                .Include(x => x.AboutTranslations)
+                .FirstOrDefaultAsync();
 
             if (about == null)
                 return NotFound(new { message = _localizer["NotFound"].Value });
 
-            var dto = _mapper.Map<GetByIdAboutDto>(about);
-            dto.Title = about.AboutTranslations.FirstOrDefault(t => t.Language == lang)?.Title
-                        ?? about.AboutTranslations.FirstOrDefault(t => t.Language == "az")?.Title;
-            dto.SubTitle = about.AboutTranslations.FirstOrDefault(t => t.Language == lang)?.SubTitle
-                           ?? about.AboutTranslations.FirstOrDefault(t => t.Language == "az")?.SubTitle;
-
+            var dto = _mapper.Map<ResultAboutDto>(about);
+            dto.Title = about.AboutTranslations!.FirstOrDefault(t => t.Language == lang)?.Title
+                        ?? about.AboutTranslations!.FirstOrDefault(t => t.Language == "az")?.Title;
+            dto.SubTitle = about.AboutTranslations!.FirstOrDefault(t => t.Language == lang)?.SubTitle
+                           ?? about.AboutTranslations!.FirstOrDefault(t => t.Language == "az")?.SubTitle;
             return Ok(dto);
         }
 
@@ -68,20 +47,28 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(201)]
         public async Task<IActionResult> Create(CreateAboutDto dto)
         {
-            var about = _mapper.Map<About>(dto);
+            var existing = await _context.Abouts!
+                .Include(x => x.AboutTranslations)
+                .ToListAsync();
 
-            about.ImageUrl = dto.ImageUrl;
-            about.AboutTranslations = new List<AboutTranslation>
+            _context.Abouts!.RemoveRange(existing);
+
+            var about = new About
             {
-                new() { Language = "az", Title = dto.TitleAz, SubTitle = dto.SubTitleAz },
-                new() { Language = "en", Title = dto.TitleEn, SubTitle = dto.SubTitleEn },
-                new() { Language = "ru", Title = dto.TitleRu, SubTitle = dto.SubTitleRu },
-                new() { Language = "tr", Title = dto.TitleTr, SubTitle = dto.SubTitleTr },
+                ImageUrl = dto.ImageUrl,
+                Status = dto.Status,
+                CreatedDate = DateTime.UtcNow,
+                AboutTranslations = new List<AboutTranslation>
+                {
+                    new() { Language = "az", Title = dto.TitleAz, SubTitle = dto.SubTitleAz },
+                    new() { Language = "en", Title = dto.TitleEn, SubTitle = dto.SubTitleEn },
+                    new() { Language = "ru", Title = dto.TitleRu, SubTitle = dto.SubTitleRu },
+                    new() { Language = "tr", Title = dto.TitleTr, SubTitle = dto.SubTitleTr },
+                }
             };
 
             await _context.Abouts.AddAsync(about);
             await _context.SaveChangesAsync();
-
             return StatusCode(201, new { message = _localizer["Created"].Value });
         }
 
@@ -90,14 +77,15 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> Update(UpdateAboutDto dto)
         {
-            var about = await _context.Abouts
+            var about = await _context.Abouts!
                 .Include(f => f.AboutTranslations)
-                .FirstOrDefaultAsync(f => f.Id == dto.Id);
+                .FirstOrDefaultAsync();
 
             if (about == null)
                 return NotFound(new { message = _localizer["NotFound"].Value });
 
-            _mapper.Map(dto, about);
+            about.ImageUrl = dto.ImageUrl;
+            about.Status = dto.Status;
 
             var translations = new Dictionary<string, (string? Title, string? SubTitle)>
             {
@@ -109,42 +97,29 @@ namespace ApexWebAPI.Controllers
 
             foreach (var (language, (title, subTitle)) in translations)
             {
-                var translation = about.AboutTranslations.FirstOrDefault(t => t.Language == language);
-                if (translation != null)
-                {
-                    translation.Title = title;
-                    translation.SubTitle = subTitle;
-                }
-                else
-                {
-                    about.AboutTranslations.Add(new AboutTranslation
-                    {
-                        Language = language,
-                        Title = title,
-                        SubTitle = subTitle
-                    });
-                }
+                var translation = about.AboutTranslations!.FirstOrDefault(t => t.Language == language);
+                if (translation != null) { translation.Title = title; translation.SubTitle = subTitle; }
+                else about.AboutTranslations!.Add(new AboutTranslation { Language = language, Title = title, SubTitle = subTitle });
             }
-            about.ImageUrl = dto.ImageUrl;
 
             await _context.SaveChangesAsync();
             return Ok(new { message = _localizer["Updated"].Value });
         }
-        [HttpDelete("{id}")]
+
+        [HttpDelete]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete()
         {
-            var about = await _context.Abouts
+            var about = await _context.Abouts!
                 .Include(f => f.AboutTranslations)
-                .FirstOrDefaultAsync(f => f.Id == id);
+                .FirstOrDefaultAsync();
 
             if (about == null)
                 return NotFound(new { message = _localizer["NotFound"].Value });
 
             _context.Abouts.Remove(about);
             await _context.SaveChangesAsync();
-
             return Ok(new { message = _localizer["Deleted"].Value });
         }
     }

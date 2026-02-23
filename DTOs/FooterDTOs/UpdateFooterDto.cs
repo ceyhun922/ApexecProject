@@ -2,7 +2,6 @@ namespace ApexWebAPI.DTOs.FooterDTOs
 {
     public class UpdateFooterDto
     {
-        public int Id { get; set; }
         public string? FbUrl { get; set; }
         public string? InstaUrl { get; set; }
         public string? LnUrl { get; set; }

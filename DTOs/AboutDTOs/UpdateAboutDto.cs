@@ -2,7 +2,7 @@ namespace ApexWebAPI.DTOs.AboutDTOs
 {
     public class UpdateAboutDto
     {
-        public int Id { get; set; }
+        public bool Status { get; set; } = true;
         public string? TitleAz { get; set; }
         public string? TitleEn { get; set; }
         public string? TitleTr { get; set; }
