@@ -30,9 +30,6 @@ namespace ApexWebAPI.ValidationRule
     {
         public UpdateHeroValidation()
         {
-            RuleFor(x => x.Id)
-                .GreaterThan(0).WithMessage("Keçərli ID daxil edilməlidir");
-
             RuleFor(x => x.TitleAz)
                 .NotEmpty().WithMessage("Azərbaycanca başlıq daxil edilməlidir")
                 .MaximumLength(200).WithMessage("Başlıq 200 simvoldan çox ola bilməz");

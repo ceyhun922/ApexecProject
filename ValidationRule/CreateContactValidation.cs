@@ -37,9 +37,6 @@ namespace ApexWebAPI.ValidationRule
     {
         public UpdateContactValidation()
         {
-            RuleFor(x => x.Id)
-                .GreaterThan(0).WithMessage("Keçərli ID daxil edilməlidir");
-
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty().WithMessage("Telefon nömrəsi daxil edilməlidir")
                 .MaximumLength(20).WithMessage("Telefon nömrəsi 20 simvoldan çox ola bilməz");

@@ -40,8 +40,8 @@ namespace ApexWebAPI.Services.Concrete
 
         public async Task UpdateAsync(UpdateContactDto dto)
         {
-            var contact = await _context.Contacts!.FindAsync(dto.Id)
-                ?? throw new KeyNotFoundException($"Contact {dto.Id} not found");
+            var contact = await _context.Contacts!.FirstOrDefaultAsync()
+                ?? throw new KeyNotFoundException("Contact not found");
 
             _mapper.Map(dto, contact);
             contact.ImageUrl = dto.ImageUrl;

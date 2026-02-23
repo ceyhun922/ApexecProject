@@ -39,8 +39,8 @@ namespace ApexWebAPI.Services.Concrete
 
         public async Task UpdateAsync(UpdateFooterDto dto)
         {
-            var footer = await _context.Contacts!.FindAsync(dto.Id)
-                ?? throw new KeyNotFoundException($"Footer {dto.Id} not found");
+            var footer = await _context.Contacts!.FirstOrDefaultAsync()
+                ?? throw new KeyNotFoundException("Footer not found");
 
             _mapper.Map(dto, footer);
             _context.Contacts.Update(footer);

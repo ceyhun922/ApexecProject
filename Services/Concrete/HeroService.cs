@@ -90,8 +90,8 @@ namespace ApexWebAPI.Services.Concrete
         {
             var hero = await _context.Heroes!
                 .Include(h => h.Translations)
-                .FirstOrDefaultAsync(h => h.Id == dto.Id)
-                ?? throw new KeyNotFoundException($"Hero {dto.Id} not found");
+                .FirstOrDefaultAsync()
+                ?? throw new KeyNotFoundException("Hero not found");
 
             if (dto.Video != null && dto.Video.Length > 0)
             {

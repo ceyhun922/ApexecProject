@@ -7,9 +7,6 @@ namespace ApexWebAPI.ValidationRule
     {
         public UpdateFooterValidation()
         {
-            RuleFor(x => x.Id)
-                .GreaterThan(0).WithMessage("Keçərli ID daxil edilməlidir");
-
             RuleFor(x => x.FbUrl)
                 .Must(url => Uri.IsWellFormedUriString(url, UriKind.Absolute))
                 .When(x => !string.IsNullOrWhiteSpace(x.FbUrl))

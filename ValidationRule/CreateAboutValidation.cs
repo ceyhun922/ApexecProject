@@ -21,9 +21,6 @@ namespace ApexWebAPI.ValidationRule
     {
         public UpdateAboutValidation()
         {
-            RuleFor(x => x.Id)
-                .GreaterThan(0).WithMessage("Keçərli ID daxil edilməlidir");
-
             RuleFor(x => x.TitleAz)
                 .NotEmpty().WithMessage("Azərbaycanca başlıq daxil edilməlidir")
                 .MaximumLength(300).WithMessage("Başlıq 300 simvoldan çox ola bilməz");
