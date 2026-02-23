@@ -1,7 +1,9 @@
+using System.ComponentModel;
 namespace ApexWebAPI.DTOs.EducationLevelDTOs
 {
     public class CreateEducationLevelDto
     {
+        [DefaultValue(true)]
         public bool Status { get; set; } = true;
         public string? NameAz { get; set; }
         public string? NameEn { get; set; }

@@ -1,7 +1,9 @@
+using System.ComponentModel;
 namespace ApexWebAPI.DTOs.PresentationDTOs
 {
     public class CreatePresentationDto
     {
+        [DefaultValue(true)]
         public bool Status { get; set; } = true;
         public string? YouTubeUrl { get; set; }
         public string? TitleAz { get; set; }

@@ -1,7 +1,9 @@
+using System.ComponentModel;
 namespace ApexWebAPI.DTOs.FaqDTO.cs
 {
     public class CreateFaqDto
     {
+        [DefaultValue(true)]
         public bool Status { get; set; } = true;
         public string? TitleAz { get; set; }
         public string? TitleEn { get; set; }

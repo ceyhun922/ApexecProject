@@ -1,7 +1,9 @@
+using System.ComponentModel;
 namespace ApexWebAPI.DTOs.AboutDTOs
 {
     public class CreateAboutDto
     {
+        [DefaultValue(true)]
         public bool Status { get; set; } = true;
         public string? TitleAz { get; set; }
         public string? TitleEn { get; set; }

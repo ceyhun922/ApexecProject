@@ -1,7 +1,9 @@
+using System.ComponentModel;
 namespace ApexWebAPI.DTOs.StatisticDTOs
 {
     public class CreateStatisticDto
     {
+        [DefaultValue(true)]
         public bool Status { get; set; } = true;
         public string? Count1 { get; set; }
         public string? Count2 { get; set; }

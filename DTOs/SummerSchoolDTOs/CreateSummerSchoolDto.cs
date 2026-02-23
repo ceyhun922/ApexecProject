@@ -1,3 +1,4 @@
+using System.ComponentModel;
 namespace ApexWebAPI.DTOs.SummerSchoolDTOs
 {
     public class CreateSummerSchoolDto
@@ -11,6 +12,7 @@ namespace ApexWebAPI.DTOs.SummerSchoolDTOs
         public string? SubTitleRu { get; set; }
         public string? SubTitleTr { get; set; }
         public string? ImageUrl { get; set; }
+        [DefaultValue(true)]
         public bool Status { get; set; } = true;
         public int CountryId { get; set; }
     }

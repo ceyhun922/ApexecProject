@@ -1,7 +1,9 @@
+using System.ComponentModel;
 namespace ApexWebAPI.DTOs.FeatureDTOs
 {
     public class CreateHeroDto
     {
+        [DefaultValue(true)]
         public bool Status { get; set; } = true;
         public IFormFile? Video { get; set; }
         public string? TitleAz { get; set; }

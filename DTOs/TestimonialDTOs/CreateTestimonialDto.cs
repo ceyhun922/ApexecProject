@@ -1,7 +1,9 @@
+using System.ComponentModel;
 namespace ApexWebAPI.DTOs.TestimonialDTOs
 {
     public class CreateTestimonialDto
     {
+        [DefaultValue(true)]
         public bool Status { get; set; } = true;
         public string? FullName { get; set; }
         public string? ImageUrl { get; set; }
