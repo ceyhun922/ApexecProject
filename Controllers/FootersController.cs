@@ -25,7 +25,7 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<ResultFooterDto>> Get()
         {
-            var footer = await _context.Contacts!.FirstOrDefaultAsync();
+            var footer = await _context.Footers!.FirstOrDefaultAsync();
 
             if (footer == null)
                 return NotFound(new { message = "Footer tapılmadı" });
@@ -37,11 +37,11 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(201)]
         public async Task<IActionResult> Create([FromBody] CreateFooterDto dto)
         {
-            var existing = await _context.Contacts!.ToListAsync();
-            _context.Contacts!.RemoveRange(existing);
+            var existing = await _context.Footers!.ToListAsync();
+            _context.Footers!.RemoveRange(existing);
 
-            var footer = _mapper.Map<Contact>(dto);
-            await _context.Contacts.AddAsync(footer);
+            var footer = _mapper.Map<Footer>(dto);
+            await _context.Footers.AddAsync(footer);
             await _context.SaveChangesAsync();
             return StatusCode(201, new { message = "Footer yaradıldı" });
         }
@@ -51,7 +51,7 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> Update([FromBody] UpdateFooterDto dto)
         {
-            var footer = await _context.Contacts!.FirstOrDefaultAsync();
+            var footer = await _context.Footers!.FirstOrDefaultAsync();
 
             if (footer == null)
                 return NotFound(new { message = "Footer tapılmadı" });
@@ -66,12 +66,12 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> Delete()
         {
-            var footer = await _context.Contacts!.FirstOrDefaultAsync();
+            var footer = await _context.Footers!.FirstOrDefaultAsync();
 
             if (footer == null)
                 return NotFound(new { message = "Footer tapılmadı" });
 
-            _context.Contacts.Remove(footer);
+            _context.Footers.Remove(footer);
             await _context.SaveChangesAsync();
             return Ok(new { message = "Footer silindi" });
         }

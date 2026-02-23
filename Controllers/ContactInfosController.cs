@@ -1,3 +1,4 @@
+
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.ContactInfoDTOs;
 using ApexWebAPI.Entities;
@@ -25,7 +26,7 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<ResultContactInfoDto>> Get()
         {
-            var contact = await _context.Contacts!.FirstOrDefaultAsync();
+            var contact = await _context.ContactInfos!.FirstOrDefaultAsync();
 
             if (contact == null)
                 return NotFound(new { message = "Əlaqə məlumatı tapılmadı" });
@@ -37,11 +38,11 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(201)]
         public async Task<IActionResult> Create(CreateContactInfoDto dto)
         {
-            var existing = await _context.Contacts!.ToListAsync();
-            _context.Contacts!.RemoveRange(existing);
+            var existing = await _context.ContactInfos!.ToListAsync();
+            _context.ContactInfos!.RemoveRange(existing);
 
-            var contact = _mapper.Map<Contact>(dto);
-            await _context.Contacts.AddAsync(contact);
+            var contact = _mapper.Map<ContactInfo>(dto);
+            await _context.ContactInfos.AddAsync(contact);
             await _context.SaveChangesAsync();
             return StatusCode(201, new { message = "Yaradıldı" });
         }
@@ -51,7 +52,7 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> Update(UpdateContactInfoDto dto)
         {
-            var contact = await _context.Contacts!.FirstOrDefaultAsync();
+            var contact = await _context.ContactInfos!.FirstOrDefaultAsync();
 
             if (contact == null)
                 return NotFound(new { message = "Əlaqə tapılmadı" });
@@ -66,12 +67,12 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> Delete()
         {
-            var contact = await _context.Contacts!.FirstOrDefaultAsync();
+            var contact = await _context.ContactInfos!.FirstOrDefaultAsync();
 
             if (contact == null)
                 return NotFound(new { message = "Əlaqə tapılmadı" });
 
-            _context.Contacts.Remove(contact);
+            _context.ContactInfos.Remove(contact);
             await _context.SaveChangesAsync();
             return Ok(new { message = "Silindi" });
         }

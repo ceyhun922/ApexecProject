@@ -132,14 +132,14 @@ namespace ApexWebAPI.Mapping
                 }));
 
             //SummerSchool
-               CreateMap<CreateSummerSchoolDto, SummerSchool>()
-                .ForMember(dest => dest.Translations, opt => opt.MapFrom(src => new List<SummerSchoolTranslation>
-                {
+            CreateMap<CreateSummerSchoolDto, SummerSchool>()
+             .ForMember(dest => dest.Translations, opt => opt.MapFrom(src => new List<SummerSchoolTranslation>
+             {
                     new() { Language = "az", Title = src.TitleAz, SubTitle = src.SubTitleAz },
                     new() { Language = "en", Title = src.TitleEn, SubTitle = src.SubTitleEn },
                     new() { Language = "ru", Title = src.TitleRu, SubTitle = src.SubTitleRu },
                     new() { Language = "tr", Title = src.TitleTr, SubTitle = src.SubTitleTr },
-                }));
+             }));
 
             CreateMap<UpdateSummerSchoolDto, SummerSchool>()
                 .ForMember(dest => dest.Translations, opt => opt.MapFrom(src => new List<SummerSchoolTranslation>
@@ -219,38 +219,27 @@ namespace ApexWebAPI.Mapping
                 }));
 
             // Information
-            CreateMap<CreateInformationDto, Contact>().ReverseMap();
-            CreateMap<Contact, ResultInformationDto>().ReverseMap();
-            CreateMap<Contact, UpdateInformationDto>().ReverseMap();
-            CreateMap<Contact, GetByIdInformationDto>().ReverseMap();
+            CreateMap<CreateInformationDto, Information>().ReverseMap();
+            CreateMap<Information, ResultInformationDto>().ReverseMap();
+            CreateMap<Information, UpdateInformationDto>().ReverseMap();
+            CreateMap<Information, GetByIdInformationDto>().ReverseMap();
 
             // Message
-            CreateMap<CreateMessageDto, Contact>().ReverseMap();
-            CreateMap<Contact, ResultMessageDto>().ReverseMap();
-            CreateMap<Contact, UpdateMessageDto>().ReverseMap();
-            CreateMap<Contact, GetByIdMessageDto>().ReverseMap();
+            CreateMap<CreateMessageDto, Message>().ReverseMap();
+            CreateMap<Message, ResultMessageDto>().ReverseMap();
+            CreateMap<Message, UpdateMessageDto>().ReverseMap();
+            CreateMap<Message, GetByIdMessageDto>().ReverseMap();
 
             // ContactInfo
-            CreateMap<CreateContactInfoDto, Contact>()
-            .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
-            .ForMember(dest => dest.PhoneNumber2, opt => opt.MapFrom(src => src.PhoneNumber2))
-            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-            .ForMember(dest => dest.Adress, opt => opt.MapFrom(src => src.Adress)); 
-              CreateMap<UpdateContactInfoDto, Contact>()
-            .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
-            .ForMember(dest => dest.PhoneNumber2, opt => opt.MapFrom(src => src.PhoneNumber2))
-            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-            .ForMember(dest => dest.Adress, opt => opt.MapFrom(src => src.Adress));
-
-            CreateMap<Contact, ResultContactInfoDto>();
-
-            CreateMap<Contact, GetByIdContactDto>();
+            CreateMap<CreateContactInfoDto, ContactInfo>().ReverseMap();
+            CreateMap<UpdateContactInfoDto, ContactInfo>().ReverseMap();
+            CreateMap<ContactInfo, ResultContactInfoDto>().ReverseMap();
+            CreateMap<ContactInfo, GetByIdContactDto>().ReverseMap();
 
             // Footer
-            CreateMap<Contact, ResultFooterDto>().ReverseMap();
-            CreateMap<Contact, UpdateFooterDto>().ReverseMap();
-            CreateMap<CreateFooterDto, Contact>();
-
+            CreateMap<Footer, ResultFooterDto>().ReverseMap();
+            CreateMap<Footer, UpdateFooterDto>().ReverseMap();
+            CreateMap<CreateFooterDto, Footer>().ReverseMap();
             // Statistic
             CreateMap<Statistic, ResultStatisticDto>()
                 .ForMember(dest => dest.Text1, opt => opt.Ignore())

@@ -1,6 +1,5 @@
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.InformationDTOs;
-using ApexWebAPI.DTOs.MessageDTOs;
 using ApexWebAPI.Entities;
 using ApexWebAPI.Services.Interfaces;
 using AutoMapper;
@@ -21,26 +20,26 @@ namespace ApexWebAPI.Services.Concrete
 
         public async Task<IEnumerable<ResultInformationDto>> GetAllAsync()
         {
-            var items = await _context.Contacts!.ToListAsync();
+            var items = await _context.Informations!.ToListAsync();
             return _mapper.Map<List<ResultInformationDto>>(items);
         }
 
         public async Task<GetByIdInformationDto?> GetByIdAsync(int id)
         {
-            var item = await _context.Contacts!.FindAsync(id);
+            var item = await _context.Informations!.FindAsync(id);
             return item == null ? null : _mapper.Map<GetByIdInformationDto>(item);
         }
 
         public async Task CreateAsync(CreateInformationDto dto)
         {
-            var contact = _mapper.Map<Contact>(dto);
-            _context.Contacts!.Add(contact);
+            var item = _mapper.Map<Information>(dto);
+            _context.Informations!.Add(item);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(UpdateInformationDto dto)
         {
-            var item = await _context.Contacts!.FindAsync(dto.Id)
+            var item = await _context.Informations!.FindAsync(dto.Id)
                 ?? throw new KeyNotFoundException($"Information {dto.Id} not found");
 
             _mapper.Map(dto, item);
@@ -49,10 +48,10 @@ namespace ApexWebAPI.Services.Concrete
 
         public async Task DeleteAsync(int id)
         {
-            var item = await _context.Contacts!.FindAsync(id)
+            var item = await _context.Informations!.FindAsync(id)
                 ?? throw new KeyNotFoundException($"Information {id} not found");
 
-            _context.Contacts.Remove(item);
+            _context.Informations.Remove(item);
             await _context.SaveChangesAsync();
         }
     }

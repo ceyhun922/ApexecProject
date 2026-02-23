@@ -20,39 +20,39 @@ namespace ApexWebAPI.Services.Concrete
 
         public async Task<IEnumerable<ResultFooterDto>> GetAllAsync()
         {
-            var footers = await _context.Contacts!.ToListAsync();
+            var footers = await _context.Footers!.ToListAsync();
             return _mapper.Map<List<ResultFooterDto>>(footers);
         }
 
         public async Task<GetByIdFooterDto?> GetByIdAsync(int id)
         {
-            var footer = await _context.Contacts!.FindAsync(id);
+            var footer = await _context.Footers!.FindAsync(id);
             return footer == null ? null : _mapper.Map<GetByIdFooterDto>(footer);
         }
 
         public async Task CreateAsync(CreateFooterDto dto)
         {
-            var footer = _mapper.Map<Contact>(dto);
-            await _context.Contacts!.AddAsync(footer);
+            var footer = _mapper.Map<Footer>(dto);
+            await _context.Footers!.AddAsync(footer);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(UpdateFooterDto dto)
         {
-            var footer = await _context.Contacts!.FirstOrDefaultAsync()
+            var footer = await _context.Footers!.FirstOrDefaultAsync()
                 ?? throw new KeyNotFoundException("Footer not found");
 
             _mapper.Map(dto, footer);
-            _context.Contacts.Update(footer);
+            _context.Footers.Update(footer);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
-            var footer = await _context.Contacts!.FindAsync(id)
+            var footer = await _context.Footers!.FindAsync(id)
                 ?? throw new KeyNotFoundException($"Footer {id} not found");
 
-            _context.Contacts.Remove(footer);
+            _context.Footers.Remove(footer);
             await _context.SaveChangesAsync();
         }
     }

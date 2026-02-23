@@ -1,3 +1,5 @@
+
+
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.MessageDTOs.cs;
 using ApexWebAPI.Entities;
@@ -20,26 +22,26 @@ namespace ApexWebAPI.Services.Concrete
 
         public async Task<IEnumerable<ResultMessageDto>> GetAllAsync()
         {
-            var items = await _context.Contacts!.ToListAsync();
+            var items = await _context.Messages!.ToListAsync();
             return _mapper.Map<List<ResultMessageDto>>(items);
         }
 
         public async Task<GetByIdMessageDto?> GetByIdAsync(int id)
         {
-            var item = await _context.Contacts!.FindAsync(id);
+            var item = await _context.Messages!.FindAsync(id);
             return item == null ? null : _mapper.Map<GetByIdMessageDto>(item);
         }
 
         public async Task CreateAsync(CreateMessageDto dto)
         {
-            var contact = _mapper.Map<Contact>(dto);
-            _context.Contacts!.Add(contact);
+            var item = _mapper.Map<Message>(dto);
+            _context.Messages!.Add(item);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(UpdateMessageDto dto)
         {
-            var item = await _context.Contacts!.FindAsync(dto.Id)
+            var item = await _context.Messages!.FindAsync(dto.Id)
                 ?? throw new KeyNotFoundException($"Message {dto.Id} not found");
 
             _mapper.Map(dto, item);
@@ -48,10 +50,10 @@ namespace ApexWebAPI.Services.Concrete
 
         public async Task DeleteAsync(int id)
         {
-            var item = await _context.Contacts!.FindAsync(id)
+            var item = await _context.Messages!.FindAsync(id)
                 ?? throw new KeyNotFoundException($"Message {id} not found");
 
-            _context.Contacts.Remove(item);
+            _context.Messages.Remove(item);
             await _context.SaveChangesAsync();
         }
     }

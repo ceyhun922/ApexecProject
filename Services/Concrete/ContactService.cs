@@ -20,39 +20,39 @@ namespace ApexWebAPI.Services.Concrete
 
         public async Task<IEnumerable<ResultContactInfoDto>> GetAllAsync()
         {
-            var contacts = await _context.Contacts!.ToListAsync();
+            var contacts = await _context.ContactInfos!.ToListAsync();
             return _mapper.Map<List<ResultContactInfoDto>>(contacts);
         }
 
         public async Task<GetByIdContactDto?> GetByIdAsync(int id)
         {
-            var contact = await _context.Contacts!.FindAsync(id);
+            var contact = await _context.ContactInfos!.FindAsync(id);
             return contact == null ? null : _mapper.Map<GetByIdContactDto>(contact);
         }
 
         public async Task CreateAsync(CreateContactInfoDto dto)
         {
-            var contact = _mapper.Map<Contact>(dto);
-            await _context.Contacts!.AddAsync(contact);
+            var contact = _mapper.Map<ContactInfo>(dto);
+            await _context.ContactInfos!.AddAsync(contact);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(UpdateContactInfoDto dto)
         {
-            var contact = await _context.Contacts!.FirstOrDefaultAsync()
-                ?? throw new KeyNotFoundException("Contact not found");
+            var contact = await _context.ContactInfos!.FirstOrDefaultAsync()
+                ?? throw new KeyNotFoundException("ContactInfo not found");
 
             _mapper.Map(dto, contact);
-            _context.Contacts.Update(contact);
+            _context.ContactInfos.Update(contact);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
-            var contact = await _context.Contacts!.FindAsync(id)
-                ?? throw new KeyNotFoundException($"Contact {id} not found");
+            var contact = await _context.ContactInfos!.FindAsync(id)
+                ?? throw new KeyNotFoundException($"ContactInfo {id} not found");
 
-            _context.Contacts.Remove(contact);
+            _context.ContactInfos.Remove(contact);
             await _context.SaveChangesAsync();
         }
     }

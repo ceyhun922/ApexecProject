@@ -26,7 +26,7 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(typeof(List<ResultInformationDto>), 200)]
         public async Task<ActionResult<List<ResultInformationDto>>> GetMessages()
         {
-            var messages = await _context.Contacts.ToListAsync();
+            var messages = await _context.Informations.ToListAsync();
 
             var dto = _mapper.Map<List<ResultInformationDto>>(messages);
 
@@ -38,7 +38,7 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<GetByIdInformationDto>> GetByIdMessage(int id)
         {
-            var message = await _context.Contacts.FindAsync(id);
+            var message = await _context.Informations.FindAsync(id);
 
             if (message == null)
                 return NotFound(new { message = "Məlumat tapılmadı" });
@@ -51,8 +51,8 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(201)]
         public async Task<IActionResult> SubmitMessage([FromBody] CreateInformationDto informationDto)
         {
-            var entity = _mapper.Map<Contact>(informationDto);
-            _context.Contacts.Add(entity);
+            var entity = _mapper.Map<Information>(informationDto);
+            _context.Informations.Add(entity);
             await _context.SaveChangesAsync();
             return StatusCode(201, new { message = "Məlumat uğurla göndərildi" });
         }
@@ -62,7 +62,7 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> Update(UpdateInformationDto dto)
         {
-            var message = await _context.Contacts.FindAsync(dto.Id);
+            var message = await _context.Informations.FindAsync(dto.Id);
 
             if (message == null)
                 return NotFound(new { message = "Məlumat tapılmadı" });
@@ -77,12 +77,12 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
-            var message = await _context.Contacts.FindAsync(id);
+            var message = await _context.Informations.FindAsync(id);
 
             if (message == null)
                 return NotFound(new { message = "Məlumat tapılmadı" });
 
-            _context.Contacts.Remove(message);
+            _context.Informations.Remove(message);
             await _context.SaveChangesAsync();
             return Ok(new { message = "Məlumat uğurla silindi" });
         }

@@ -34,7 +34,6 @@ namespace ApexWebAPI.Concrete
         public DbSet<FaqTranslation>? FaqTranslations {get;set;}
         public DbSet<About>? Abouts {get;set;}
         public DbSet<AboutTranslation>? AboutTranslations {get;set;}
-        public DbSet<Contact>? Contacts {get;set;}
         public DbSet<Country>? Countries {get;set;}
         public DbSet<CountryTranslation>? CountryTranslations {get;set;}
         public DbSet<EducationLevel>? EducationLevels {get;set;}
@@ -50,6 +49,10 @@ namespace ApexWebAPI.Concrete
         public DbSet<StatisticTranslation>? StatisticTranslations { get; set; }
         public DbSet<ContactHeader>? ContactHeaders { get; set; }
         public DbSet<ContactHeaderTranslation>? ContactHeaderTranslations { get; set; }
-
+        public DbSet<ContactInfo>? ContactInfos { get; set; }
+        public DbSet<Information>? Informations { get; set; }
+        public DbSet<Message>? Messages { get; set; }
+        public DbSet<Footer>? Footers { get; set; }
+        public object Contacts { get; internal set; }
     }
 }

@@ -33,9 +33,8 @@ namespace ApexWebAPI.Controllers
                 var dto = _mapper.Map<ResultSummerSchoolDto>(s);
                 dto.Title = s.Translations.FirstOrDefault(s => s.Language == lang)?.Title
                     ?? s.Translations.FirstOrDefault(s => s.Language == "az")?.Title;
-                dto.SubTitle = s.Translations.FirstOrDefault(s => s.Language == lang).SubTitle
-                    ?? s.Translations.FirstOrDefault(s => s.SubTitle == "az").SubTitle;
-
+                dto.SubTitle = s.Translations.FirstOrDefault(s => s.Language == lang)?.SubTitle
+                    ?? s.Translations.FirstOrDefault(s => s.Language == "az")?.SubTitle;
                 return dto;
             });
 
@@ -116,6 +115,24 @@ namespace ApexWebAPI.Controllers
 
 
             return Ok(new { message = _localizer["Updated"].Value });
+        }
+
+        [HttpDelete("{id}")]
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var schools = await _context.SummerSchools!
+                .Include(s => s.Translations)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            if (schools == null)
+                return NotFound(new { message = _localizer["NotFound"].Value });
+
+            _context.SummerSchools.Remove(schools);
+            await _context.SaveChangesAsync();
+            return Ok(new { message = _localizer["Deleted"].Value });
         }
     }
 }

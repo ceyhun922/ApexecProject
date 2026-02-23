@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApexWebAPI.Migrations
 {
     [DbContext(typeof(ApexDbContext))]
-    [Migration("20260222052110_mig-10")]
-    partial class mig10
+    [Migration("20260223181624_mig3")]
+    partial class mig3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,6 +31,9 @@ namespace ApexWebAPI.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
@@ -116,7 +119,54 @@ namespace ApexWebAPI.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ApexWebAPI.Entities.Contact", b =>
+            modelBuilder.Entity("ApexWebAPI.Entities.ContactHeader", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ContactHeaders");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.ContactHeaderTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ContactHeaderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactHeaderId");
+
+                    b.ToTable("ContactHeaderTranslations");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.ContactInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -127,19 +177,10 @@ namespace ApexWebAPI.Migrations
                     b.Property<string>("Adress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ClassOrYear")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Education")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
@@ -148,9 +189,12 @@ namespace ApexWebAPI.Migrations
                     b.Property<string>("PhoneNumber2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("ContactInfos");
                 });
 
             modelBuilder.Entity("ApexWebAPI.Entities.Country", b =>
@@ -332,6 +376,40 @@ namespace ApexWebAPI.Migrations
                     b.ToTable("FaqTranslations");
                 });
 
+            modelBuilder.Entity("ApexWebAPI.Entities.Footer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FbUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InstaUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LnUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OtherUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("XUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Footers");
+                });
+
             modelBuilder.Entity("ApexWebAPI.Entities.Hero", b =>
                 {
                     b.Property<int>("Id")
@@ -345,12 +423,6 @@ namespace ApexWebAPI.Migrations
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
-
-                    b.Property<string>("SubTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VideoUrl")
                         .HasColumnType("nvarchar(max)");
@@ -386,6 +458,238 @@ namespace ApexWebAPI.Migrations
                     b.HasIndex("HeroId");
 
                     b.ToTable("HeroTranslations");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.Information", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClassOrYear")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Education")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Informations");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Messagee")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.Presentation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("YouTubeUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Presentations");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.PresentationTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PresentationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PresentationId");
+
+                    b.ToTable("PresentationTranslations");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.Statistic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Count1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Count2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Count3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Count4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Statistics");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.StatisticTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StatisticId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StatisticId");
+
+                    b.ToTable("StatisticTranslations");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.SummerSchool", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("SummerSchools");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.SummerSchoolTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SummerSchoolId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SummerSchoolId");
+
+                    b.ToTable("SummerSchoolTranslations");
                 });
 
             modelBuilder.Entity("ApexWebAPI.Entities.Testimonial", b =>
@@ -450,6 +754,17 @@ namespace ApexWebAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("About");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.ContactHeaderTranslation", b =>
+                {
+                    b.HasOne("ApexWebAPI.Entities.ContactHeader", "ContactHeader")
+                        .WithMany("Translations")
+                        .HasForeignKey("ContactHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ContactHeader");
                 });
 
             modelBuilder.Entity("ApexWebAPI.Entities.CountryTranslation", b =>
@@ -529,6 +844,50 @@ namespace ApexWebAPI.Migrations
                     b.Navigation("Hero");
                 });
 
+            modelBuilder.Entity("ApexWebAPI.Entities.PresentationTranslation", b =>
+                {
+                    b.HasOne("ApexWebAPI.Entities.Presentation", "Presentation")
+                        .WithMany("Translations")
+                        .HasForeignKey("PresentationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Presentation");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.StatisticTranslation", b =>
+                {
+                    b.HasOne("ApexWebAPI.Entities.Statistic", "Statistic")
+                        .WithMany("Translations")
+                        .HasForeignKey("StatisticId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Statistic");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.SummerSchool", b =>
+                {
+                    b.HasOne("ApexWebAPI.Entities.Country", "Country")
+                        .WithMany("SummerSchools")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.SummerSchoolTranslation", b =>
+                {
+                    b.HasOne("ApexWebAPI.Entities.SummerSchool", "SummerSchool")
+                        .WithMany("Translations")
+                        .HasForeignKey("SummerSchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SummerSchool");
+                });
+
             modelBuilder.Entity("ApexWebAPI.Entities.TestimonialTranslation", b =>
                 {
                     b.HasOne("ApexWebAPI.Entities.Testimonial", "Testimonial")
@@ -545,11 +904,18 @@ namespace ApexWebAPI.Migrations
                     b.Navigation("AboutTranslations");
                 });
 
+            modelBuilder.Entity("ApexWebAPI.Entities.ContactHeader", b =>
+                {
+                    b.Navigation("Translations");
+                });
+
             modelBuilder.Entity("ApexWebAPI.Entities.Country", b =>
                 {
                     b.Navigation("CountryTranslations");
 
                     b.Navigation("EducationLevels");
+
+                    b.Navigation("SummerSchools");
                 });
 
             modelBuilder.Entity("ApexWebAPI.Entities.Department", b =>
@@ -570,6 +936,21 @@ namespace ApexWebAPI.Migrations
                 });
 
             modelBuilder.Entity("ApexWebAPI.Entities.Hero", b =>
+                {
+                    b.Navigation("Translations");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.Presentation", b =>
+                {
+                    b.Navigation("Translations");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.Statistic", b =>
+                {
+                    b.Navigation("Translations");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.SummerSchool", b =>
                 {
                     b.Navigation("Translations");
                 });

@@ -19,7 +19,7 @@ namespace ApexWebAPI.ValidationRule
                 .EmailAddress().When(x => !string.IsNullOrWhiteSpace(x.Email))
                 .WithMessage("Düzgün e-mail formatı daxil edilməlidir");
 
-            RuleFor(x => x.Message)
+            RuleFor(x => x.Messagee)
                 .NotEmpty().WithMessage("Mesaj daxil edilməlidir")
                 .MaximumLength(1000).WithMessage("Mesaj 1000 simvoldan çox ola bilməz");
         }

@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Security.Claims;
 using System.Text;
+using ApexWebAPI.Common;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.Entities;
 using ApexWebAPI.Middleware;
@@ -154,6 +155,8 @@ try
     builder.Services.AddScoped<IMessageService, MessageService>();
     builder.Services.AddScoped<IFooterService, FooterService>();
     builder.Services.AddScoped<IFileUploadService, FileUploadService>();
+    builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+    builder.Services.AddScoped<IEmailService, EmailService>();
 
     var app = builder.Build();
 
