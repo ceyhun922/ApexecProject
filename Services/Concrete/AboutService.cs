@@ -70,8 +70,8 @@ namespace ApexWebAPI.Services.Concrete
         {
             var about = await _context.Abouts!
                 .Include(f => f.AboutTranslations)
-                .FirstOrDefaultAsync(f => f.Id == dto.Id)
-                ?? throw new KeyNotFoundException($"About {dto.Id} not found");
+                .FirstOrDefaultAsync()
+                ?? throw new KeyNotFoundException("About not found");
 
             _mapper.Map(dto, about);
             about.ImageUrl = dto.ImageUrl;
