@@ -2,6 +2,7 @@ namespace ApexWebAPI.DTOs.FaqDTO.cs
 {
     public class CreateFaqDto
     {
+        public bool Status { get; set; } = true;
         public string? TitleAz { get; set; }
         public string? TitleEn { get; set; }
         public string? TitleRu { get; set; }

@@ -80,7 +80,7 @@ namespace ApexWebAPI.Controllers
             var presentation = new Presentation
             {
                 YouTubeUrl = dto.YouTubeUrl,
-                Status = true,
+                Status = dto.Status,
                 CreatedDate = DateTime.UtcNow,
                 Translations = new List<PresentationTranslation>
                 {

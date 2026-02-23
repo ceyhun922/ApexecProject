@@ -2,6 +2,7 @@ namespace ApexWebAPI.DTOs.PresentationDTOs
 {
     public class CreatePresentationDto
     {
+        public bool Status { get; set; } = true;
         public string? YouTubeUrl { get; set; }
         public string? TitleAz { get; set; }
         public string? TitleEn { get; set; }

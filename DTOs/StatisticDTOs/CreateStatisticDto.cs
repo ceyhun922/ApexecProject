@@ -2,6 +2,7 @@ namespace ApexWebAPI.DTOs.StatisticDTOs
 {
     public class CreateStatisticDto
     {
+        public bool Status { get; set; } = true;
         public string? Count1 { get; set; }
         public string? Count2 { get; set; }
         public string? Count3 { get; set; }

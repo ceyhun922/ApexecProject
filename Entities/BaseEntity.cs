@@ -7,7 +7,7 @@ namespace ApexWebAPI.Entities
 
     public abstract class AuditableEntity : BaseEntity
     {
-        public bool Status { get; set; }
+        public bool Status { get; set; } = true;
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
     }
 }

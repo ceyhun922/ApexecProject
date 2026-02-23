@@ -11,7 +11,7 @@ namespace ApexWebAPI.DTOs.SummerSchoolDTOs
         public string? SubTitleRu { get; set; }
         public string? SubTitleTr { get; set; }
         public string? ImageUrl { get; set; }
-        public bool Status { get; set; }
+        public bool Status { get; set; } = true;
         public int CountryId { get; set; }
     }
 }

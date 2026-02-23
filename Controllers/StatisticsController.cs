@@ -87,7 +87,7 @@ namespace ApexWebAPI.Controllers
                 Count2 = dto.Count2,
                 Count3 = dto.Count3,
                 Count4 = dto.Count4,
-                Status = true,
+                Status = dto.Status,
                 CreatedDate = DateTime.UtcNow,
                 Translations = new List<StatisticTranslation>
                 {

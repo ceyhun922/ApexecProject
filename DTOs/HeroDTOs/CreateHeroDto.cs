@@ -2,6 +2,7 @@ namespace ApexWebAPI.DTOs.FeatureDTOs
 {
     public class CreateHeroDto
     {
+        public bool Status { get; set; } = true;
         public IFormFile? Video { get; set; }
         public string? TitleAz { get; set; }
         public string? TitleEn { get; set; }

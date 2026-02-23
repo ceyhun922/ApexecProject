@@ -118,7 +118,7 @@ namespace ApexWebAPI.Controllers
             var hero = new Hero
             {
                 VideoUrl = videoUrl,
-                Status = true,
+                Status = dto.Status,
                 CreatedDate = DateTime.UtcNow,
                 Translations = new List<HeroTranslation>
         {
