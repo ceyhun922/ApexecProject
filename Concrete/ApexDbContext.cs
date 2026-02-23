@@ -53,6 +53,7 @@ namespace ApexWebAPI.Concrete
         public DbSet<Information>? Informations { get; set; }
         public DbSet<Message>? Messages { get; set; }
         public DbSet<Footer>? Footers { get; set; }
+        public DbSet<Notification> Notifications { get; set; } = null!;
         public object Contacts { get; internal set; }
     }
 }

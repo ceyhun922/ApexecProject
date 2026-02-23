@@ -1,0 +1,14 @@
+using ApexWebAPI.DTOs.NotificationDTOs;
+
+namespace ApexWebAPI.Services.Interfaces
+{
+    public interface INotificationService
+    {
+        Task SendNotificationAsync(string title, string body, string type, int? referenceId = null);
+        Task<List<NotificationDto>> GetAllAsync();
+        Task<int> GetUnreadCountAsync();
+        Task MarkAsReadAsync(int id);
+        Task MarkAllAsReadAsync();
+        Task DeleteAsync(int id);
+    }
+}

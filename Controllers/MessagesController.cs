@@ -16,12 +16,14 @@ namespace ApexWebAPI.Controllers
         private readonly ApexDbContext _context;
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
+        private readonly INotificationService _notificationService;
 
-        public MessagesController(ApexDbContext context, IMapper mapper, IEmailService emailService)
+        public MessagesController(ApexDbContext context, IMapper mapper, IEmailService emailService, INotificationService notificationService)
         {
             _context = context;
             _mapper = mapper;
             _emailService = emailService;
+            _notificationService = notificationService;
         }
 
 
@@ -66,6 +68,20 @@ namespace ApexWebAPI.Controllers
                     entity.Email ?? "",
                     entity.PhoneNumber ?? "",
                     entity.Messagee ?? ""
+                );
+            }
+            catch (Exception ex)
+            {
+                _ = ex;
+            }
+
+            try
+            {
+                await _notificationService.SendNotificationAsync(
+                    title: "Yeni Mesaj",
+                    body: $"{entity.FullName} tərəfindən yeni mesaj daxil oldu.",
+                    type: "message",
+                    referenceId: entity.Id
                 );
             }
             catch (Exception ex)
