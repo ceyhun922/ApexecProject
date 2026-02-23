@@ -1,4 +1,4 @@
-name: Deploy to Server
+name: Deploy to Production
 
 on:
   push:
@@ -6,36 +6,76 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '6.0.x'
 
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+      - name: Restore
+        run: dotnet restore
 
-      - name: Add server to known hosts
-        run: ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+      - name: Build
+        run: dotnet build --no-restore -c Release
 
-      - name: Deploy to Server
+      - name: Publish
+        run: dotnet publish -c Release --no-build -o ./publish
+
+      - name: Setup SSH key
         run: |
-          ssh root@${{ secrets.SERVER_HOST }} "
-            systemctl stop apex-api &&
-            cd /var/www/ApexecProject &&
-            git reset --hard HEAD &&
-            git pull origin main &&
-            dotnet publish ApexWebAPI.csproj -c Release -o /var/www/apex/api &&
-            dotnet tool install --global dotnet-ef --version 6.* 2>/dev/null || true &&
-            export PATH=\"\$PATH:\$HOME/.dotnet/tools\" &&
-            dotnet ef database update --project ApexWebAPI.csproj --connection '${{ secrets.PRODUCTION_DB_CONNECTION }}' &&
-            systemctl start apex-api
-          "
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Stop service
+        run: |
+          ssh -i ~/.ssh/id_ed25519 root@${{ secrets.SERVER_HOST }} \
+            "systemctl stop apex-api || true"
+
+      - name: Upload files
+        run: |
+          scp -i ~/.ssh/id_ed25519 -r ./publish/* \
+            root@${{ secrets.SERVER_HOST }}:/var/www/apex/api/
+
+      - name: Run migrations
+        run: |
+          ssh -i ~/.ssh/id_ed25519 root@${{ secrets.SERVER_HOST }} bash -s << 'EOF'
+            set -e
+            export PATH="$PATH:$HOME/.dotnet/tools"
+
+            dotnet tool install --global dotnet-ef --version "6.*" 2>/dev/null || true
+
+            cd /var/www/ApexecProject
+            git fetch origin main
+            git reset --hard origin/main
+
+            dotnet ef database update \
+              --connection "Server=Localhost,1433;Database=ApexDbContext;User Id=SA;Password=reallyStrongPwd123;TrustServerCertificate=True;" \
+              2>&1 | tee /tmp/migration.log || true
+
+            echo "--- Migration log ---"
+            cat /tmp/migration.log
+          EOF
+
+      - name: Start service
+        run: |
+          ssh -i ~/.ssh/id_ed25519 root@${{ secrets.SERVER_HOST }} \
+            "systemctl start apex-api && sleep 3 && systemctl status apex-api --no-pager"
+
+      - name: Health check
+        run: |
+          sleep 5
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://api.apexec.az/swagger/index.html)
+          echo "Health check: HTTP $HTTP_CODE"
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "Deploy xetasi: HTTP $HTTP_CODE"
+            exit 1
+          fi
+          echo "Deploy ugurla tamamlandi!"
