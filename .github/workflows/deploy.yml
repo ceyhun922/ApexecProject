@@ -31,7 +31,7 @@ jobs:
           ssh root@${{ secrets.SERVER_HOST }} "
             cd /var/www/ApexecProject &&
             git pull origin main &&
-            dotnet publish ApexWebAPI.csproj -c Release -o /var/www/apexapi &&
+            dotnet publish ApexWebAPI.csproj -c Release -o /var/www/apex/api &&
             dotnet tool install --global dotnet-ef --version 6.* 2>/dev/null || true &&
             export PATH=\"\$PATH:\$HOME/.dotnet/tools\" &&
             dotnet ef database update --project ApexWebAPI.csproj --connection '${{ secrets.PRODUCTION_DB_CONNECTION }}' &&
