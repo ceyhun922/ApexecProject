@@ -2,7 +2,6 @@ namespace ApexWebAPI.DTOs.StatisticDTOs
 {
     public class UpdateStatisticDto
     {
-        public int Id { get; set; }
         public string? Count1 { get; set; }
         public string? Count2 { get; set; }
         public string? Count3 { get; set; }

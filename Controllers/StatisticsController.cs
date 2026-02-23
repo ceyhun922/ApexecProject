@@ -24,47 +24,18 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ResultStatisticDto>), 200)]
-        public async Task<ActionResult<IEnumerable<ResultStatisticDto>>> GetAll([FromRoute] string lang)
-        {
-            var statistics = await _context.Statistics!
-                .Include(s => s.Translations)
-                .Where(s => s.Status)
-                .ToListAsync();
-
-            var result = statistics.Select(s =>
-            {
-                var dto = _mapper.Map<ResultStatisticDto>(s);
-
-                var translation = s.Translations!
-                    .FirstOrDefault(t => t.Language == lang)
-                    ?? s.Translations!.FirstOrDefault(t => t.Language == "az");
-
-                dto.Text1 = translation?.Text1;
-                dto.Text2 = translation?.Text2;
-                dto.Text3 = translation?.Text3;
-                dto.Text4 = translation?.Text4;
-
-                return dto;
-            });
-
-            return Ok(result);
-        }
-
-        [HttpGet("{id}")]
-        [ProducesResponseType(typeof(GetByIdStatisticDto), 200)]
+        [ProducesResponseType(typeof(ResultStatisticDto), 200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<GetByIdStatisticDto>> GetById([FromRoute] string lang, int id)
+        public async Task<ActionResult<ResultStatisticDto>> Get([FromRoute] string lang)
         {
             var statistic = await _context.Statistics!
                 .Include(s => s.Translations)
-                .FirstOrDefaultAsync(s => s.Id == id);
+                .FirstOrDefaultAsync();
 
             if (statistic == null)
                 return NotFound(new { message = _localizer["NotFound"].Value });
 
-            var dto = _mapper.Map<GetByIdStatisticDto>(statistic);
-
+            var dto = _mapper.Map<ResultStatisticDto>(statistic);
             var translation = statistic.Translations!
                 .FirstOrDefault(t => t.Language == lang)
                 ?? statistic.Translations!.FirstOrDefault(t => t.Language == "az");
@@ -81,6 +52,12 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(201)]
         public async Task<IActionResult> Create([FromRoute] string lang, [FromBody] CreateStatisticDto dto)
         {
+            var existing = await _context.Statistics!
+                .Include(s => s.Translations)
+                .ToListAsync();
+
+            _context.Statistics!.RemoveRange(existing);
+
             var statistic = new Statistic
             {
                 Count1 = dto.Count1,
@@ -98,7 +75,7 @@ namespace ApexWebAPI.Controllers
                 }
             };
 
-            await _context.Statistics!.AddAsync(statistic);
+            await _context.Statistics.AddAsync(statistic);
             await _context.SaveChangesAsync();
 
             return StatusCode(201, new { message = _localizer["Created"].Value, id = statistic.Id });
@@ -111,7 +88,7 @@ namespace ApexWebAPI.Controllers
         {
             var statistic = await _context.Statistics!
                 .Include(s => s.Translations)
-                .FirstOrDefaultAsync(s => s.Id == dto.Id);
+                .FirstOrDefaultAsync();
 
             if (statistic == null)
                 return NotFound(new { message = _localizer["NotFound"].Value });
@@ -133,45 +110,28 @@ namespace ApexWebAPI.Controllers
             foreach (var (language, (t1, t2, t3, t4)) in translations)
             {
                 var t = statistic.Translations!.FirstOrDefault(x => x.Language == language);
-                if (t != null)
-                {
-                    t.Text1 = t1;
-                    t.Text2 = t2;
-                    t.Text3 = t3;
-                    t.Text4 = t4;
-                }
-                else
-                {
-                    statistic.Translations!.Add(new StatisticTranslation
-                    {
-                        Language = language,
-                        Text1 = t1,
-                        Text2 = t2,
-                        Text3 = t3,
-                        Text4 = t4
-                    });
-                }
+                if (t != null) { t.Text1 = t1; t.Text2 = t2; t.Text3 = t3; t.Text4 = t4; }
+                else statistic.Translations!.Add(new StatisticTranslation { Language = language, Text1 = t1, Text2 = t2, Text3 = t3, Text4 = t4 });
             }
 
             await _context.SaveChangesAsync();
             return Ok(new { message = _localizer["Updated"].Value });
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete()
         {
             var statistic = await _context.Statistics!
                 .Include(s => s.Translations)
-                .FirstOrDefaultAsync(s => s.Id == id);
+                .FirstOrDefaultAsync();
 
             if (statistic == null)
                 return NotFound(new { message = _localizer["NotFound"].Value });
 
             _context.Statistics.Remove(statistic);
             await _context.SaveChangesAsync();
-
             return Ok(new { message = _localizer["Deleted"].Value });
         }
     }
