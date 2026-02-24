@@ -4,7 +4,6 @@ using System.Text;
 using ApexWebAPI.Common;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.Entities;
-using ApexWebAPI.Hubs;
 using ApexWebAPI.Middleware;
 using ApexWebAPI.Repositories.Concrete;
 using ApexWebAPI.Repositories.Interfaces;
@@ -103,7 +102,6 @@ try
         });
     });
 
-    builder.Services.AddSignalR();
 
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
@@ -122,20 +120,6 @@ try
             };
 
             // SignalR WebSocket bağlantıları için token query string-dən oxunur
-            options.Events = new JwtBearerEvents
-            {
-                OnMessageReceived = context =>
-                {
-                    var accessToken = context.Request.Query["access_token"];
-                    var path = context.HttpContext.Request.Path;
-                    if (!string.IsNullOrEmpty(accessToken) &&
-                        path.StartsWithSegments("/hubs/notifications"))
-                    {
-                        context.Token = accessToken;
-                    }
-                    return Task.CompletedTask;
-                }
-            };
         });
 
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -172,11 +156,9 @@ try
     builder.Services.AddScoped<IContactService, ContactService>();
     builder.Services.AddScoped<IInformationService, InformationService>();
     builder.Services.AddScoped<IMessageService, MessageService>();
-    builder.Services.AddScoped<IFooterService, FooterService>();
     builder.Services.AddScoped<IFileUploadService, FileUploadService>();
     builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
     builder.Services.AddScoped<IEmailService, EmailService>();
-    builder.Services.AddScoped<INotificationService, NotificationService>();
 
     var app = builder.Build();
 
@@ -241,7 +223,6 @@ try
     app.UseAuthorization();
 
     app.MapControllers();
-    app.MapHub<NotificationHub>("/hubs/notifications");
 
     app.Run();
 }

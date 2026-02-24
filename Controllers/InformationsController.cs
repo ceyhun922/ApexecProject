@@ -14,13 +14,10 @@ namespace ApexWebAPI.Controllers
     {
         private readonly ApexDbContext _context;
         private readonly IMapper _mapper;
-        private readonly INotificationService _notificationService;
-
-        public InformationsController(ApexDbContext context, IMapper mapper, INotificationService notificationService)
+        public InformationsController(ApexDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _notificationService = notificationService;
         }
 
 
@@ -58,17 +55,6 @@ namespace ApexWebAPI.Controllers
             _context.Informations.Add(entity);
             await _context.SaveChangesAsync();
 
-            try
-            {
-                await _notificationService.SendNotificationAsync(
-                    title: "Yeni Məlumat",
-                    body: "Yeni məlumat əlavə edildi.",
-                    type: "information",
-                    referenceId: entity.Id
-                );
-            }
-            catch (Exception ex) { _ = ex; }
-
             return StatusCode(201, new { message = "Məlumat uğurla göndərildi" });
         }
 
@@ -85,17 +71,6 @@ namespace ApexWebAPI.Controllers
             _mapper.Map(dto, message);
             await _context.SaveChangesAsync();
 
-            try
-            {
-                await _notificationService.SendNotificationAsync(
-                    title: "Məlumat Yeniləndi",
-                    body: $"#{dto.Id} nömrəli məlumat yeniləndi.",
-                    type: "information",
-                    referenceId: dto.Id
-                );
-            }
-            catch (Exception ex) { _ = ex; }
-
             return Ok(new { message = "Məlumat uğurla yeniləndi" });
         }
 
@@ -111,17 +86,6 @@ namespace ApexWebAPI.Controllers
 
             _context.Informations.Remove(message);
             await _context.SaveChangesAsync();
-
-            try
-            {
-                await _notificationService.SendNotificationAsync(
-                    title: "Məlumat Silindi",
-                    body: $"#{id} nömrəli məlumat silindi.",
-                    type: "information",
-                    referenceId: id
-                );
-            }
-            catch (Exception ex) { _ = ex; }
 
             return Ok(new { message = "Məlumat uğurla silindi" });
         }

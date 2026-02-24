@@ -4,6 +4,7 @@ using ApexWebAPI.DTOs.CountryHeaderDTOs;
 using ApexWebAPI.DTOs.CoursesHeaderDTOs;
 using ApexWebAPI.DTOs.SummerSchoolHeaderDTOs;
 using ApexWebAPI.DTOs.FivePProgramHeaderDTOs;
+using ApexWebAPI.DTOs.LanguageCoursesHeaderDTOs;
 using ApexWebAPI.DTOs.FivePProgramCounterDTOs;
 using ApexWebAPI.DTOs.PlanningDTOs;
 using ApexWebAPI.DTOs.SocialMediaDTOs;
@@ -17,7 +18,6 @@ using ApexWebAPI.DTOs.DepartmentDTOs;
 using ApexWebAPI.DTOs.EducationLevelDTOs;
 using ApexWebAPI.DTOs.FaqDTO.cs;
 using ApexWebAPI.DTOs.FeatureDTOs;
-using ApexWebAPI.DTOs.FooterDTOs;
 using ApexWebAPI.DTOs.InformationDTOs;
 using ApexWebAPI.DTOs.MessageDTOs;
 using ApexWebAPI.DTOs.MessageDTOs.cs;
@@ -246,10 +246,6 @@ namespace ApexWebAPI.Mapping
             CreateMap<ContactInfo, ResultContactInfoDto>().ReverseMap();
             CreateMap<ContactInfo, GetByIdContactDto>().ReverseMap();
 
-            // Footer
-            CreateMap<Footer, ResultFooterDto>().ReverseMap();
-            CreateMap<Footer, UpdateFooterDto>().ReverseMap();
-            CreateMap<CreateFooterDto, Footer>().ReverseMap();
             // Statistic
             CreateMap<Statistic, ResultStatisticDto>()
                 .ForMember(dest => dest.Text1, opt => opt.Ignore())
@@ -364,6 +360,15 @@ namespace ApexWebAPI.Mapping
             CreateMap<CreateFivePProgramHeaderDto, FivePProgramHeader>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
             CreateMap<UpdateFivePProgramHeaderDto, FivePProgramHeader>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            // LanguageCoursesHeader
+            CreateMap<LanguageCoursesHeader, ResultLanguageCoursesHeaderDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+            CreateMap<CreateLanguageCoursesHeaderDto, LanguageCoursesHeader>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+            CreateMap<UpdateLanguageCoursesHeaderDto, LanguageCoursesHeader>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
 
             // FivePProgramCounter

@@ -57,6 +57,8 @@ namespace ApexWebAPI.Concrete
         public DbSet<SummerSchoolHeaderTranslation>? SummerSchoolHeaderTranslations { get; set; }
         public DbSet<FivePProgramHeader>? FivePProgramHeaders { get; set; }
         public DbSet<FivePProgramHeaderTranslation>? FivePProgramHeaderTranslations { get; set; }
+        public DbSet<LanguageCoursesHeader>? LanguageCoursesHeaders { get; set; }
+        public DbSet<LanguageCoursesHeaderTranslation>? LanguageCoursesHeaderTranslations { get; set; }
         public DbSet<FivePProgramCounter>? FivePProgramCounters { get; set; }
         public DbSet<FivePProgramCounterTranslation>? FivePProgramCounterTranslations { get; set; }
         public DbSet<Planning>? Plannings { get; set; }
@@ -67,8 +69,6 @@ namespace ApexWebAPI.Concrete
         public DbSet<ContactInfo>? ContactInfos { get; set; }
         public DbSet<Information>? Informations { get; set; }
         public DbSet<Message>? Messages { get; set; }
-        public DbSet<Footer>? Footers { get; set; }
-        public DbSet<Notification> Notifications { get; set; } = null!;
         public DbSet<AboutCounter>? AboutCounters { get; set; }
         public DbSet<AboutCounterTranslation>? AboutCounterTranslations { get; set; }
         public DbSet<AboutVideoSection>? AboutVideoSections { get; set; }

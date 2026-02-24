@@ -4,6 +4,7 @@ using ApexWebAPI.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApexWebAPI.Migrations
 {
     [DbContext(typeof(ApexDbContext))]
-    partial class ApexDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260224103254_RemoveFooterNotification")]
+    partial class RemoveFooterNotification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -829,53 +831,6 @@ namespace ApexWebAPI.Migrations
                     b.ToTable("Informations");
                 });
 
-            modelBuilder.Entity("ApexWebAPI.Entities.LanguageCoursesHeader", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LanguageCoursesHeaders");
-                });
-
-            modelBuilder.Entity("ApexWebAPI.Entities.LanguageCoursesHeaderTranslation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("LanguageCoursesHeaderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SubTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LanguageCoursesHeaderId");
-
-                    b.ToTable("LanguageCoursesHeaderTranslations");
-                });
-
             modelBuilder.Entity("ApexWebAPI.Entities.Layout", b =>
                 {
                     b.Property<int>("Id")
@@ -1455,17 +1410,6 @@ namespace ApexWebAPI.Migrations
                     b.Navigation("HomeVideoSection");
                 });
 
-            modelBuilder.Entity("ApexWebAPI.Entities.LanguageCoursesHeaderTranslation", b =>
-                {
-                    b.HasOne("ApexWebAPI.Entities.LanguageCoursesHeader", "LanguageCoursesHeader")
-                        .WithMany("Translations")
-                        .HasForeignKey("LanguageCoursesHeaderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("LanguageCoursesHeader");
-                });
-
             modelBuilder.Entity("ApexWebAPI.Entities.LayoutTranslation", b =>
                 {
                     b.HasOne("ApexWebAPI.Entities.Layout", "Layout")
@@ -1615,11 +1559,6 @@ namespace ApexWebAPI.Migrations
                 });
 
             modelBuilder.Entity("ApexWebAPI.Entities.HomeVideoSection", b =>
-                {
-                    b.Navigation("Translations");
-                });
-
-            modelBuilder.Entity("ApexWebAPI.Entities.LanguageCoursesHeader", b =>
                 {
                     b.Navigation("Translations");
                 });
