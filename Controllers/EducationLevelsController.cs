@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.EducationLevelDTOs;
@@ -25,6 +26,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(IEnumerable<ResultEducationLevelDto>), 200)]
         public async Task<ActionResult<IEnumerable<ResultEducationLevelDto>>> GetAll(string lang, [FromQuery] int? countryId = null)
         {
@@ -49,6 +51,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(GetByIdEducationLevelDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<GetByIdEducationLevelDto>> GetByIdEducationLevel(string lang, int id)

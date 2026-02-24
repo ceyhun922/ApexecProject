@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.FaqDTO.cs;
@@ -25,6 +26,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(IEnumerable<ResultFaqDto>), 200)]
         public async Task<ActionResult<IEnumerable<ResultFaqDto>>> GetALL(string lang)
         {
@@ -47,6 +49,7 @@ namespace ApexWebAPI.Controllers
         } 
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(GetByIdFaqDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<GetByIdFaqDto>> GetById(string lang, int id)

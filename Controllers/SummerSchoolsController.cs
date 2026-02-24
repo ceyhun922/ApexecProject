@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.SummerSchoolDTOs;
 using ApexWebAPI.Entities;
@@ -24,6 +25,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(IEnumerable<ResultSummerSchoolDto>), 200)]
         public async Task<ActionResult<IEnumerable<ResultSummerSchoolDto>>> GetAll([FromRoute] string lang)
         {

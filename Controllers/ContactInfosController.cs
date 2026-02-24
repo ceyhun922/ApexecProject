@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Authorization;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.ContactInfoDTOs;
 using ApexWebAPI.Entities;
@@ -22,6 +23,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(ResultContactInfoDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<ResultContactInfoDto>> Get()

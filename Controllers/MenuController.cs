@@ -1,5 +1,6 @@
 
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 
@@ -17,6 +18,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet("getmenu/{lang}")]
+        [AllowAnonymous]
         public IActionResult GetMenu(string lang)
         {
             var supportedLanguages = new[] { "az", "tr" };

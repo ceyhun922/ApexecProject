@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.LayoutDTOs;
 using ApexWebAPI.Entities;
@@ -24,6 +25,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(ResultLayoutDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<ResultLayoutDto>> Get([FromRoute] string lang)

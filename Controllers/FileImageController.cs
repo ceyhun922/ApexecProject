@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApexWebAPI.Controllers
@@ -21,6 +22,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Upload([FromForm] UploadFileRequest request)
         {

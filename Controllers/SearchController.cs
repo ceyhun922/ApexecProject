@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.CountryDTOs;
 using ApexWebAPI.DTOs.DepartmentDTOs;
@@ -23,6 +24,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(SearchResultDto), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]

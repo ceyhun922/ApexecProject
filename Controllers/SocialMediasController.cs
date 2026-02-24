@@ -22,6 +22,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(List<ResultSocialMediaDto>), 200)]
         public async Task<ActionResult<List<ResultSocialMediaDto>>> GetAll()
         {
@@ -33,6 +34,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(ResultSocialMediaDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<ResultSocialMediaDto>> GetById(int id)

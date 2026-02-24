@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.LanguageCoursesHeaderDTOs;
 using ApexWebAPI.Entities;
@@ -21,6 +22,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(ResultLanguageCoursesHeaderDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<ResultLanguageCoursesHeaderDto>> Get([FromRoute] string lang)

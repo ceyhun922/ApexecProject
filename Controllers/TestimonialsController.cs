@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.TestimonialDTOs;
@@ -25,6 +26,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(IEnumerable<ResultTestimonialDto>), 200)]
         public async Task<ActionResult<IEnumerable<ResultTestimonialDto>>> GetALL(string lang)
         {
@@ -43,6 +45,7 @@ namespace ApexWebAPI.Controllers
             return Ok(result);
         }
         [HttpGet("{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(GetByIdTestimonialDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<GetByIdTestimonialDto>> GetById(string lang, int id)

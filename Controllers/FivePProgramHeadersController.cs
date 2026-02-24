@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.FivePProgramHeaderDTOs;
 using ApexWebAPI.Entities;
@@ -21,6 +22,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(ResultFivePProgramHeaderDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<ResultFivePProgramHeaderDto>> Get([FromRoute] string lang)

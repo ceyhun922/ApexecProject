@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using ApexWebAPI.Common;
 using ApexWebAPI.DTOs.CountryDTOs;
 using ApexWebAPI.Services.Interfaces;
@@ -20,6 +21,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<ResultCountryDto>>), 200)]
         public async Task<ActionResult<ApiResponse<IEnumerable<ResultCountryDto>>>> GetAll(string lang)
         {
@@ -28,6 +30,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(ApiResponse<GetByIdCountryDto>), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<ApiResponse<GetByIdCountryDto>>> GetById(string lang, int id)

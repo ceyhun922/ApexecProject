@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.HomeVideoSectionDTOs;
 using ApexWebAPI.Entities;
@@ -24,6 +25,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(GetByIdHomeVideoSectionDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<GetByIdHomeVideoSectionDto>> Get([FromRoute] string lang)

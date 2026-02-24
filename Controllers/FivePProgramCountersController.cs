@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.FivePProgramCounterDTOs;
 using ApexWebAPI.Entities;
@@ -24,6 +25,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(GetByIdFivePProgramCounterDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<GetByIdFivePProgramCounterDto>> Get([FromRoute] string lang)
