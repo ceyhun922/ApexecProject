@@ -4,6 +4,7 @@ using ApexWebAPI.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApexWebAPI.Migrations
 {
     [DbContext(typeof(ApexDbContext))]
-    partial class ApexDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260224110355_ReplaceSocialMediaWithLinks")]
+    partial class ReplaceSocialMediaWithLinks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1028,7 +1030,7 @@ namespace ApexWebAPI.Migrations
                     b.ToTable("PlanningTranslations");
                 });
 
-            modelBuilder.Entity("ApexWebAPI.Entities.SocialMedia", b =>
+            modelBuilder.Entity("ApexWebAPI.Entities.SocialMediaLink", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1051,7 +1053,7 @@ namespace ApexWebAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SocialMedias");
+                    b.ToTable("SocialMediaLinks");
                 });
 
             modelBuilder.Entity("ApexWebAPI.Entities.Statistic", b =>

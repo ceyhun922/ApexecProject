@@ -1,11 +1,12 @@
+using System.ComponentModel;
+
 namespace ApexWebAPI.DTOs.SocialMediaDTOs
 {
     public class CreateSocialMediaDto
     {
-        public string? FbUrl { get; set; }
-        public string? InstaUrl { get; set; }
-        public string? LnUrl { get; set; }
-        public string? XUrl { get; set; }
-        public string? OtherUrl { get; set; }
+        public string Key { get; set; } = null!;
+        public string? Url { get; set; }
+        [DefaultValue(true)]
+        public bool Status { get; set; } = true;
     }
 }

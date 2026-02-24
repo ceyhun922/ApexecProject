@@ -2,10 +2,9 @@ namespace ApexWebAPI.DTOs.SocialMediaDTOs
 {
     public class UpdateSocialMediaDto
     {
-        public string? FbUrl { get; set; }
-        public string? InstaUrl { get; set; }
-        public string? LnUrl { get; set; }
-        public string? XUrl { get; set; }
-        public string? OtherUrl { get; set; }
+        public int Id { get; set; }
+        public string Key { get; set; } = null!;
+        public string? Url { get; set; }
+        public bool Status { get; set; }
     }
 }
