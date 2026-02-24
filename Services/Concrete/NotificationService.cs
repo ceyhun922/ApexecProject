@@ -51,16 +51,15 @@ namespace ApexWebAPI.Services.Concrete
             return await _context.Notifications.CountAsync(n => !n.IsRead);
         }
 
-        public async Task MarkAsReadAsync(int id)
+        public async Task<bool> MarkAsReadAsync(int id)
         {
             var notification = await _context.Notifications.FindAsync(id);
-            if (notification != null)
-            {
-                notification.IsRead = true;
-                await _context.SaveChangesAsync();
+            if (notification == null) return false;
 
-                await _hubContext.Clients.Group("Admins").SendAsync("NotificationRead", id);
-            }
+            notification.IsRead = true;
+            await _context.SaveChangesAsync();
+            await _hubContext.Clients.Group("Admins").SendAsync("NotificationRead", id);
+            return true;
         }
 
         public async Task MarkAllAsReadAsync()
@@ -72,14 +71,14 @@ namespace ApexWebAPI.Services.Concrete
             await _hubContext.Clients.Group("Admins").SendAsync("AllNotificationsRead");
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var notification = await _context.Notifications.FindAsync(id);
-            if (notification != null)
-            {
-                _context.Notifications.Remove(notification);
-                await _context.SaveChangesAsync();
-            }
+            if (notification == null) return false;
+
+            _context.Notifications.Remove(notification);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         private static NotificationDto MapToDto(Notification n) => new()

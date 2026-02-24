@@ -7,8 +7,8 @@ namespace ApexWebAPI.Services.Interfaces
         Task SendNotificationAsync(string title, string body, string type, int? referenceId = null);
         Task<List<NotificationDto>> GetAllAsync();
         Task<int> GetUnreadCountAsync();
-        Task MarkAsReadAsync(int id);
+        Task<bool> MarkAsReadAsync(int id);
         Task MarkAllAsReadAsync();
-        Task DeleteAsync(int id);
+        Task<bool> DeleteAsync(int id);
     }
 }

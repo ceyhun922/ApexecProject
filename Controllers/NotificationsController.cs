@@ -38,7 +38,8 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> MarkAsRead(int id)
         {
-            await _notificationService.MarkAsReadAsync(id);
+            var result = await _notificationService.MarkAsReadAsync(id);
+            if (!result) return NotFound(new { message = "Bildiriş tapılmadı" });
             return Ok(new { message = "Bildiriş oxundu olaraq işarələndi" });
         }
 
@@ -55,7 +56,8 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
-            await _notificationService.DeleteAsync(id);
+            var result = await _notificationService.DeleteAsync(id);
+            if (!result) return NotFound(new { message = "Bildiriş tapılmadı" });
             return Ok(new { message = "Bildiriş silindi" });
         }
     }
