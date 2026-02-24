@@ -62,6 +62,8 @@ namespace ApexWebAPI.Concrete
         public DbSet<Planning>? Plannings { get; set; }
         public DbSet<PlanningTranslation>? PlanningTranslations { get; set; }
         public DbSet<SocialMedia>? SocialMedias { get; set; }
+        public DbSet<Layout>? Layouts { get; set; }
+        public DbSet<LayoutTranslation>? LayoutTranslations { get; set; }
         public DbSet<ContactInfo>? ContactInfos { get; set; }
         public DbSet<Information>? Informations { get; set; }
         public DbSet<Message>? Messages { get; set; }
