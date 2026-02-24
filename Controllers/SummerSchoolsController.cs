@@ -29,14 +29,45 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(typeof(IEnumerable<ResultSummerSchoolDto>), 200)]
         public async Task<ActionResult<IEnumerable<ResultSummerSchoolDto>>> GetAll([FromRoute] string lang)
         {
-            var schools = await _context.SummerSchools.Include(s => s.Translations).Where(s => s.Status).ToListAsync();
+            var schools = await _context.SummerSchools
+                .Include(s => s.Translations)
+                .Where(s => s.Status)
+                .ToListAsync();
+
             var result = schools.Select(s =>
             {
                 var dto = _mapper.Map<ResultSummerSchoolDto>(s);
-                dto.Title = s.Translations.FirstOrDefault(s => s.Language == lang)?.Title
-                    ?? s.Translations.FirstOrDefault(s => s.Language == "az")?.Title;
-                dto.SubTitle = s.Translations.FirstOrDefault(s => s.Language == lang)?.SubTitle
-                    ?? s.Translations.FirstOrDefault(s => s.Language == "az")?.SubTitle;
+                dto.Title = s.Translations.FirstOrDefault(t => t.Language == lang)?.Title
+                    ?? s.Translations.FirstOrDefault(t => t.Language == "az")?.Title;
+                dto.SubTitle = s.Translations.FirstOrDefault(t => t.Language == lang)?.SubTitle
+                    ?? s.Translations.FirstOrDefault(t => t.Language == "az")?.SubTitle;
+                return dto;
+            });
+
+            return Ok(result);
+        }
+
+        [HttpGet("by-country/{countryId}")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(IEnumerable<ResultSummerSchoolDto>), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<IEnumerable<ResultSummerSchoolDto>>> GetByCountry([FromRoute] string lang, [FromRoute] int countryId)
+        {
+            var schools = await _context.SummerSchools
+                .Include(s => s.Translations)
+                .Where(s => s.Status && s.CountryId == countryId)
+                .ToListAsync();
+
+            if (!schools.Any())
+                return NotFound(new { message = "Bu ölkə üçün yay məktəbi tapılmadı" });
+
+            var result = schools.Select(s =>
+            {
+                var dto = _mapper.Map<ResultSummerSchoolDto>(s);
+                dto.Title = s.Translations.FirstOrDefault(t => t.Language == lang)?.Title
+                    ?? s.Translations.FirstOrDefault(t => t.Language == "az")?.Title;
+                dto.SubTitle = s.Translations.FirstOrDefault(t => t.Language == lang)?.SubTitle
+                    ?? s.Translations.FirstOrDefault(t => t.Language == "az")?.SubTitle;
                 return dto;
             });
 
