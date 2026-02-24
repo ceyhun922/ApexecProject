@@ -63,6 +63,10 @@ namespace ApexWebAPI.Concrete
         public DbSet<FivePProgramCounterTranslation>? FivePProgramCounterTranslations { get; set; }
         public DbSet<Planning>? Plannings { get; set; }
         public DbSet<PlanningTranslation>? PlanningTranslations { get; set; }
+        public DbSet<Language>? Languages { get; set; }
+        public DbSet<LanguageTranslation>? LanguageTranslations { get; set; }
+        public DbSet<LanguageCourse>? LanguageCourses { get; set; }
+        public DbSet<LanguageCourseTranslation>? LanguageCourseTranslations { get; set; }
         public DbSet<SocialMedia>? SocialMedias { get; set; }
         public DbSet<Layout>? Layouts { get; set; }
         public DbSet<LayoutTranslation>? LayoutTranslations { get; set; }

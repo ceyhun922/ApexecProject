@@ -26,6 +26,8 @@ using ApexWebAPI.DTOs.TestimonialDTOs;
 using ApexWebAPI.Entities;
 using AutoMapper;
 using ApexWebAPI.DTOs.ContactInfoDTOs;
+using ApexWebAPI.DTOs.LanguageDTOs;
+using ApexWebAPI.DTOs.LanguageCourseDTOs;
 
 namespace ApexWebAPI.Mapping
 {
@@ -407,6 +409,23 @@ namespace ApexWebAPI.Mapping
             CreateMap<SocialMedia, ResultSocialMediaDto>();
             CreateMap<CreateSocialMediaDto, SocialMedia>();
             CreateMap<UpdateSocialMediaDto, SocialMedia>();
+
+            // Language
+            CreateMap<Language, ResultLanguageDto>()
+                .ForMember(dest => dest.Name, opt => opt.Ignore());
+            CreateMap<CreateLanguageDto, Language>()
+                .ForMember(dest => dest.LanguageTranslations, opt => opt.Ignore());
+            CreateMap<UpdateLanguageDto, Language>()
+                .ForMember(dest => dest.LanguageTranslations, opt => opt.Ignore());
+
+            // LanguageCourse
+            CreateMap<LanguageCourse, ResultLanguageCourseDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+            CreateMap<CreateLanguageCourseDto, LanguageCourse>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+            CreateMap<UpdateLanguageCourseDto, LanguageCourse>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
 
             // Layout
             CreateMap<Layout, ResultLayoutDto>()
