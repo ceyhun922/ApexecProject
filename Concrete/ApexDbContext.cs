@@ -49,6 +49,14 @@ namespace ApexWebAPI.Concrete
         public DbSet<StatisticTranslation>? StatisticTranslations { get; set; }
         public DbSet<ContactHeader>? ContactHeaders { get; set; }
         public DbSet<ContactHeaderTranslation>? ContactHeaderTranslations { get; set; }
+        public DbSet<CountryHeader>? CountryHeaders { get; set; }
+        public DbSet<CountryHeaderTranslation>? CountryHeaderTranslations { get; set; }
+        public DbSet<CoursesHeader>? CoursesHeaders { get; set; }
+        public DbSet<CoursesHeaderTranslation>? CoursesHeaderTranslations { get; set; }
+        public DbSet<SummerSchoolHeader>? SummerSchoolHeaders { get; set; }
+        public DbSet<SummerSchoolHeaderTranslation>? SummerSchoolHeaderTranslations { get; set; }
+        public DbSet<FivePProgramHeader>? FivePProgramHeaders { get; set; }
+        public DbSet<FivePProgramHeaderTranslation>? FivePProgramHeaderTranslations { get; set; }
         public DbSet<ContactInfo>? ContactInfos { get; set; }
         public DbSet<Information>? Informations { get; set; }
         public DbSet<Message>? Messages { get; set; }

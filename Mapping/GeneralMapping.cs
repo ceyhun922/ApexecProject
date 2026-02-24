@@ -1,5 +1,9 @@
 using ApexWebAPI.DTOs.AboutDTOs;
 using ApexWebAPI.DTOs.ContactHeaderDTOs;
+using ApexWebAPI.DTOs.CountryHeaderDTOs;
+using ApexWebAPI.DTOs.CoursesHeaderDTOs;
+using ApexWebAPI.DTOs.SummerSchoolHeaderDTOs;
+using ApexWebAPI.DTOs.FivePProgramHeaderDTOs;
 using ApexWebAPI.DTOs.HomeVideoSectionDTOs;
 using ApexWebAPI.DTOs.AboutVideoSectionDTOs;
 using ApexWebAPI.DTOs.AboutCounterDTOs;
@@ -320,6 +324,42 @@ namespace ApexWebAPI.Mapping
             CreateMap<CreateContactHeaderDto, ContactHeader>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
             CreateMap<UpdateContactHeaderDto, ContactHeader>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            // CountryHeader
+            CreateMap<CountryHeader, ResultCountryHeaderDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+            CreateMap<CreateCountryHeaderDto, CountryHeader>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+            CreateMap<UpdateCountryHeaderDto, CountryHeader>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            // CoursesHeader
+            CreateMap<CoursesHeader, ResultCoursesHeaderDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+            CreateMap<CreateCoursesHeaderDto, CoursesHeader>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+            CreateMap<UpdateCoursesHeaderDto, CoursesHeader>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            // SummerSchoolHeader
+            CreateMap<SummerSchoolHeader, ResultSummerSchoolHeaderDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+            CreateMap<CreateSummerSchoolHeaderDto, SummerSchoolHeader>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+            CreateMap<UpdateSummerSchoolHeaderDto, SummerSchoolHeader>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            // FivePProgramHeader
+            CreateMap<FivePProgramHeader, ResultFivePProgramHeaderDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+            CreateMap<CreateFivePProgramHeaderDto, FivePProgramHeader>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+            CreateMap<UpdateFivePProgramHeaderDto, FivePProgramHeader>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
         }
     }
