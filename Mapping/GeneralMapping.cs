@@ -5,6 +5,7 @@ using ApexWebAPI.DTOs.CoursesHeaderDTOs;
 using ApexWebAPI.DTOs.SummerSchoolHeaderDTOs;
 using ApexWebAPI.DTOs.FivePProgramHeaderDTOs;
 using ApexWebAPI.DTOs.FivePProgramCounterDTOs;
+using ApexWebAPI.DTOs.PlanningDTOs;
 using ApexWebAPI.DTOs.HomeVideoSectionDTOs;
 using ApexWebAPI.DTOs.AboutVideoSectionDTOs;
 using ApexWebAPI.DTOs.AboutCounterDTOs;
@@ -380,6 +381,19 @@ namespace ApexWebAPI.Mapping
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
 
             CreateMap<UpdateFivePProgramCounterDto, FivePProgramCounter>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            // Planning
+            CreateMap<Planning, ResultPlanningDto>()
+                .ForMember(dest => dest.Option1Title, opt => opt.Ignore())
+                .ForMember(dest => dest.Option2Title, opt => opt.Ignore())
+                .ForMember(dest => dest.Option3Title, opt => opt.Ignore())
+                .ForMember(dest => dest.Option4Title, opt => opt.Ignore());
+
+            CreateMap<CreatePlanningDto, Planning>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            CreateMap<UpdatePlanningDto, Planning>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
         }
     }

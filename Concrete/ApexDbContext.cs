@@ -59,6 +59,8 @@ namespace ApexWebAPI.Concrete
         public DbSet<FivePProgramHeaderTranslation>? FivePProgramHeaderTranslations { get; set; }
         public DbSet<FivePProgramCounter>? FivePProgramCounters { get; set; }
         public DbSet<FivePProgramCounterTranslation>? FivePProgramCounterTranslations { get; set; }
+        public DbSet<Planning>? Plannings { get; set; }
+        public DbSet<PlanningTranslation>? PlanningTranslations { get; set; }
         public DbSet<ContactInfo>? ContactInfos { get; set; }
         public DbSet<Information>? Informations { get; set; }
         public DbSet<Message>? Messages { get; set; }
