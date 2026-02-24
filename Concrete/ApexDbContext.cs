@@ -43,8 +43,8 @@ namespace ApexWebAPI.Concrete
         public DbSet<DepartmentTranslation>? DepartmentTranslations {get;set;}
         public DbSet<SummerSchool>? SummerSchools { get; set; }
         public DbSet<SummerSchoolTranslation>? SummerSchoolTranslations { get; set; }
-        public DbSet<Presentation>? Presentations { get; set; }
-        public DbSet<PresentationTranslation>? PresentationTranslations { get; set; }
+        public DbSet<HomeVideoSection>? HomeVideoSections { get; set; }
+        public DbSet<HomeVideoSectionTranslation>? HomeVideoSectionTranslations { get; set; }
         public DbSet<Statistic>? Statistics { get; set; }
         public DbSet<StatisticTranslation>? StatisticTranslations { get; set; }
         public DbSet<ContactHeader>? ContactHeaders { get; set; }
@@ -54,6 +54,10 @@ namespace ApexWebAPI.Concrete
         public DbSet<Message>? Messages { get; set; }
         public DbSet<Footer>? Footers { get; set; }
         public DbSet<Notification> Notifications { get; set; } = null!;
+        public DbSet<AboutCounter>? AboutCounters { get; set; }
+        public DbSet<AboutCounterTranslation>? AboutCounterTranslations { get; set; }
+        public DbSet<AboutVideoSection>? AboutVideoSections { get; set; }
+        public DbSet<AboutVideoSectionTranslation>? AboutVideoSectionTranslations { get; set; }
         public object Contacts { get; internal set; }
     }
 }

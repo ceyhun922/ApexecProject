@@ -1,7 +1,8 @@
 using System.ComponentModel;
-namespace ApexWebAPI.DTOs.PresentationDTOs
+
+namespace ApexWebAPI.DTOs.AboutVideoSectionDTOs
 {
-    public class CreatePresentationDto
+    public class CreateAboutVideoSectionDto
     {
         [DefaultValue(true)]
         public bool Status { get; set; } = true;

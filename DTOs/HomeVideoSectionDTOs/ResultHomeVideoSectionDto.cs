@@ -1,6 +1,6 @@
-namespace ApexWebAPI.DTOs.PresentationDTOs
+namespace ApexWebAPI.DTOs.HomeVideoSectionDTOs
 {
-    public class GetByIdPresentationDto
+    public class ResultHomeVideoSectionDto
     {
         public int Id { get; set; }
         public string? Title { get; set; }

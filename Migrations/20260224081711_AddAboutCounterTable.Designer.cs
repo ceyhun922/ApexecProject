@@ -4,6 +4,7 @@ using ApexWebAPI.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApexWebAPI.Migrations
 {
     [DbContext(typeof(ApexDbContext))]
-    partial class ApexDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260224081711_AddAboutCounterTable")]
+    partial class AddAboutCounterTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,56 +143,6 @@ namespace ApexWebAPI.Migrations
                     b.HasIndex("AboutId");
 
                     b.ToTable("AboutTranslations");
-                });
-
-            modelBuilder.Entity("ApexWebAPI.Entities.AboutVideoSection", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("YouTubeUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AboutVideoSections");
-                });
-
-            modelBuilder.Entity("ApexWebAPI.Entities.AboutVideoSectionTranslation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AboutVideoSectionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SubTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AboutVideoSectionId");
-
-                    b.ToTable("AboutVideoSectionTranslations");
                 });
 
             modelBuilder.Entity("ApexWebAPI.Entities.AppUser", b =>
@@ -573,56 +525,6 @@ namespace ApexWebAPI.Migrations
                     b.ToTable("HeroTranslations");
                 });
 
-            modelBuilder.Entity("ApexWebAPI.Entities.HomeVideoSection", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("YouTubeUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HomeVideoSections");
-                });
-
-            modelBuilder.Entity("ApexWebAPI.Entities.HomeVideoSectionTranslation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("HomeVideoSectionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SubTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HomeVideoSectionId");
-
-                    b.ToTable("HomeVideoSectionTranslations");
-                });
-
             modelBuilder.Entity("ApexWebAPI.Entities.Information", b =>
                 {
                     b.Property<int>("Id")
@@ -717,6 +619,56 @@ namespace ApexWebAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.Presentation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("YouTubeUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Presentations");
+                });
+
+            modelBuilder.Entity("ApexWebAPI.Entities.PresentationTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PresentationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PresentationId");
+
+                    b.ToTable("PresentationTranslations");
                 });
 
             modelBuilder.Entity("ApexWebAPI.Entities.Statistic", b =>
@@ -911,17 +863,6 @@ namespace ApexWebAPI.Migrations
                     b.Navigation("About");
                 });
 
-            modelBuilder.Entity("ApexWebAPI.Entities.AboutVideoSectionTranslation", b =>
-                {
-                    b.HasOne("ApexWebAPI.Entities.AboutVideoSection", "AboutVideoSection")
-                        .WithMany("Translations")
-                        .HasForeignKey("AboutVideoSectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AboutVideoSection");
-                });
-
             modelBuilder.Entity("ApexWebAPI.Entities.ContactHeaderTranslation", b =>
                 {
                     b.HasOne("ApexWebAPI.Entities.ContactHeader", "ContactHeader")
@@ -1010,15 +951,15 @@ namespace ApexWebAPI.Migrations
                     b.Navigation("Hero");
                 });
 
-            modelBuilder.Entity("ApexWebAPI.Entities.HomeVideoSectionTranslation", b =>
+            modelBuilder.Entity("ApexWebAPI.Entities.PresentationTranslation", b =>
                 {
-                    b.HasOne("ApexWebAPI.Entities.HomeVideoSection", "HomeVideoSection")
+                    b.HasOne("ApexWebAPI.Entities.Presentation", "Presentation")
                         .WithMany("Translations")
-                        .HasForeignKey("HomeVideoSectionId")
+                        .HasForeignKey("PresentationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("HomeVideoSection");
+                    b.Navigation("Presentation");
                 });
 
             modelBuilder.Entity("ApexWebAPI.Entities.StatisticTranslation", b =>
@@ -1075,11 +1016,6 @@ namespace ApexWebAPI.Migrations
                     b.Navigation("Translations");
                 });
 
-            modelBuilder.Entity("ApexWebAPI.Entities.AboutVideoSection", b =>
-                {
-                    b.Navigation("Translations");
-                });
-
             modelBuilder.Entity("ApexWebAPI.Entities.ContactHeader", b =>
                 {
                     b.Navigation("Translations");
@@ -1116,7 +1052,7 @@ namespace ApexWebAPI.Migrations
                     b.Navigation("Translations");
                 });
 
-            modelBuilder.Entity("ApexWebAPI.Entities.HomeVideoSection", b =>
+            modelBuilder.Entity("ApexWebAPI.Entities.Presentation", b =>
                 {
                     b.Navigation("Translations");
                 });

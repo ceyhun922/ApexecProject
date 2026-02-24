@@ -1,5 +1,5 @@
 using ApexWebAPI.Concrete;
-using ApexWebAPI.DTOs.PresentationDTOs;
+using ApexWebAPI.DTOs.AboutVideoSectionDTOs;
 using ApexWebAPI.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +10,13 @@ namespace ApexWebAPI.Controllers
 {
     [ApiController]
     [Route("api/{lang}/[controller]")]
-    public class PresentationsController : ControllerBase
+    public class AboutVideoSectionsController : ControllerBase
     {
         private readonly ApexDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IStringLocalizer<PresentationsController> _localizer;
+        private readonly IStringLocalizer<AboutVideoSectionsController> _localizer;
 
-        public PresentationsController(ApexDbContext context, IMapper mapper, IStringLocalizer<PresentationsController> localizer)
+        public AboutVideoSectionsController(ApexDbContext context, IMapper mapper, IStringLocalizer<AboutVideoSectionsController> localizer)
         {
             _context = context;
             _mapper = mapper;
@@ -24,48 +24,22 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ResultPresentationDto>), 200)]
-        public async Task<ActionResult<IEnumerable<ResultPresentationDto>>> GetAll([FromRoute] string lang)
-        {
-            var presentations = await _context.Presentations!
-                .Include(p => p.Translations)
-                .Where(p => p.Status)
-                .ToListAsync();
-
-            var result = presentations.Select(p =>
-            {
-                var dto = _mapper.Map<ResultPresentationDto>(p);
-
-                var translation = p.Translations!
-                    .FirstOrDefault(t => t.Language == lang)
-                    ?? p.Translations!.FirstOrDefault(t => t.Language == "az");
-
-                dto.Title = translation?.Title;
-                dto.SubTitle = translation?.SubTitle;
-
-                return dto;
-            });
-
-            return Ok(result);
-        }
-
-        [HttpGet("{id}")]
-        [ProducesResponseType(typeof(GetByIdPresentationDto), 200)]
+        [ProducesResponseType(typeof(GetByIdAboutVideoSectionDto), 200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<GetByIdPresentationDto>> GetById([FromRoute] string lang, int id)
+        public async Task<ActionResult<GetByIdAboutVideoSectionDto>> Get([FromRoute] string lang)
         {
-            var presentation = await _context.Presentations!
+            var item = await _context.AboutVideoSections!
                 .Include(p => p.Translations)
-                .FirstOrDefaultAsync(p => p.Id == id);
+                .FirstOrDefaultAsync();
 
-            if (presentation == null)
+            if (item == null)
                 return NotFound(new { message = _localizer["NotFound"].Value });
 
-            var dto = _mapper.Map<GetByIdPresentationDto>(presentation);
+            var dto = _mapper.Map<GetByIdAboutVideoSectionDto>(item);
 
-            var translation = presentation.Translations!
+            var translation = item.Translations!
                 .FirstOrDefault(t => t.Language == lang)
-                ?? presentation.Translations!.FirstOrDefault(t => t.Language == "az");
+                ?? item.Translations!.FirstOrDefault(t => t.Language == "az");
 
             dto.Title = translation?.Title;
             dto.SubTitle = translation?.SubTitle;
@@ -75,14 +49,21 @@ namespace ApexWebAPI.Controllers
 
         [HttpPost]
         [ProducesResponseType(201)]
-        public async Task<IActionResult> Create([FromRoute] string lang, [FromBody] CreatePresentationDto dto)
+        public async Task<IActionResult> Create([FromRoute] string lang, [FromBody] CreateAboutVideoSectionDto dto)
         {
-            var presentation = new Presentation
+            var existing = await _context.AboutVideoSections!
+                .Include(p => p.Translations)
+                .FirstOrDefaultAsync();
+
+            if (existing != null)
+                _context.AboutVideoSections.Remove(existing);
+
+            var item = new AboutVideoSection
             {
                 YouTubeUrl = dto.YouTubeUrl,
                 Status = dto.Status,
                 CreatedDate = DateTime.UtcNow,
-                Translations = new List<PresentationTranslation>
+                Translations = new List<AboutVideoSectionTranslation>
                 {
                     new() { Language = "az", Title = dto.TitleAz, SubTitle = dto.SubTitleAz },
                     new() { Language = "en", Title = dto.TitleEn, SubTitle = dto.SubTitleEn },
@@ -91,26 +72,26 @@ namespace ApexWebAPI.Controllers
                 }
             };
 
-            await _context.Presentations!.AddAsync(presentation);
+            await _context.AboutVideoSections!.AddAsync(item);
             await _context.SaveChangesAsync();
 
-            return StatusCode(201, new { message = _localizer["Created"].Value, id = presentation.Id });
+            return StatusCode(201, new { message = _localizer["Created"].Value, id = item.Id });
         }
 
         [HttpPut]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Update([FromRoute] string lang, [FromBody] UpdatePresentationDto dto)
+        public async Task<IActionResult> Update([FromRoute] string lang, [FromBody] UpdateAboutVideoSectionDto dto)
         {
-            var presentation = await _context.Presentations!
+            var item = await _context.AboutVideoSections!
                 .Include(p => p.Translations)
                 .FirstOrDefaultAsync(p => p.Id == dto.Id);
 
-            if (presentation == null)
+            if (item == null)
                 return NotFound(new { message = _localizer["NotFound"].Value });
 
-            presentation.YouTubeUrl = dto.YouTubeUrl;
-            presentation.Status = dto.Status;
+            item.YouTubeUrl = dto.YouTubeUrl;
+            item.Status = dto.Status;
 
             var translations = new Dictionary<string, (string? Title, string? SubTitle)>
             {
@@ -122,7 +103,7 @@ namespace ApexWebAPI.Controllers
 
             foreach (var (language, (title, subTitle)) in translations)
             {
-                var t = presentation.Translations!.FirstOrDefault(x => x.Language == language);
+                var t = item.Translations!.FirstOrDefault(x => x.Language == language);
                 if (t != null)
                 {
                     t.Title = title;
@@ -130,7 +111,7 @@ namespace ApexWebAPI.Controllers
                 }
                 else
                 {
-                    presentation.Translations!.Add(new PresentationTranslation
+                    item.Translations!.Add(new AboutVideoSectionTranslation
                     {
                         Language = language,
                         Title = title,
@@ -148,14 +129,14 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
-            var presentation = await _context.Presentations!
+            var item = await _context.AboutVideoSections!
                 .Include(p => p.Translations)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
-            if (presentation == null)
+            if (item == null)
                 return NotFound(new { message = _localizer["NotFound"].Value });
 
-            _context.Presentations.Remove(presentation);
+            _context.AboutVideoSections.Remove(item);
             await _context.SaveChangesAsync();
 
             return Ok(new { message = _localizer["Deleted"].Value });

@@ -1,6 +1,8 @@
 using ApexWebAPI.DTOs.AboutDTOs;
 using ApexWebAPI.DTOs.ContactHeaderDTOs;
-using ApexWebAPI.DTOs.PresentationDTOs;
+using ApexWebAPI.DTOs.HomeVideoSectionDTOs;
+using ApexWebAPI.DTOs.AboutVideoSectionDTOs;
+using ApexWebAPI.DTOs.AboutCounterDTOs;
 using ApexWebAPI.DTOs.StatisticDTOs;
 using ApexWebAPI.DTOs.CountryDTOs;
 using ApexWebAPI.DTOs.DepartmentDTOs;
@@ -259,19 +261,53 @@ namespace ApexWebAPI.Mapping
             CreateMap<UpdateStatisticDto, Statistic>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
 
-            // Presentation
-            CreateMap<Presentation, ResultPresentationDto>()
+            // HomeVideoSection
+            CreateMap<HomeVideoSection, ResultHomeVideoSectionDto>()
                 .ForMember(dest => dest.Title, opt => opt.Ignore())
                 .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
 
-            CreateMap<Presentation, GetByIdPresentationDto>()
+            CreateMap<HomeVideoSection, GetByIdHomeVideoSectionDto>()
                 .ForMember(dest => dest.Title, opt => opt.Ignore())
                 .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
 
-            CreateMap<CreatePresentationDto, Presentation>()
+            CreateMap<CreateHomeVideoSectionDto, HomeVideoSection>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
 
-            CreateMap<UpdatePresentationDto, Presentation>()
+            CreateMap<UpdateHomeVideoSectionDto, HomeVideoSection>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            // AboutVideoSection
+            CreateMap<AboutVideoSection, ResultAboutVideoSectionDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+
+            CreateMap<AboutVideoSection, GetByIdAboutVideoSectionDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+
+            CreateMap<CreateAboutVideoSectionDto, AboutVideoSection>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            CreateMap<UpdateAboutVideoSectionDto, AboutVideoSection>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            // AboutCounter
+            CreateMap<AboutCounter, ResultAboutCounterDto>()
+                .ForMember(dest => dest.Text1, opt => opt.Ignore())
+                .ForMember(dest => dest.Text2, opt => opt.Ignore())
+                .ForMember(dest => dest.Text3, opt => opt.Ignore())
+                .ForMember(dest => dest.Text4, opt => opt.Ignore());
+
+            CreateMap<AboutCounter, GetByIdAboutCounterDto>()
+                .ForMember(dest => dest.Text1, opt => opt.Ignore())
+                .ForMember(dest => dest.Text2, opt => opt.Ignore())
+                .ForMember(dest => dest.Text3, opt => opt.Ignore())
+                .ForMember(dest => dest.Text4, opt => opt.Ignore());
+
+            CreateMap<CreateAboutCounterDto, AboutCounter>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            CreateMap<UpdateAboutCounterDto, AboutCounter>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
 
             // ContactHeader

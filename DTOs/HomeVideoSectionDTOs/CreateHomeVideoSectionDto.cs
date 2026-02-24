@@ -1,8 +1,11 @@
-namespace ApexWebAPI.DTOs.PresentationDTOs
+using System.ComponentModel;
+
+namespace ApexWebAPI.DTOs.HomeVideoSectionDTOs
 {
-    public class UpdatePresentationDto
+    public class CreateHomeVideoSectionDto
     {
-        public int Id { get; set; }
+        [DefaultValue(true)]
+        public bool Status { get; set; } = true;
         public string? YouTubeUrl { get; set; }
         public string? TitleAz { get; set; }
         public string? TitleEn { get; set; }
@@ -12,6 +15,5 @@ namespace ApexWebAPI.DTOs.PresentationDTOs
         public string? SubTitleEn { get; set; }
         public string? SubTitleRu { get; set; }
         public string? SubTitleTr { get; set; }
-        public bool Status { get; set; }
     }
 }
