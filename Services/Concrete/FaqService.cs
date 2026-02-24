@@ -5,6 +5,7 @@ using ApexWebAPI.Entities;
 using ApexWebAPI.Services.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using static ApexWebAPI.Common.HtmlSanitizerHelper;
 
 namespace ApexWebAPI.Services.Concrete
 {
@@ -55,10 +56,10 @@ namespace ApexWebAPI.Services.Concrete
             var faq = _mapper.Map<Faq>(dto);
             faq.FaqTranslations = new List<FaqTranslation>
             {
-                new() { Language = LanguageCodes.Az, Title = dto.TitleAz, Content = dto.ContentAz },
-                new() { Language = LanguageCodes.En, Title = dto.TitleEn, Content = dto.ContentEn },
-                new() { Language = LanguageCodes.Ru, Title = dto.TitleRu, Content = dto.ContentRu },
-                new() { Language = LanguageCodes.Tr, Title = dto.TitleTr, Content = dto.ContentTr }
+                new() { Language = LanguageCodes.Az, Title = Sanitize(dto.TitleAz), Content = Sanitize(dto.ContentAz) },
+                new() { Language = LanguageCodes.En, Title = Sanitize(dto.TitleEn), Content = Sanitize(dto.ContentEn) },
+                new() { Language = LanguageCodes.Ru, Title = Sanitize(dto.TitleRu), Content = Sanitize(dto.ContentRu) },
+                new() { Language = LanguageCodes.Tr, Title = Sanitize(dto.TitleTr), Content = Sanitize(dto.ContentTr) }
             };
 
             await _context.Faqs!.AddAsync(faq);
@@ -76,10 +77,10 @@ namespace ApexWebAPI.Services.Concrete
 
             var translations = new Dictionary<string, (string? Title, string? Content)>
             {
-                { LanguageCodes.Az, (dto.TitleAz, dto.ContentAz) },
-                { LanguageCodes.En, (dto.TitleEn, dto.ContentEn) },
-                { LanguageCodes.Ru, (dto.TitleRu, dto.ContentRu) },
-                { LanguageCodes.Tr, (dto.TitleTr, dto.ContentTr) }
+                { LanguageCodes.Az, (Sanitize(dto.TitleAz), Sanitize(dto.ContentAz)) },
+                { LanguageCodes.En, (Sanitize(dto.TitleEn), Sanitize(dto.ContentEn)) },
+                { LanguageCodes.Ru, (Sanitize(dto.TitleRu), Sanitize(dto.ContentRu)) },
+                { LanguageCodes.Tr, (Sanitize(dto.TitleTr), Sanitize(dto.ContentTr)) }
             };
 
             foreach (var (language, (title, content)) in translations)

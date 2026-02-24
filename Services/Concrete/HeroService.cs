@@ -5,6 +5,7 @@ using ApexWebAPI.Entities;
 using ApexWebAPI.Services.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using static ApexWebAPI.Common.HtmlSanitizerHelper;
 
 namespace ApexWebAPI.Services.Concrete
 {
@@ -70,14 +71,14 @@ namespace ApexWebAPI.Services.Concrete
                 Translations = LanguageCodes.All.Select(l => new HeroTranslation
                 {
                     Language = l,
-                    Title = l == LanguageCodes.Az ? dto.TitleAz
+                    Title = Sanitize(l == LanguageCodes.Az ? dto.TitleAz
                           : l == LanguageCodes.En ? dto.TitleEn
                           : l == LanguageCodes.Ru ? dto.TitleRu
-                          : dto.TitleTr,
-                    SubTitle = l == LanguageCodes.Az ? dto.SubTitleAz
+                          : dto.TitleTr),
+                    SubTitle = Sanitize(l == LanguageCodes.Az ? dto.SubTitleAz
                              : l == LanguageCodes.En ? dto.SubTitleEn
                              : l == LanguageCodes.Ru ? dto.SubTitleRu
-                             : dto.SubTitleTr
+                             : dto.SubTitleTr)
                 }).ToList()
             };
 
@@ -103,10 +104,10 @@ namespace ApexWebAPI.Services.Concrete
 
             var translationMap = new Dictionary<string, (string? Title, string? SubTitle)>
             {
-                { LanguageCodes.Az, (dto.TitleAz, dto.SubTitleAz) },
-                { LanguageCodes.En, (dto.TitleEn, dto.SubTitleEn) },
-                { LanguageCodes.Ru, (dto.TitleRu, dto.SubTitleRu) },
-                { LanguageCodes.Tr, (dto.TitleTr, dto.SubTitleTr) }
+                { LanguageCodes.Az, (Sanitize(dto.TitleAz), Sanitize(dto.SubTitleAz)) },
+                { LanguageCodes.En, (Sanitize(dto.TitleEn), Sanitize(dto.SubTitleEn)) },
+                { LanguageCodes.Ru, (Sanitize(dto.TitleRu), Sanitize(dto.SubTitleRu)) },
+                { LanguageCodes.Tr, (Sanitize(dto.TitleTr), Sanitize(dto.SubTitleTr)) }
             };
 
             foreach (var (language, (title, subTitle)) in translationMap)

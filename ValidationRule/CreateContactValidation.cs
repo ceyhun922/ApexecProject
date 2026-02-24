@@ -22,9 +22,6 @@ namespace ApexWebAPI.ValidationRule
     {
         public UpdateContactValidation(IStringLocalizer<CreateContactValidation> localizer)
         {
-            RuleFor(x => x.Id)
-                .GreaterThan(0).WithMessage(_ => localizer["IdInvalid"]);
-
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty().WithMessage(_ => localizer["PhoneRequired"])
                 .MaximumLength(20).WithMessage(_ => localizer["PhoneMaxLength"]);

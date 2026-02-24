@@ -5,6 +5,7 @@ using ApexWebAPI.Entities;
 using ApexWebAPI.Services.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using static ApexWebAPI.Common.HtmlSanitizerHelper;
 
 namespace ApexWebAPI.Services.Concrete
 {
@@ -51,10 +52,10 @@ namespace ApexWebAPI.Services.Concrete
             var department = _mapper.Map<Department>(dto);
             department.DepartmentTranslations = new List<DepartmentTranslation>
             {
-                new() { Language = LanguageCodes.Az, Name = dto.NameAz },
-                new() { Language = LanguageCodes.En, Name = dto.NameEn },
-                new() { Language = LanguageCodes.Tr, Name = dto.NameTr },
-                new() { Language = LanguageCodes.Ru, Name = dto.NameRu }
+                new() { Language = LanguageCodes.Az, Name = Sanitize(dto.NameAz) },
+                new() { Language = LanguageCodes.En, Name = Sanitize(dto.NameEn) },
+                new() { Language = LanguageCodes.Tr, Name = Sanitize(dto.NameTr) },
+                new() { Language = LanguageCodes.Ru, Name = Sanitize(dto.NameRu) }
             };
 
             await _context.Departments!.AddAsync(department);
@@ -72,10 +73,10 @@ namespace ApexWebAPI.Services.Concrete
 
             var translations = new Dictionary<string, string?>
             {
-                [LanguageCodes.Az] = dto.NameAz,
-                [LanguageCodes.En] = dto.NameEn,
-                [LanguageCodes.Tr] = dto.NameTr,
-                [LanguageCodes.Ru] = dto.NameRu
+                [LanguageCodes.Az] = Sanitize(dto.NameAz),
+                [LanguageCodes.En] = Sanitize(dto.NameEn),
+                [LanguageCodes.Tr] = Sanitize(dto.NameTr),
+                [LanguageCodes.Ru] = Sanitize(dto.NameRu)
             };
 
             foreach (var (language, name) in translations)

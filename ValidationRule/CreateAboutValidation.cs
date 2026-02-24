@@ -22,9 +22,6 @@ namespace ApexWebAPI.ValidationRule
     {
         public UpdateAboutValidation(IStringLocalizer<CreateAboutValidation> localizer)
         {
-            RuleFor(x => x.Id)
-                .GreaterThan(0).WithMessage(_ => localizer["IdInvalid"]);
-
             RuleFor(x => x.TitleAz)
                 .NotEmpty().WithMessage(_ => localizer["TitleRequired"])
                 .MaximumLength(300).WithMessage(_ => localizer["TitleMaxLength"]);

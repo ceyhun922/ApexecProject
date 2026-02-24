@@ -1,9 +1,11 @@
+using ApexWebAPI.Common;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.ContactInfoDTOs;
 using ApexWebAPI.Entities;
 using ApexWebAPI.Services.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using static ApexWebAPI.Common.HtmlSanitizerHelper;
 
 namespace ApexWebAPI.Services.Concrete
 {
@@ -33,6 +35,7 @@ namespace ApexWebAPI.Services.Concrete
         public async Task CreateAsync(CreateContactInfoDto dto)
         {
             var contact = _mapper.Map<ContactInfo>(dto);
+            contact.Adress = Sanitize(contact.Adress);
             await _context.ContactInfos!.AddAsync(contact);
             await _context.SaveChangesAsync();
         }
@@ -43,6 +46,7 @@ namespace ApexWebAPI.Services.Concrete
                 ?? throw new KeyNotFoundException("ContactInfo not found");
 
             _mapper.Map(dto, contact);
+            contact.Adress = Sanitize(contact.Adress);
             _context.ContactInfos.Update(contact);
             await _context.SaveChangesAsync();
         }

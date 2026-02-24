@@ -1,11 +1,11 @@
-
-
+using ApexWebAPI.Common;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.MessageDTOs.cs;
 using ApexWebAPI.Entities;
 using ApexWebAPI.Services.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using static ApexWebAPI.Common.HtmlSanitizerHelper;
 
 namespace ApexWebAPI.Services.Concrete
 {
@@ -35,6 +35,8 @@ namespace ApexWebAPI.Services.Concrete
         public async Task CreateAsync(CreateMessageDto dto)
         {
             var item = _mapper.Map<Message>(dto);
+            item.FullName = Sanitize(item.FullName);
+            item.Messagee = Sanitize(item.Messagee);
             _context.Messages!.Add(item);
             await _context.SaveChangesAsync();
         }
@@ -45,6 +47,8 @@ namespace ApexWebAPI.Services.Concrete
                 ?? throw new KeyNotFoundException($"Message {dto.Id} not found");
 
             _mapper.Map(dto, item);
+            item.FullName = Sanitize(item.FullName);
+            item.Messagee = Sanitize(item.Messagee);
             await _context.SaveChangesAsync();
         }
 

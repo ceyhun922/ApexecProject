@@ -5,6 +5,7 @@ using ApexWebAPI.Entities;
 using ApexWebAPI.Services.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using static ApexWebAPI.Common.HtmlSanitizerHelper;
 
 namespace ApexWebAPI.Services.Concrete
 {
@@ -52,10 +53,10 @@ namespace ApexWebAPI.Services.Concrete
             testimonial.ImageUrl = dto.ImageUrl;
             testimonial.Translations = new List<TestimonialTranslation>
             {
-                new() { Language = LanguageCodes.Az, Comment = dto.CommentAz },
-                new() { Language = LanguageCodes.En, Comment = dto.CommentEn },
-                new() { Language = LanguageCodes.Ru, Comment = dto.CommentRu },
-                new() { Language = LanguageCodes.Tr, Comment = dto.CommentTr }
+                new() { Language = LanguageCodes.Az, Comment = Sanitize(dto.CommentAz) },
+                new() { Language = LanguageCodes.En, Comment = Sanitize(dto.CommentEn) },
+                new() { Language = LanguageCodes.Ru, Comment = Sanitize(dto.CommentRu) },
+                new() { Language = LanguageCodes.Tr, Comment = Sanitize(dto.CommentTr) }
             };
 
             await _context.Testimonials!.AddAsync(testimonial);
@@ -74,10 +75,10 @@ namespace ApexWebAPI.Services.Concrete
 
             var translations = new Dictionary<string, string?>
             {
-                { LanguageCodes.Az, dto.CommentAz },
-                { LanguageCodes.En, dto.CommentEn },
-                { LanguageCodes.Ru, dto.CommentRu },
-                { LanguageCodes.Tr, dto.CommentTr }
+                { LanguageCodes.Az, Sanitize(dto.CommentAz) },
+                { LanguageCodes.En, Sanitize(dto.CommentEn) },
+                { LanguageCodes.Ru, Sanitize(dto.CommentRu) },
+                { LanguageCodes.Tr, Sanitize(dto.CommentTr) }
             };
 
             foreach (var (language, comment) in translations)

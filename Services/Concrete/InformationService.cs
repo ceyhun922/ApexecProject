@@ -1,9 +1,11 @@
+using ApexWebAPI.Common;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.InformationDTOs;
 using ApexWebAPI.Entities;
 using ApexWebAPI.Services.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using static ApexWebAPI.Common.HtmlSanitizerHelper;
 
 namespace ApexWebAPI.Services.Concrete
 {
@@ -33,6 +35,9 @@ namespace ApexWebAPI.Services.Concrete
         public async Task CreateAsync(CreateInformationDto dto)
         {
             var item = _mapper.Map<Information>(dto);
+            item.FullName = Sanitize(item.FullName);
+            item.Education = Sanitize(item.Education);
+            item.ClassOrYear = Sanitize(item.ClassOrYear);
             _context.Informations!.Add(item);
             await _context.SaveChangesAsync();
         }
@@ -43,6 +48,9 @@ namespace ApexWebAPI.Services.Concrete
                 ?? throw new KeyNotFoundException($"Information {dto.Id} not found");
 
             _mapper.Map(dto, item);
+            item.FullName = Sanitize(item.FullName);
+            item.Education = Sanitize(item.Education);
+            item.ClassOrYear = Sanitize(item.ClassOrYear);
             await _context.SaveChangesAsync();
         }
 
