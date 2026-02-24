@@ -36,6 +36,7 @@ namespace ApexWebAPI.Controllers
                 return NotFound(new { message = _localizer["NotFound"].Value });
 
             var dto = _mapper.Map<ResultLayoutDto>(item);
+            
 
             var translation = item.Translations!
                 .FirstOrDefault(t => t.Language == lang)
