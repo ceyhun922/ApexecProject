@@ -1,0 +1,15 @@
+namespace ApexWebAPI.Entities
+{
+    public class FivePProgramCounterTranslation
+    {
+        public int Id { get; set; }
+        public string Language { get; set; } = null!;
+        public string? Text1 { get; set; }
+        public string? Text2 { get; set; }
+        public string? Text3 { get; set; }
+        public string? Text4 { get; set; }
+
+        public int FivePProgramCounterId { get; set; }
+        public FivePProgramCounter? FivePProgramCounter { get; set; }
+    }
+}

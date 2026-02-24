@@ -4,6 +4,7 @@ using ApexWebAPI.DTOs.CountryHeaderDTOs;
 using ApexWebAPI.DTOs.CoursesHeaderDTOs;
 using ApexWebAPI.DTOs.SummerSchoolHeaderDTOs;
 using ApexWebAPI.DTOs.FivePProgramHeaderDTOs;
+using ApexWebAPI.DTOs.FivePProgramCounterDTOs;
 using ApexWebAPI.DTOs.HomeVideoSectionDTOs;
 using ApexWebAPI.DTOs.AboutVideoSectionDTOs;
 using ApexWebAPI.DTOs.AboutCounterDTOs;
@@ -360,6 +361,25 @@ namespace ApexWebAPI.Mapping
             CreateMap<CreateFivePProgramHeaderDto, FivePProgramHeader>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
             CreateMap<UpdateFivePProgramHeaderDto, FivePProgramHeader>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            // FivePProgramCounter
+            CreateMap<FivePProgramCounter, ResultFivePProgramCounterDto>()
+                .ForMember(dest => dest.Text1, opt => opt.Ignore())
+                .ForMember(dest => dest.Text2, opt => opt.Ignore())
+                .ForMember(dest => dest.Text3, opt => opt.Ignore())
+                .ForMember(dest => dest.Text4, opt => opt.Ignore());
+
+            CreateMap<FivePProgramCounter, GetByIdFivePProgramCounterDto>()
+                .ForMember(dest => dest.Text1, opt => opt.Ignore())
+                .ForMember(dest => dest.Text2, opt => opt.Ignore())
+                .ForMember(dest => dest.Text3, opt => opt.Ignore())
+                .ForMember(dest => dest.Text4, opt => opt.Ignore());
+
+            CreateMap<CreateFivePProgramCounterDto, FivePProgramCounter>()
+                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            CreateMap<UpdateFivePProgramCounterDto, FivePProgramCounter>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
         }
     }
