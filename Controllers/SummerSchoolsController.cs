@@ -48,6 +48,28 @@ namespace ApexWebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(GetByIdSchoolSummerDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<GetByIdSchoolSummerDto>> GetById([FromRoute] string lang, int id)
+        {
+            var school = await _context.SummerSchools
+                .Include(s => s.Translations)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            if (school == null)
+                return NotFound(new { message = _localizer["NotFound"].Value });
+
+            var dto = _mapper.Map<GetByIdSchoolSummerDto>(school);
+            dto.Title = school.Translations.FirstOrDefault(t => t.Language == lang)?.Title
+                ?? school.Translations.FirstOrDefault(t => t.Language == "az")?.Title;
+            dto.SubTitle = school.Translations.FirstOrDefault(t => t.Language == lang)?.SubTitle
+                ?? school.Translations.FirstOrDefault(t => t.Language == "az")?.SubTitle;
+
+            return Ok(dto);
+        }
+
         [HttpGet("countries")]
         [AllowAnonymous]
         [ProducesResponseType(typeof(IEnumerable<ResultCountryDto>), 200)]
