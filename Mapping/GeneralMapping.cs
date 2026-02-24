@@ -6,6 +6,7 @@ using ApexWebAPI.DTOs.SummerSchoolHeaderDTOs;
 using ApexWebAPI.DTOs.FivePProgramHeaderDTOs;
 using ApexWebAPI.DTOs.FivePProgramCounterDTOs;
 using ApexWebAPI.DTOs.PlanningDTOs;
+using ApexWebAPI.DTOs.SocialMediaDTOs;
 using ApexWebAPI.DTOs.HomeVideoSectionDTOs;
 using ApexWebAPI.DTOs.AboutVideoSectionDTOs;
 using ApexWebAPI.DTOs.AboutCounterDTOs;
@@ -395,6 +396,11 @@ namespace ApexWebAPI.Mapping
 
             CreateMap<UpdatePlanningDto, Planning>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            // SocialMedia
+            CreateMap<SocialMedia, ResultSocialMediaDto>();
+            CreateMap<CreateSocialMediaDto, SocialMedia>();
+            CreateMap<UpdateSocialMediaDto, SocialMedia>();
         }
     }
 }
