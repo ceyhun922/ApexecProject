@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using ApexWebAPI.Concrete;
+using ApexWebAPI.DTOs.CountryDTOs;
 using ApexWebAPI.DTOs.SummerSchoolDTOs;
 using ApexWebAPI.Entities;
 using AutoMapper;
@@ -42,6 +43,30 @@ namespace ApexWebAPI.Controllers
                 dto.SubTitle = s.Translations.FirstOrDefault(t => t.Language == lang)?.SubTitle
                     ?? s.Translations.FirstOrDefault(t => t.Language == "az")?.SubTitle;
                 return dto;
+            });
+
+            return Ok(result);
+        }
+
+        [HttpGet("countries")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(IEnumerable<ResultCountryDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ResultCountryDto>>> GetCountriesWithSummerSchools([FromRoute] string lang)
+        {
+            var countries = await _context.SummerSchools
+                .Where(s => s.Status)
+                .Include(s => s.Country)
+                    .ThenInclude(c => c!.CountryTranslations)
+                .Select(s => s.Country!)
+                .Distinct()
+                .ToListAsync();
+
+            var result = countries.Select(c => new ResultCountryDto
+            {
+                Id = c.Id,
+                Name = c.CountryTranslations?
+                    .FirstOrDefault(t => t.Language == lang)?.Name
+                    ?? c.CountryTranslations?.FirstOrDefault(t => t.Language == "az")?.Name
             });
 
             return Ok(result);
