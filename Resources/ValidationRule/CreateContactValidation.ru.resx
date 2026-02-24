@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="PhoneRequired" xml:space="preserve">
+    <value>Необходимо указать номер телефона</value>
+  </data>
+  <data name="PhoneMaxLength" xml:space="preserve">
+    <value>Номер телефона не может превышать 20 символов</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>Необходимо указать электронную почту</value>
+  </data>
+  <data name="EmailInvalid" xml:space="preserve">
+    <value>Необходимо указать корректный адрес электронной почты</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Необходимо указать корректный ID</value>
+  </data>
+</root>

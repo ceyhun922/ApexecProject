@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="UsernameRequired" xml:space="preserve">
+    <value>Необходимо указать имя пользователя</value>
+  </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Необходимо указать пароль</value>
+  </data>
+</root>

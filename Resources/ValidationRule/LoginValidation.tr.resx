@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="UsernameRequired" xml:space="preserve">
+    <value>Kullanıcı adı girilmelidir</value>
+  </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Şifre girilmelidir</value>
+  </data>
+</root>

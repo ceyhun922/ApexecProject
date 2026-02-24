@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="TitleRequired" xml:space="preserve">
+    <value>Необходимо указать заголовок на азербайджанском</value>
+  </data>
+  <data name="TitleMaxLength" xml:space="preserve">
+    <value>Заголовок не может превышать 300 символов</value>
+  </data>
+  <data name="SubTitleMaxLength" xml:space="preserve">
+    <value>Подзаголовок не может превышать 500 символов</value>
+  </data>
+  <data name="CountryRequired" xml:space="preserve">
+    <value>Необходимо выбрать страну</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Необходимо указать корректный ID</value>
+  </data>
+</root>

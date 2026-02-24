@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="PhoneRequired" xml:space="preserve">
+    <value>Telefon nömrəsi daxil edilməlidir</value>
+  </data>
+  <data name="PhoneMaxLength" xml:space="preserve">
+    <value>Telefon nömrəsi 20 simvoldan çox ola bilməz</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>E-mail daxil edilməlidir</value>
+  </data>
+  <data name="EmailInvalid" xml:space="preserve">
+    <value>Düzgün e-mail formatı daxil edilməlidir</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Keçərli ID daxil edilməlidir</value>
+  </data>
+</root>

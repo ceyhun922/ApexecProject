@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="NameRequired" xml:space="preserve">
+    <value>Необходимо указать название уровня образования на азербайджанском</value>
+  </data>
+  <data name="NameMaxLength" xml:space="preserve">
+    <value>Название уровня образования не может превышать 200 символов</value>
+  </data>
+  <data name="CountryRequired" xml:space="preserve">
+    <value>Необходимо выбрать страну</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Необходимо указать корректный ID</value>
+  </data>
+</root>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="FullNameRequired" xml:space="preserve">
+    <value>Ad Soyad girilmelidir</value>
+  </data>
+  <data name="FullNameMaxLength" xml:space="preserve">
+    <value>Ad Soyad 100 karakterden fazla olamaz</value>
+  </data>
+  <data name="PhoneRequired" xml:space="preserve">
+    <value>Telefon numarası girilmelidir</value>
+  </data>
+  <data name="PhoneMaxLength" xml:space="preserve">
+    <value>Telefon numarası 20 karakterden fazla olamaz</value>
+  </data>
+  <data name="EmailInvalid" xml:space="preserve">
+    <value>Geçerli bir e-posta adresi girilmelidir</value>
+  </data>
+  <data name="EducationRequired" xml:space="preserve">
+    <value>Eğitim bilgisi girilmelidir</value>
+  </data>
+  <data name="EducationMaxLength" xml:space="preserve">
+    <value>Eğitim bilgisi 200 karakterden fazla olamaz</value>
+  </data>
+  <data name="ClassOrYearRequired" xml:space="preserve">
+    <value>Sınıf/yıl bilgisi girilmelidir</value>
+  </data>
+  <data name="ClassOrYearMaxLength" xml:space="preserve">
+    <value>Sınıf/yıl 20 karakterden fazla olamaz</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Geçerli bir ID girilmelidir</value>
+  </data>
+</root>

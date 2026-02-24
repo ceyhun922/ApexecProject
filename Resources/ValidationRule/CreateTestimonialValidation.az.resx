@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="FullNameRequired" xml:space="preserve">
+    <value>Ad Soyad daxil edilməlidir</value>
+  </data>
+  <data name="FullNameMaxLength" xml:space="preserve">
+    <value>Ad Soyad 100 simvoldan çox ola bilməz</value>
+  </data>
+  <data name="CommentRequired" xml:space="preserve">
+    <value>Azərbaycanca rəy daxil edilməlidir</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Keçərli ID daxil edilməlidir</value>
+  </data>
+</root>

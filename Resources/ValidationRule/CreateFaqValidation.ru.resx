@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="TitleRequired" xml:space="preserve">
+    <value>Необходимо указать вопрос на азербайджанском</value>
+  </data>
+  <data name="TitleMaxLength" xml:space="preserve">
+    <value>Вопрос не может превышать 300 символов</value>
+  </data>
+  <data name="ContentRequired" xml:space="preserve">
+    <value>Необходимо указать ответ на азербайджанском</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Необходимо указать корректный ID</value>
+  </data>
+</root>

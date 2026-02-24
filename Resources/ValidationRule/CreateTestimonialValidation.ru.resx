@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="FullNameRequired" xml:space="preserve">
+    <value>Необходимо указать имя и фамилию</value>
+  </data>
+  <data name="FullNameMaxLength" xml:space="preserve">
+    <value>Имя и фамилия не могут превышать 100 символов</value>
+  </data>
+  <data name="CommentRequired" xml:space="preserve">
+    <value>Необходимо указать отзыв на азербайджанском</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Необходимо указать корректный ID</value>
+  </data>
+</root>

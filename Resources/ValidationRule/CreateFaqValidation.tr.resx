@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="TitleRequired" xml:space="preserve">
+    <value>Azerbaycanca soru girilmelidir</value>
+  </data>
+  <data name="TitleMaxLength" xml:space="preserve">
+    <value>Soru 300 karakterden fazla olamaz</value>
+  </data>
+  <data name="ContentRequired" xml:space="preserve">
+    <value>Azerbaycanca cevap girilmelidir</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Geçerli bir ID girilmelidir</value>
+  </data>
+</root>

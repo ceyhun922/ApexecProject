@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="NameRequired" xml:space="preserve">
+    <value>Azerbaycanca ülke adı girilmelidir</value>
+  </data>
+  <data name="NameMaxLength" xml:space="preserve">
+    <value>Ülke adı 100 karakterden fazla olamaz</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Geçerli bir ID girilmelidir</value>
+  </data>
+</root>

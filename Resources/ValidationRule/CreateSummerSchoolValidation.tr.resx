@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="TitleRequired" xml:space="preserve">
+    <value>Azerbaycanca başlık girilmelidir</value>
+  </data>
+  <data name="TitleMaxLength" xml:space="preserve">
+    <value>Başlık 300 karakterden fazla olamaz</value>
+  </data>
+  <data name="SubTitleMaxLength" xml:space="preserve">
+    <value>Alt başlık 500 karakterden fazla olamaz</value>
+  </data>
+  <data name="CountryRequired" xml:space="preserve">
+    <value>Ülke seçilmelidir</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Geçerli bir ID girilmelidir</value>
+  </data>
+</root>

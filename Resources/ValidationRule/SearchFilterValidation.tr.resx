@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="PageInvalid" xml:space="preserve">
+    <value>Sayfa numarası 0'dan büyük olmalıdır</value>
+  </data>
+  <data name="PageSizeInvalid" xml:space="preserve">
+    <value>Sayfa boyutu 1 ile 100 arasında olmalıdır</value>
+  </data>
+  <data name="CountryIdInvalid" xml:space="preserve">
+    <value>Ülke ID 0'dan büyük olmalıdır</value>
+  </data>
+  <data name="EducationLevelIdInvalid" xml:space="preserve">
+    <value>Eğitim seviyesi ID 0'dan büyük olmalıdır</value>
+  </data>
+  <data name="DepartmentIdInvalid" xml:space="preserve">
+    <value>Fakülte ID 0'dan büyük olmalıdır</value>
+  </data>
+</root>

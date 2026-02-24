@@ -1,33 +1,37 @@
 using ApexWebAPI.DTOs.AboutDTOs;
 using FluentValidation;
+using Microsoft.Extensions.Localization;
 
 namespace ApexWebAPI.ValidationRule
 {
     public class CreateAboutValidation : AbstractValidator<CreateAboutDto>
     {
-        public CreateAboutValidation()
+        public CreateAboutValidation(IStringLocalizer<CreateAboutValidation> localizer)
         {
             RuleFor(x => x.TitleAz)
-                .NotEmpty().WithMessage("Azərbaycanca başlıq daxil edilməlidir")
-                .MaximumLength(300).WithMessage("Başlıq 300 simvoldan çox ola bilməz");
+                .NotEmpty().WithMessage(_ => localizer["TitleRequired"])
+                .MaximumLength(300).WithMessage(_ => localizer["TitleMaxLength"]);
 
             RuleFor(x => x.SubTitleAz)
-                .NotEmpty().WithMessage("Azərbaycanca alt başlıq daxil edilməlidir")
-                .MaximumLength(500).WithMessage("Alt başlıq 500 simvoldan çox ola bilməz");
+                .NotEmpty().WithMessage(_ => localizer["SubTitleRequired"])
+                .MaximumLength(500).WithMessage(_ => localizer["SubTitleMaxLength"]);
         }
     }
 
     public class UpdateAboutValidation : AbstractValidator<UpdateAboutDto>
     {
-        public UpdateAboutValidation()
+        public UpdateAboutValidation(IStringLocalizer<CreateAboutValidation> localizer)
         {
+            RuleFor(x => x.Id)
+                .GreaterThan(0).WithMessage(_ => localizer["IdInvalid"]);
+
             RuleFor(x => x.TitleAz)
-                .NotEmpty().WithMessage("Azərbaycanca başlıq daxil edilməlidir")
-                .MaximumLength(300).WithMessage("Başlıq 300 simvoldan çox ola bilməz");
+                .NotEmpty().WithMessage(_ => localizer["TitleRequired"])
+                .MaximumLength(300).WithMessage(_ => localizer["TitleMaxLength"]);
 
             RuleFor(x => x.SubTitleAz)
-                .NotEmpty().WithMessage("Azərbaycanca alt başlıq daxil edilməlidir")
-                .MaximumLength(500).WithMessage("Alt başlıq 500 simvoldan çox ola bilməz");
+                .NotEmpty().WithMessage(_ => localizer["SubTitleRequired"])
+                .MaximumLength(500).WithMessage(_ => localizer["SubTitleMaxLength"]);
         }
     }
 }

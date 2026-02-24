@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="NameRequired" xml:space="preserve">
+    <value>Azərbaycanca ölkə adı daxil edilməlidir</value>
+  </data>
+  <data name="NameMaxLength" xml:space="preserve">
+    <value>Ölkə adı 100 simvoldan çox ola bilməz</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Keçərli ID daxil edilməlidir</value>
+  </data>
+</root>

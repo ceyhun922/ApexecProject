@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="TitleRequired" xml:space="preserve">
+    <value>Azerbaijani title is required</value>
+  </data>
+  <data name="TitleMaxLength" xml:space="preserve">
+    <value>Title cannot exceed 200 characters</value>
+  </data>
+  <data name="TitleEnMaxLength" xml:space="preserve">
+    <value>English title cannot exceed 200 characters</value>
+  </data>
+  <data name="TitleRuMaxLength" xml:space="preserve">
+    <value>Russian title cannot exceed 200 characters</value>
+  </data>
+  <data name="TitleTrMaxLength" xml:space="preserve">
+    <value>Turkish title cannot exceed 200 characters</value>
+  </data>
+  <data name="VideoMaxSize" xml:space="preserve">
+    <value>Video file cannot exceed 50MB</value>
+  </data>
+</root>

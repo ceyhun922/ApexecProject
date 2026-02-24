@@ -1,28 +1,29 @@
 using ApexWebAPI.DTOs.CountryDTOs;
 using FluentValidation;
+using Microsoft.Extensions.Localization;
 
 namespace ApexWebAPI.ValidationRule
 {
     public class CreateCountryValidation : AbstractValidator<CreateCountryDto>
     {
-        public CreateCountryValidation()
+        public CreateCountryValidation(IStringLocalizer<CreateCountryValidation> localizer)
         {
             RuleFor(x => x.NameAz)
-                .NotEmpty().WithMessage("Azərbaycanca ölkə adı daxil edilməlidir")
-                .MaximumLength(100).WithMessage("Ölkə adı 100 simvoldan çox ola bilməz");
+                .NotEmpty().WithMessage(_ => localizer["NameRequired"])
+                .MaximumLength(100).WithMessage(_ => localizer["NameMaxLength"]);
         }
     }
 
     public class UpdateCountryValidation : AbstractValidator<UpdateCountryDto>
     {
-        public UpdateCountryValidation()
+        public UpdateCountryValidation(IStringLocalizer<CreateCountryValidation> localizer)
         {
             RuleFor(x => x.Id)
-                .GreaterThan(0).WithMessage("Keçərli ID daxil edilməlidir");
+                .GreaterThan(0).WithMessage(_ => localizer["IdInvalid"]);
 
             RuleFor(x => x.NameAz)
-                .NotEmpty().WithMessage("Azərbaycanca ölkə adı daxil edilməlidir")
-                .MaximumLength(100).WithMessage("Ölkə adı 100 simvoldan çox ola bilməz");
+                .NotEmpty().WithMessage(_ => localizer["NameRequired"])
+                .MaximumLength(100).WithMessage(_ => localizer["NameMaxLength"]);
         }
     }
 }

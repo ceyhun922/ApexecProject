@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="FullNameRequired" xml:space="preserve">
+    <value>Необходимо указать имя и фамилию</value>
+  </data>
+  <data name="UsernameRequired" xml:space="preserve">
+    <value>Необходимо указать имя пользователя</value>
+  </data>
+  <data name="EmailInvalid" xml:space="preserve">
+    <value>Необходимо указать корректный адрес электронной почты</value>
+  </data>
+</root>

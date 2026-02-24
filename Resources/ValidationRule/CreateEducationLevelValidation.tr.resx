@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="NameRequired" xml:space="preserve">
+    <value>Azerbaycanca eğitim seviyesi adı girilmelidir</value>
+  </data>
+  <data name="NameMaxLength" xml:space="preserve">
+    <value>Eğitim seviyesi adı 200 karakterden fazla olamaz</value>
+  </data>
+  <data name="CountryRequired" xml:space="preserve">
+    <value>Ülke seçilmelidir</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Geçerli bir ID girilmelidir</value>
+  </data>
+</root>

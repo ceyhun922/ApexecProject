@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="TitleRequired" xml:space="preserve">
+    <value>Необходимо указать заголовок на азербайджанском</value>
+  </data>
+  <data name="TitleMaxLength" xml:space="preserve">
+    <value>Заголовок не может превышать 200 символов</value>
+  </data>
+  <data name="TitleEnMaxLength" xml:space="preserve">
+    <value>Английский заголовок не может превышать 200 символов</value>
+  </data>
+  <data name="TitleRuMaxLength" xml:space="preserve">
+    <value>Русский заголовок не может превышать 200 символов</value>
+  </data>
+  <data name="TitleTrMaxLength" xml:space="preserve">
+    <value>Турецкий заголовок не может превышать 200 символов</value>
+  </data>
+  <data name="VideoMaxSize" xml:space="preserve">
+    <value>Видеофайл не может превышать 50МБ</value>
+  </data>
+</root>

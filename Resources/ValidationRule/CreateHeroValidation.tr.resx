@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="TitleRequired" xml:space="preserve">
+    <value>Azerbaycanca başlık girilmelidir</value>
+  </data>
+  <data name="TitleMaxLength" xml:space="preserve">
+    <value>Başlık 200 karakterden fazla olamaz</value>
+  </data>
+  <data name="TitleEnMaxLength" xml:space="preserve">
+    <value>İngilizce başlık 200 karakterden fazla olamaz</value>
+  </data>
+  <data name="TitleRuMaxLength" xml:space="preserve">
+    <value>Rusça başlık 200 karakterden fazla olamaz</value>
+  </data>
+  <data name="TitleTrMaxLength" xml:space="preserve">
+    <value>Türkçe başlık 200 karakterden fazla olamaz</value>
+  </data>
+  <data name="VideoMaxSize" xml:space="preserve">
+    <value>Video dosyası 50MB'dan büyük olamaz</value>
+  </data>
+</root>

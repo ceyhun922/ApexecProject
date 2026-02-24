@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="PageInvalid" xml:space="preserve">
+    <value>Page number must be greater than 0</value>
+  </data>
+  <data name="PageSizeInvalid" xml:space="preserve">
+    <value>Page size must be between 1 and 100</value>
+  </data>
+  <data name="CountryIdInvalid" xml:space="preserve">
+    <value>Country ID must be greater than 0</value>
+  </data>
+  <data name="EducationLevelIdInvalid" xml:space="preserve">
+    <value>Education level ID must be greater than 0</value>
+  </data>
+  <data name="DepartmentIdInvalid" xml:space="preserve">
+    <value>Department ID must be greater than 0</value>
+  </data>
+</root>

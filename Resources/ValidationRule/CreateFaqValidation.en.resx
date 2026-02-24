@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="TitleRequired" xml:space="preserve">
+    <value>Azerbaijani question is required</value>
+  </data>
+  <data name="TitleMaxLength" xml:space="preserve">
+    <value>Question cannot exceed 300 characters</value>
+  </data>
+  <data name="ContentRequired" xml:space="preserve">
+    <value>Azerbaijani answer is required</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>A valid ID is required</value>
+  </data>
+</root>

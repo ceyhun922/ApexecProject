@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="TitleRequired" xml:space="preserve">
+    <value>Azərbaycanca başlıq daxil edilməlidir</value>
+  </data>
+  <data name="TitleMaxLength" xml:space="preserve">
+    <value>Başlıq 200 simvoldan çox ola bilməz</value>
+  </data>
+  <data name="TitleEnMaxLength" xml:space="preserve">
+    <value>İngilis başlığı 200 simvoldan çox ola bilməz</value>
+  </data>
+  <data name="TitleRuMaxLength" xml:space="preserve">
+    <value>Rus başlığı 200 simvoldan çox ola bilməz</value>
+  </data>
+  <data name="TitleTrMaxLength" xml:space="preserve">
+    <value>Türk başlığı 200 simvoldan çox ola bilməz</value>
+  </data>
+  <data name="VideoMaxSize" xml:space="preserve">
+    <value>Video fayl 50MB-dan böyük ola bilməz</value>
+  </data>
+</root>

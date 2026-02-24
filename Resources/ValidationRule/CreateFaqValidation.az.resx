@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="TitleRequired" xml:space="preserve">
+    <value>Azərbaycanca sual daxil edilməlidir</value>
+  </data>
+  <data name="TitleMaxLength" xml:space="preserve">
+    <value>Sual 300 simvoldan çox ola bilməz</value>
+  </data>
+  <data name="ContentRequired" xml:space="preserve">
+    <value>Azərbaycanca cavab daxil edilməlidir</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Keçərli ID daxil edilməlidir</value>
+  </data>
+</root>

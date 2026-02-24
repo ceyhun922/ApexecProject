@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="FullNameRequired" xml:space="preserve">
+    <value>Ad Soyad daxil edilməlidir</value>
+  </data>
+  <data name="UsernameRequired" xml:space="preserve">
+    <value>İstifadəçi adı daxil edilməlidir</value>
+  </data>
+  <data name="EmailInvalid" xml:space="preserve">
+    <value>Düzgün e-mail daxil edilməlidir</value>
+  </data>
+</root>

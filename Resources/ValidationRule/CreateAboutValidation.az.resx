@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="TitleRequired" xml:space="preserve">
+    <value>Azərbaycanca başlıq daxil edilməlidir</value>
+  </data>
+  <data name="TitleMaxLength" xml:space="preserve">
+    <value>Başlıq 300 simvoldan çox ola bilməz</value>
+  </data>
+  <data name="SubTitleRequired" xml:space="preserve">
+    <value>Azərbaycanca alt başlıq daxil edilməlidir</value>
+  </data>
+  <data name="SubTitleMaxLength" xml:space="preserve">
+    <value>Alt başlıq 500 simvoldan çox ola bilməz</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Keçərli ID daxil edilməlidir</value>
+  </data>
+</root>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="NameRequired" xml:space="preserve">
+    <value>Azerbaijani department name is required</value>
+  </data>
+  <data name="NameMaxLength" xml:space="preserve">
+    <value>Department name cannot exceed 200 characters</value>
+  </data>
+  <data name="EducationLevelRequired" xml:space="preserve">
+    <value>Education level must be selected</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>A valid ID is required</value>
+  </data>
+</root>

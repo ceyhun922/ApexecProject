@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="FullNameRequired" xml:space="preserve">
+    <value>Full name is required</value>
+  </data>
+  <data name="FullNameMaxLength" xml:space="preserve">
+    <value>Full name cannot exceed 100 characters</value>
+  </data>
+  <data name="CommentRequired" xml:space="preserve">
+    <value>Azerbaijani comment is required</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>A valid ID is required</value>
+  </data>
+</root>

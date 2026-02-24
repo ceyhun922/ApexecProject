@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="NameRequired" xml:space="preserve">
+    <value>Azərbaycanca fakültə adı daxil edilməlidir</value>
+  </data>
+  <data name="NameMaxLength" xml:space="preserve">
+    <value>Fakültə adı 200 simvoldan çox ola bilməz</value>
+  </data>
+  <data name="EducationLevelRequired" xml:space="preserve">
+    <value>Təhsil səviyyəsi seçilməlidir</value>
+  </data>
+  <data name="IdInvalid" xml:space="preserve">
+    <value>Keçərli ID daxil edilməlidir</value>
+  </data>
+</root>
