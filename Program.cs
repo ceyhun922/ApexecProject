@@ -22,6 +22,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using ApexWebAPI.Infrastructure.ServiceExtensions;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -124,15 +125,11 @@ try
                 NameClaimType = ClaimTypes.NameIdentifier
             };
 
-            // SignalR WebSocket bağlantıları için token query string-dən oxunur
         });
 
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-    builder.Services.AddDbContext<ApexDbContext>(opt =>
-    {
-        opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-    });
+    builder.Services.AddDatabase(builder.Configuration);
 
     builder.Services.Configure<ForwardedHeadersOptions>(options =>
     {
@@ -145,11 +142,9 @@ try
         options.KnownProxies.Clear();
     });
 
-    // Repository & Unit of Work
     builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-    // Application Services
     builder.Services.AddScoped<IHeroService, HeroService>();
     builder.Services.AddScoped<IAboutService, AboutService>();
     builder.Services.AddScoped<ITestimonialService, TestimonialService>();
