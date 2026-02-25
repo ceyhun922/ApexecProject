@@ -182,7 +182,7 @@ namespace ApexWebAPI.Controllers
                 .FirstOrDefaultAsync(s => s.Id == dto.Id);
 
             if (school == null)
-                return NotFound(new { message = _localizer["NotFount"].Value });
+                return NotFound(new { message = _localizer["NotFound"].Value });
 
             _mapper.Map(dto, school);
 

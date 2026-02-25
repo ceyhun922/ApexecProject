@@ -28,7 +28,6 @@ namespace ApexWebAPI.Controllers
 
 
         [HttpGet("messages-list")]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(List<ResultMessageDto>), 200)]
         public async Task<ActionResult<List<ResultMessageDto>>> GetMessages()
         {
@@ -40,7 +39,6 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(GetByIdMessageDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<GetByIdMessageDto>> GetByIdMessage(int id)

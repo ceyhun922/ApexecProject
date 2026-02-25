@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using ApexWebAPI.Concrete;
 using ApexWebAPI.DTOs.UniversityDTOs;
 using ApexWebAPI.Entities;
+using ApexWebAPI.Infrastructure.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +17,14 @@ namespace ApexWebAPI.Controllers
         private readonly ApexDbContext _context;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<UniversitiesController> _localizer;
+        private readonly HtmlSanitizerService _htmlSanitizerService;
 
-        public UniversitiesController(ApexDbContext context, IMapper mapper, IStringLocalizer<UniversitiesController> localizer)
+        public UniversitiesController(ApexDbContext context, IMapper mapper, IStringLocalizer<UniversitiesController> localizer, HtmlSanitizerService htmlSanitizerService)
         {
             _context = context;
             _mapper = mapper;
             _localizer = localizer;
+            _htmlSanitizerService = htmlSanitizerService;
         }
 
         [HttpGet]
@@ -123,10 +126,10 @@ namespace ApexWebAPI.Controllers
                 CreatedDate = DateTime.UtcNow,
                 Translations = new List<UniversityTranslation>
                 {
-                    new() { Language = "az", Title = dto.TitleAz, SubTitle = dto.SubTitleAz, Description = dto.DescriptionAz },
-                    new() { Language = "en", Title = dto.TitleEn, SubTitle = dto.SubTitleEn, Description = dto.DescriptionEn },
-                    new() { Language = "ru", Title = dto.TitleRu, SubTitle = dto.SubTitleRu, Description = dto.DescriptionRu },
-                    new() { Language = "tr", Title = dto.TitleTr, SubTitle = dto.SubTitleTr, Description = dto.DescriptionTr }
+                    new() { Language = "az", Title = dto.TitleAz, SubTitle = dto.SubTitleAz, Description = _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionAz) },
+                    new() { Language = "en", Title = dto.TitleEn, SubTitle = dto.SubTitleEn, Description = _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionEn) },
+                    new() { Language = "ru", Title = dto.TitleRu, SubTitle = dto.SubTitleRu, Description = _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionRu) },
+                    new() { Language = "tr", Title = dto.TitleTr, SubTitle = dto.SubTitleTr, Description = _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionTr) }
                 }
             };
 
@@ -156,10 +159,10 @@ namespace ApexWebAPI.Controllers
 
             var langs = new[]
             {
-                ("az", dto.TitleAz, dto.SubTitleAz, dto.DescriptionAz),
-                ("en", dto.TitleEn, dto.SubTitleEn, dto.DescriptionEn),
-                ("ru", dto.TitleRu, dto.SubTitleRu, dto.DescriptionRu),
-                ("tr", dto.TitleTr, dto.SubTitleTr, dto.DescriptionTr)
+                ("az", dto.TitleAz, dto.SubTitleAz, _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionAz)),
+                ("en", dto.TitleEn, dto.SubTitleEn, _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionEn)),
+                ("ru", dto.TitleRu, dto.SubTitleRu, _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionRu)),
+                ("tr", dto.TitleTr, dto.SubTitleTr, _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionTr))
             };
 
             foreach (var (l, title, subTitle, description) in langs)
