@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using ApexWebAPI.Infrastructure.Services;
 
 namespace ApexWebAPI.Controllers
 {
@@ -17,12 +18,14 @@ namespace ApexWebAPI.Controllers
         private readonly ApexDbContext _context;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<SummerSchoolsController> _localizer;
+        private readonly HtmlSanitizerService _htmlSanitizerService;
 
-        public SummerSchoolsController(ApexDbContext context, IMapper mapper, IStringLocalizer<SummerSchoolsController> localizer)
+        public SummerSchoolsController(ApexDbContext context, IMapper mapper, IStringLocalizer<SummerSchoolsController> localizer, HtmlSanitizerService htmlSanitizerService)
         {
             _context = context;
             _mapper = mapper;
             _localizer = localizer;
+            _htmlSanitizerService = htmlSanitizerService;
         }
 
         [HttpGet]
@@ -157,10 +160,10 @@ namespace ApexWebAPI.Controllers
             schools.ImageUrl = dto.ImageUrl;
             schools.Translations = new List<SummerSchoolTranslation>
             {
-                new() { Language = "az", Title = dto.TitleAz, SubTitle = dto.SubTitleAz, Description = dto.DescriptionAz },
-                new() { Language = "en", Title = dto.TitleEn, SubTitle = dto.SubTitleEn, Description = dto.DescriptionEn },
-                new() { Language = "ru", Title = dto.TitleRu, SubTitle = dto.SubTitleRu, Description = dto.DescriptionRu },
-                new() { Language = "tr", Title = dto.TitleTr, SubTitle = dto.SubTitleTr, Description = dto.DescriptionTr }
+                new() { Language = "az", Title = _htmlSanitizerService.SanitizeHtmlContent(dto.TitleAz), SubTitle = _htmlSanitizerService.SanitizeHtmlContent(dto.SubTitleAz), Description = _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionAz) },
+                new() { Language = "en", Title = _htmlSanitizerService.SanitizeHtmlContent(dto.TitleEn), SubTitle = _htmlSanitizerService.SanitizeHtmlContent(dto.SubTitleEn), Description = _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionEn) },
+                new() { Language = "ru", Title = _htmlSanitizerService.SanitizeHtmlContent(dto.TitleRu), SubTitle = _htmlSanitizerService.SanitizeHtmlContent(dto.SubTitleRu), Description = _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionRu) },
+                new() { Language = "tr", Title = _htmlSanitizerService.SanitizeHtmlContent(dto.TitleTr), SubTitle = _htmlSanitizerService.SanitizeHtmlContent(dto.SubTitleTr), Description = _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionTr) }
             };
 
             await _context.SummerSchools.AddAsync(schools);
@@ -185,10 +188,10 @@ namespace ApexWebAPI.Controllers
 
             var translations = new[]
             {
-                ("az", dto.TitleAz, dto.SubTitleAz, dto.DescriptionAz),
-                ("en", dto.TitleEn, dto.SubTitleEn, dto.DescriptionEn),
-                ("ru", dto.TitleRu, dto.SubTitleRu, dto.DescriptionRu),
-                ("tr", dto.TitleTr, dto.SubTitleTr, dto.DescriptionTr)
+                 ("az", _htmlSanitizerService.SanitizeHtmlContent(dto.TitleAz), _htmlSanitizerService.SanitizeHtmlContent(dto.SubTitleAz), _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionAz)),
+                ("en", _htmlSanitizerService.SanitizeHtmlContent(dto.TitleEn), _htmlSanitizerService.SanitizeHtmlContent(dto.SubTitleEn), _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionEn)),
+                ("ru", _htmlSanitizerService.SanitizeHtmlContent(dto.TitleRu), _htmlSanitizerService.SanitizeHtmlContent(dto.SubTitleRu), _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionRu)),
+                ("tr", _htmlSanitizerService.SanitizeHtmlContent(dto.TitleTr), _htmlSanitizerService.SanitizeHtmlContent(dto.SubTitleTr), _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionTr))
             };
 
             foreach (var (language, title, subTitle, description) in translations)

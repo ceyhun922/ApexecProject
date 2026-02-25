@@ -2,6 +2,7 @@ using ApexWebAPI.Concrete;
 using ApexWebAPI.Entities;
 using ApexWebAPI.Infrastructure.MiddlewareExtensions;
 using ApexWebAPI.Infrastructure.ServiceExtensions;
+using ApexWebAPI.Infrastructure.Services;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -19,7 +20,7 @@ try
             rollingInterval: RollingInterval.Day,
             retainedFileCountLimit: 30)
         .Enrich.FromLogContext());
-
+    builder.Services.AddSingleton<HtmlSanitizerService>();
     builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
     builder.Services.AddControllersConfig();
     builder.Services.AddSwaggerWithBearer();
