@@ -77,6 +77,31 @@ namespace ApexWebAPI.Concrete
         public DbSet<AboutCounterTranslation>? AboutCounterTranslations { get; set; }
         public DbSet<AboutVideoSection>? AboutVideoSections { get; set; }
         public DbSet<AboutVideoSectionTranslation>? AboutVideoSectionTranslations { get; set; }
+        public DbSet<University>? Universities { get; set; }
+        public DbSet<UniversityTranslation>? UniversityTranslations { get; set; }
         public object Contacts { get; internal set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<University>(entity =>
+            {
+                entity.HasOne(u => u.Country)
+                    .WithMany(c => c.Universities)
+                    .HasForeignKey(u => u.CountryId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(u => u.EducationLevel)
+                    .WithMany(e => e.Universities)
+                    .HasForeignKey(u => u.EducationLevelId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(u => u.Department)
+                    .WithMany(d => d.Universities)
+                    .HasForeignKey(u => u.DepartmentId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+        }
     }
 }

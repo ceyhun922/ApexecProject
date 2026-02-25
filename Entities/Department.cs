@@ -7,5 +7,6 @@ namespace ApexWebAPI.Entities
         public int EducationLevelId {get;set;}
         public EducationLevel? EducationLevel {get;set;}
         public ICollection<DepartmentTranslation>? DepartmentTranslations {get;set;}
+        public ICollection<University>? Universities { get; set; }
     }
 }

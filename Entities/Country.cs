@@ -8,5 +8,6 @@ namespace ApexWebAPI.Entities
         public ICollection<CountryTranslation>? CountryTranslations {get;set;}
 
         public ICollection<SummerSchool>? SummerSchools { get; set; }
+        public ICollection<University>? Universities { get; set; }
     }
 }

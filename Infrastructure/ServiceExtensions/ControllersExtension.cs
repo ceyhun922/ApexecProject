@@ -1,3 +1,4 @@
+using ApexWebAPI.Middleware;
 using ApexWebAPI.ValidationRule;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -17,6 +18,7 @@ namespace ApexWebAPI.Infrastructure.ServiceExtensions
             services.AddControllers(options =>
                 {
                     options.Filters.Add(new AuthorizeFilter());
+                    options.Filters.Add<HtmlSanitizeFilter>();
                 })
                 .ConfigureApiBehaviorOptions(options =>
                 {
