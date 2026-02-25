@@ -1,6 +1,7 @@
 using System.Globalization;
 using ApexWebAPI.Middleware;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.FileProviders;
 using Serilog;
 
 namespace ApexWebAPI.Infrastructure.MiddlewareExtensions
@@ -42,7 +43,21 @@ namespace ApexWebAPI.Infrastructure.MiddlewareExtensions
             app.UseSwagger();
             app.UseSwaggerUI();
 
-            app.UseStaticFiles();
+            // Static files: configured upload path or fallback to wwwroot
+            var config = app.Configuration;
+            var uploadPath = config["App:UploadPath"];
+            var staticRoot = !string.IsNullOrWhiteSpace(uploadPath)
+                ? uploadPath
+                : Path.Combine(app.Environment.ContentRootPath, "wwwroot");
+
+            Directory.CreateDirectory(Path.Combine(staticRoot, "images"));
+            Directory.CreateDirectory(Path.Combine(staticRoot, "videos"));
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(staticRoot),
+                RequestPath = ""
+            });
 
             app.UseRouting();
 
