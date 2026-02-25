@@ -20,6 +20,11 @@ namespace ApexWebAPI.Middleware
 
         public void OnActionExecuted(ActionExecutedContext context) { }
 
+        private static readonly HashSet<Type> _skipTypes = new()
+        {
+            typeof(IFormFile), typeof(Stream), typeof(CancellationToken)
+        };
+
         private static void SanitizeObject(object obj)
         {
             if (obj is null) return;
@@ -29,11 +34,23 @@ namespace ApexWebAPI.Middleware
             if (type.IsPrimitive || type == typeof(string) || type.IsEnum || type.IsValueType)
                 return;
 
+            if (_skipTypes.Any(t => t.IsAssignableFrom(type)))
+                return;
+
             foreach (var prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
+                // Skip indexed properties (indexers) - GetValue would throw TargetParameterCountException
+                if (prop.GetIndexParameters().Length > 0) continue;
+
                 if (!prop.CanRead || !prop.CanWrite) continue;
 
-                var value = prop.GetValue(obj);
+                // Skip IFormFile and Stream typed properties
+                if (_skipTypes.Any(t => t.IsAssignableFrom(prop.PropertyType))) continue;
+
+                object? value;
+                try { value = prop.GetValue(obj); }
+                catch { continue; }
+
                 if (value is null) continue;
 
                 if (prop.PropertyType == typeof(string))
