@@ -20,6 +20,7 @@ namespace ApexWebAPI.Infrastructure.Swagger
 
             if (_excluded.Contains(controller ?? string.Empty)) return;
 
+            // Endpoint açıklamasını ekleyelim
             var existing = operation.Description ?? string.Empty;
             operation.Description = string.IsNullOrWhiteSpace(existing)
                 ? "✏️ **CKEditor destəklənir** — bu endpoint mətn sahələrində HTML qəbul edir. XSS qoruması avtomatik tətbiq olunur."
