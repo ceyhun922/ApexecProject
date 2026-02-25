@@ -23,6 +23,96 @@ namespace ApexWebAPI.Controllers
             _validator = validator;
         }
 
+        [HttpGet("countries")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(IEnumerable<ResultCountryDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ResultCountryDto>>> GetCountries([FromRoute] string lang)
+        {
+            var countries = await _context.Universities!
+                .Where(u => u.Status)
+                .Include(u => u.Country)
+                    .ThenInclude(c => c!.CountryTranslations)
+                .Select(u => u.Country!)
+                .Distinct()
+                .ToListAsync();
+
+            var result = countries.Select(c => new ResultCountryDto
+            {
+                Id = c.Id,
+                Name = c.CountryTranslations?
+                    .FirstOrDefault(t => t.Language == lang)?.Name
+                    ?? c.CountryTranslations?.FirstOrDefault(t => t.Language == "az")?.Name
+            });
+
+            return Ok(result);
+        }
+
+        [HttpGet("education-levels")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(IEnumerable<ResultEducationLevelDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ResultEducationLevelDto>>> GetEducationLevels(
+            [FromRoute] string lang,
+            [FromQuery] int? countryId)
+        {
+            var query = _context.Universities!
+                .Where(u => u.Status)
+                .Include(u => u.EducationLevel)
+                    .ThenInclude(e => e!.EducationLevelTranslations)
+                .AsQueryable();
+
+            if (countryId.HasValue)
+                query = query.Where(u => u.CountryId == countryId.Value);
+
+            var educationLevels = await query
+                .Select(u => u.EducationLevel!)
+                .Distinct()
+                .ToListAsync();
+
+            var result = educationLevels.Select(e => new ResultEducationLevelDto
+            {
+                Id = e.Id,
+                CountryId = e.CountryId,
+                Name = e.EducationLevelTranslations?
+                    .FirstOrDefault(t => t.Language == lang)?.Name
+                    ?? e.EducationLevelTranslations?.FirstOrDefault(t => t.Language == "az")?.Name
+            });
+
+            return Ok(result);
+        }
+
+        [HttpGet("departments")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(IEnumerable<ResultDepartmentDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ResultDepartmentDto>>> GetDepartments(
+            [FromRoute] string lang,
+            [FromQuery] int? educationLevelId)
+        {
+            var query = _context.Universities!
+                .Where(u => u.Status)
+                .Include(u => u.Department)
+                    .ThenInclude(d => d!.DepartmentTranslations)
+                .AsQueryable();
+
+            if (educationLevelId.HasValue)
+                query = query.Where(u => u.EducationLevelId == educationLevelId.Value);
+
+            var departments = await query
+                .Select(u => u.Department!)
+                .Distinct()
+                .ToListAsync();
+
+            var result = departments.Select(d => new ResultDepartmentDto
+            {
+                Id = d.Id,
+                EducationLevelId = d.EducationLevelId,
+                Name = d.DepartmentTranslations?
+                    .FirstOrDefault(t => t.Language == lang)?.Name
+                    ?? d.DepartmentTranslations?.FirstOrDefault(t => t.Language == "az")?.Name
+            });
+
+            return Ok(result);
+        }
+
         [HttpGet]
         [AllowAnonymous]
         [ProducesResponseType(typeof(SearchResultDto), 200)]
