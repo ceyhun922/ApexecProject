@@ -86,6 +86,29 @@ namespace ApexWebAPI.Controllers
             return Ok(dto);
         }
 
+        [HttpGet("{id}/detail")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(GetByIdUniversityDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<GetByIdUniversityDto>> GetDetail([FromRoute] string lang, int id)
+        {
+            var item = await _context.Universities!
+                .Include(u => u.Translations)
+                .FirstOrDefaultAsync(u => u.Id == id && u.Status);
+
+            if (item == null)
+                return NotFound(new { message = _localizer["NotFound"].Value });
+
+            var dto = _mapper.Map<GetByIdUniversityDto>(item);
+            var t = item.Translations.FirstOrDefault(t => t.Language == lang)
+                ?? item.Translations.FirstOrDefault(t => t.Language == "az");
+            dto.Title = t?.Title;
+            dto.SubTitle = t?.SubTitle;
+            dto.Description = t?.Description;
+
+            return Ok(dto);
+        }
+
         [HttpPost]
         [ProducesResponseType(201)]
         public async Task<IActionResult> Create([FromBody] CreateUniversityDto dto)
