@@ -28,6 +28,7 @@ using AutoMapper;
 using ApexWebAPI.DTOs.ContactInfoDTOs;
 using ApexWebAPI.DTOs.LanguageDTOs;
 using ApexWebAPI.DTOs.LanguageCourseDTOs;
+using ApexWebAPI.DTOs.UniversityDTOs;
 
 namespace ApexWebAPI.Mapping
 {
@@ -426,6 +427,14 @@ namespace ApexWebAPI.Mapping
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
             CreateMap<UpdateLanguageCourseDto, LanguageCourse>()
                 .ForMember(dest => dest.Translations, opt => opt.Ignore());
+
+            // University
+            CreateMap<University, ResultUniversityDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+            CreateMap<University, GetByIdUniversityDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
 
             // Layout
             CreateMap<Layout, ResultLayoutDto>()

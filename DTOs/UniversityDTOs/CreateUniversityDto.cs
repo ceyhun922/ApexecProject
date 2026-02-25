@@ -1,0 +1,22 @@
+using System.ComponentModel;
+
+namespace ApexWebAPI.DTOs.UniversityDTOs
+{
+    public class CreateUniversityDto
+    {
+        public string? ImageUrl { get; set; }
+        public int CountryId { get; set; }
+        public int EducationLevelId { get; set; }
+        public int DepartmentId { get; set; }
+        public string? TitleAz { get; set; }
+        public string? TitleEn { get; set; }
+        public string? TitleRu { get; set; }
+        public string? TitleTr { get; set; }
+        public string? SubTitleAz { get; set; }
+        public string? SubTitleEn { get; set; }
+        public string? SubTitleRu { get; set; }
+        public string? SubTitleTr { get; set; }
+        [DefaultValue(true)]
+        public bool Status { get; set; } = true;
+    }
+}
