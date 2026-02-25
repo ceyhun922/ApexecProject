@@ -56,6 +56,7 @@ namespace ApexWebAPI.Controllers
                     ?? u.Translations.FirstOrDefault(t => t.Language == "az");
                 dto.Title = t?.Title;
                 dto.SubTitle = t?.SubTitle;
+                dto.Description = t?.Description;
                 return dto;
             });
 
@@ -80,6 +81,7 @@ namespace ApexWebAPI.Controllers
                 ?? item.Translations.FirstOrDefault(t => t.Language == "az");
             dto.Title = t?.Title;
             dto.SubTitle = t?.SubTitle;
+            dto.Description = t?.Description;
 
             return Ok(dto);
         }
@@ -98,10 +100,10 @@ namespace ApexWebAPI.Controllers
                 CreatedDate = DateTime.UtcNow,
                 Translations = new List<UniversityTranslation>
                 {
-                    new() { Language = "az", Title = dto.TitleAz, SubTitle = dto.SubTitleAz },
-                    new() { Language = "en", Title = dto.TitleEn, SubTitle = dto.SubTitleEn },
-                    new() { Language = "ru", Title = dto.TitleRu, SubTitle = dto.SubTitleRu },
-                    new() { Language = "tr", Title = dto.TitleTr, SubTitle = dto.SubTitleTr }
+                    new() { Language = "az", Title = dto.TitleAz, SubTitle = dto.SubTitleAz, Description = dto.DescriptionAz },
+                    new() { Language = "en", Title = dto.TitleEn, SubTitle = dto.SubTitleEn, Description = dto.DescriptionEn },
+                    new() { Language = "ru", Title = dto.TitleRu, SubTitle = dto.SubTitleRu, Description = dto.DescriptionRu },
+                    new() { Language = "tr", Title = dto.TitleTr, SubTitle = dto.SubTitleTr, Description = dto.DescriptionTr }
                 }
             };
 
@@ -131,17 +133,17 @@ namespace ApexWebAPI.Controllers
 
             var langs = new[]
             {
-                ("az", dto.TitleAz, dto.SubTitleAz),
-                ("en", dto.TitleEn, dto.SubTitleEn),
-                ("ru", dto.TitleRu, dto.SubTitleRu),
-                ("tr", dto.TitleTr, dto.SubTitleTr)
+                ("az", dto.TitleAz, dto.SubTitleAz, dto.DescriptionAz),
+                ("en", dto.TitleEn, dto.SubTitleEn, dto.DescriptionEn),
+                ("ru", dto.TitleRu, dto.SubTitleRu, dto.DescriptionRu),
+                ("tr", dto.TitleTr, dto.SubTitleTr, dto.DescriptionTr)
             };
 
-            foreach (var (l, title, subTitle) in langs)
+            foreach (var (l, title, subTitle, description) in langs)
             {
                 var t = item.Translations.FirstOrDefault(x => x.Language == l);
-                if (t != null) { t.Title = title; t.SubTitle = subTitle; }
-                else item.Translations.Add(new UniversityTranslation { Language = l, Title = title, SubTitle = subTitle });
+                if (t != null) { t.Title = title; t.SubTitle = subTitle; t.Description = description; }
+                else item.Translations.Add(new UniversityTranslation { Language = l, Title = title, SubTitle = subTitle, Description = description });
             }
 
             await _context.SaveChangesAsync();

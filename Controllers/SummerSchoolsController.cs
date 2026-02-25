@@ -37,11 +37,12 @@ namespace ApexWebAPI.Controllers
 
             var result = schools.Select(s =>
             {
+                var t = s.Translations.FirstOrDefault(x => x.Language == lang)
+                    ?? s.Translations.FirstOrDefault(x => x.Language == "az");
                 var dto = _mapper.Map<ResultSummerSchoolDto>(s);
-                dto.Title = s.Translations.FirstOrDefault(t => t.Language == lang)?.Title
-                    ?? s.Translations.FirstOrDefault(t => t.Language == "az")?.Title;
-                dto.SubTitle = s.Translations.FirstOrDefault(t => t.Language == lang)?.SubTitle
-                    ?? s.Translations.FirstOrDefault(t => t.Language == "az")?.SubTitle;
+                dto.Title = t?.Title;
+                dto.SubTitle = t?.SubTitle;
+                dto.Description = t?.Description;
                 return dto;
             });
 
@@ -61,11 +62,12 @@ namespace ApexWebAPI.Controllers
             if (school == null)
                 return NotFound(new { message = _localizer["NotFound"].Value });
 
+            var t = school.Translations.FirstOrDefault(x => x.Language == lang)
+                ?? school.Translations.FirstOrDefault(x => x.Language == "az");
             var dto = _mapper.Map<GetByIdSchoolSummerDto>(school);
-            dto.Title = school.Translations.FirstOrDefault(t => t.Language == lang)?.Title
-                ?? school.Translations.FirstOrDefault(t => t.Language == "az")?.Title;
-            dto.SubTitle = school.Translations.FirstOrDefault(t => t.Language == lang)?.SubTitle
-                ?? school.Translations.FirstOrDefault(t => t.Language == "az")?.SubTitle;
+            dto.Title = t?.Title;
+            dto.SubTitle = t?.SubTitle;
+            dto.Description = t?.Description;
 
             return Ok(dto);
         }
@@ -107,11 +109,12 @@ namespace ApexWebAPI.Controllers
             if (school == null)
                 return NotFound(new { message = _localizer["NotFound"].Value });
 
+            var td = school.Translations.FirstOrDefault(x => x.Language == lang)
+                ?? school.Translations.FirstOrDefault(x => x.Language == "az");
             var dto = _mapper.Map<ResultSummerSchoolDto>(school);
-            dto.Title = school.Translations.FirstOrDefault(t => t.Language == lang)?.Title
-                ?? school.Translations.FirstOrDefault(t => t.Language == "az")?.Title;
-            dto.SubTitle = school.Translations.FirstOrDefault(t => t.Language == lang)?.SubTitle
-                ?? school.Translations.FirstOrDefault(t => t.Language == "az")?.SubTitle;
+            dto.Title = td?.Title;
+            dto.SubTitle = td?.SubTitle;
+            dto.Description = td?.Description;
 
             return Ok(dto);
         }
@@ -132,11 +135,12 @@ namespace ApexWebAPI.Controllers
 
             var result = schools.Select(s =>
             {
+                var tc = s.Translations.FirstOrDefault(x => x.Language == lang)
+                    ?? s.Translations.FirstOrDefault(x => x.Language == "az");
                 var dto = _mapper.Map<ResultSummerSchoolDto>(s);
-                dto.Title = s.Translations.FirstOrDefault(t => t.Language == lang)?.Title
-                    ?? s.Translations.FirstOrDefault(t => t.Language == "az")?.Title;
-                dto.SubTitle = s.Translations.FirstOrDefault(t => t.Language == lang)?.SubTitle
-                    ?? s.Translations.FirstOrDefault(t => t.Language == "az")?.SubTitle;
+                dto.Title = tc?.Title;
+                dto.SubTitle = tc?.SubTitle;
+                dto.Description = tc?.Description;
                 return dto;
             });
 
@@ -153,14 +157,10 @@ namespace ApexWebAPI.Controllers
             schools.ImageUrl = dto.ImageUrl;
             schools.Translations = new List<SummerSchoolTranslation>
             {
-                new() { Language = "az", Title = dto.TitleAz},
-                new() { Language = "en", Title = dto.TitleEn},
-                new() { Language = "ru", Title = dto.TitleRu},
-                new() { Language = "tr", Title = dto.TitleTr},
-                new() { Language = "az", SubTitle = dto.SubTitleAz},
-                new() { Language = "en", SubTitle = dto.SubTitleEn},
-                new() { Language = "ru", SubTitle = dto.SubTitleRu},
-                new() { Language = "tr", SubTitle = dto.SubTitleTr}
+                new() { Language = "az", Title = dto.TitleAz, SubTitle = dto.SubTitleAz, Description = dto.DescriptionAz },
+                new() { Language = "en", Title = dto.TitleEn, SubTitle = dto.SubTitleEn, Description = dto.DescriptionEn },
+                new() { Language = "ru", Title = dto.TitleRu, SubTitle = dto.SubTitleRu, Description = dto.DescriptionRu },
+                new() { Language = "tr", Title = dto.TitleTr, SubTitle = dto.SubTitleTr, Description = dto.DescriptionTr }
             };
 
             await _context.SummerSchools.AddAsync(schools);
@@ -183,31 +183,31 @@ namespace ApexWebAPI.Controllers
 
             _mapper.Map(dto, school);
 
-            var translations = new Dictionary<string, (string? Title, string? SubTitle)>
-                {
-                    { "az", (dto.TitleAz, dto.SubTitleAz) },
-                    { "en", (dto.TitleEn, dto.SubTitleEn) },
-                    { "ru", (dto.TitleRu, dto.SubTitleRu) },
-                    { "tr", (dto.TitleTr, dto.SubTitleTr) }
-                };
+            var translations = new[]
+            {
+                ("az", dto.TitleAz, dto.SubTitleAz, dto.DescriptionAz),
+                ("en", dto.TitleEn, dto.SubTitleEn, dto.DescriptionEn),
+                ("ru", dto.TitleRu, dto.SubTitleRu, dto.DescriptionRu),
+                ("tr", dto.TitleTr, dto.SubTitleTr, dto.DescriptionTr)
+            };
 
-            foreach (var (language, value) in translations)
-
+            foreach (var (language, title, subTitle, description) in translations)
             {
                 var translation = school.Translations.FirstOrDefault(t => t.Language == language);
-
                 if (translation != null)
                 {
-                    translation.Title = value.Title;
-                    translation.SubTitle = value.SubTitle;
+                    translation.Title = title;
+                    translation.SubTitle = subTitle;
+                    translation.Description = description;
                 }
                 else
                 {
                     school.Translations.Add(new SummerSchoolTranslation
                     {
                         Language = language,
-                        Title = value.Title,
-                        SubTitle = value.SubTitle
+                        Title = title,
+                        SubTitle = subTitle,
+                        Description = description
                     });
                 }
             }

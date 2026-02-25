@@ -14,6 +14,10 @@ namespace ApexWebAPI.DTOs.LanguageCourseDTOs
         public string? SubTitleEn { get; set; }
         public string? SubTitleRu { get; set; }
         public string? SubTitleTr { get; set; }
+        public string? DescriptionAz { get; set; }
+        public string? DescriptionEn { get; set; }
+        public string? DescriptionRu { get; set; }
+        public string? DescriptionTr { get; set; }
         public bool Status { get; set; }
     }
 }

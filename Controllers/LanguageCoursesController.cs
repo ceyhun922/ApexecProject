@@ -58,6 +58,7 @@ namespace ApexWebAPI.Controllers
                     ?? c.Translations?.FirstOrDefault(t => t.Lang == "az");
                 dto.Title = translation?.Title;
                 dto.SubTitle = translation?.SubTitle;
+                dto.Description = translation?.Description;
                 return dto;
             });
 
@@ -148,6 +149,7 @@ namespace ApexWebAPI.Controllers
                 ?? course.Translations?.FirstOrDefault(t => t.Lang == "az");
             dto.Title = translation?.Title;
             dto.SubTitle = translation?.SubTitle;
+            dto.Description = translation?.Description;
 
             return Ok(dto);
         }
@@ -177,6 +179,7 @@ namespace ApexWebAPI.Controllers
                 ?? course.Translations?.FirstOrDefault(t => t.Lang == "az");
             dto.Title = translation?.Title;
             dto.SubTitle = translation?.SubTitle;
+            dto.Description = translation?.Description;
 
             return Ok(dto);
         }
@@ -194,10 +197,10 @@ namespace ApexWebAPI.Controllers
                 CreatedDate = DateTime.UtcNow,
                 Translations = new List<LanguageCourseTranslation>
                 {
-                    new() { Lang = "az", Title = dto.TitleAz, SubTitle = dto.SubTitleAz },
-                    new() { Lang = "en", Title = dto.TitleEn, SubTitle = dto.SubTitleEn },
-                    new() { Lang = "ru", Title = dto.TitleRu, SubTitle = dto.SubTitleRu },
-                    new() { Lang = "tr", Title = dto.TitleTr, SubTitle = dto.SubTitleTr }
+                    new() { Lang = "az", Title = dto.TitleAz, SubTitle = dto.SubTitleAz, Description = dto.DescriptionAz },
+                    new() { Lang = "en", Title = dto.TitleEn, SubTitle = dto.SubTitleEn, Description = dto.DescriptionEn },
+                    new() { Lang = "ru", Title = dto.TitleRu, SubTitle = dto.SubTitleRu, Description = dto.DescriptionRu },
+                    new() { Lang = "tr", Title = dto.TitleTr, SubTitle = dto.SubTitleTr, Description = dto.DescriptionTr }
                 }
             };
 
@@ -226,17 +229,17 @@ namespace ApexWebAPI.Controllers
 
             var langs = new[]
             {
-                ("az", dto.TitleAz, dto.SubTitleAz),
-                ("en", dto.TitleEn, dto.SubTitleEn),
-                ("ru", dto.TitleRu, dto.SubTitleRu),
-                ("tr", dto.TitleTr, dto.SubTitleTr)
+                ("az", dto.TitleAz, dto.SubTitleAz, dto.DescriptionAz),
+                ("en", dto.TitleEn, dto.SubTitleEn, dto.DescriptionEn),
+                ("ru", dto.TitleRu, dto.SubTitleRu, dto.DescriptionRu),
+                ("tr", dto.TitleTr, dto.SubTitleTr, dto.DescriptionTr)
             };
 
-            foreach (var (l, title, subTitle) in langs)
+            foreach (var (l, title, subTitle, description) in langs)
             {
                 var t = course.Translations!.FirstOrDefault(x => x.Lang == l);
-                if (t != null) { t.Title = title; t.SubTitle = subTitle; }
-                else course.Translations!.Add(new LanguageCourseTranslation { Lang = l, Title = title, SubTitle = subTitle });
+                if (t != null) { t.Title = title; t.SubTitle = subTitle; t.Description = description; }
+                else course.Translations!.Add(new LanguageCourseTranslation { Lang = l, Title = title, SubTitle = subTitle, Description = description });
             }
 
             await _context.SaveChangesAsync();
