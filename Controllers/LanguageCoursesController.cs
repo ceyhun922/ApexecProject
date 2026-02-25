@@ -123,6 +123,35 @@ namespace ApexWebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{id}/detail")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(ResultLanguageCourseDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<ResultLanguageCourseDto>> GetDetail([FromRoute] string lang, int id)
+        {
+            var course = await _context.LanguageCourses!
+                .Include(c => c.Translations)
+                .FirstOrDefaultAsync(c => c.Id == id && c.Status);
+
+            if (course == null)
+                return NotFound(new { message = _localizer["NotFound"].Value });
+
+            var dto = new ResultLanguageCourseDto
+            {
+                Id = course.Id,
+                ImageUrl = course.ImageUrl,
+                Status = course.Status,
+                LanguageId = course.LanguageId,
+                CountryId = course.CountryId
+            };
+            var translation = course.Translations?.FirstOrDefault(t => t.Lang == lang)
+                ?? course.Translations?.FirstOrDefault(t => t.Lang == "az");
+            dto.Title = translation?.Title;
+            dto.SubTitle = translation?.SubTitle;
+
+            return Ok(dto);
+        }
+
         [HttpGet("{id}")]
         [AllowAnonymous]
         [ProducesResponseType(typeof(ResultLanguageCourseDto), 200)]

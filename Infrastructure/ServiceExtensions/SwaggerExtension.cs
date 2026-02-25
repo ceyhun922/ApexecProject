@@ -1,3 +1,4 @@
+using ApexWebAPI.Infrastructure.Swagger;
 using Microsoft.OpenApi.Models;
 
 namespace ApexWebAPI.Infrastructure.ServiceExtensions
@@ -11,6 +12,7 @@ namespace ApexWebAPI.Infrastructure.ServiceExtensions
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApexWebAPI", Version = "v1" });
+                c.OperationFilter<CkEditorOperationFilter>();
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
