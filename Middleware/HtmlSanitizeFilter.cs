@@ -6,9 +6,18 @@ namespace ApexWebAPI.Middleware
 {
     public class HtmlSanitizeFilter : IActionFilter
     {
+        private static readonly HashSet<string> _excludedControllers = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "Auth"
+        };
+
         public void OnActionExecuting(ActionExecutingContext context)
         {
             if (context.HttpContext.Request.Method is not ("POST" or "PUT"))
+                return;
+
+            var controller = context.RouteData.Values["controller"]?.ToString();
+            if (_excludedControllers.Contains(controller ?? string.Empty))
                 return;
 
             foreach (var argument in context.ActionArguments.Values)
