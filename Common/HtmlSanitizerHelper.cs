@@ -1,4 +1,4 @@
-using Ganss.Xss;
+using Ganss.XSS;
 
 namespace ApexWebAPI.Common
 {
