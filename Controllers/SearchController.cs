@@ -34,56 +34,72 @@ namespace ApexWebAPI.Controllers
             if (!validation.IsValid)
                 return BadRequest(validation.Errors.Select(e => e.ErrorMessage));
 
-            var query = _context.Departments
-                .Include(d => d.DepartmentTranslations)
-                .Include(d => d.EducationLevel)
+            var query = _context.Universities!
+                .Include(u => u.Translations)
+                .Include(u => u.Country)
+                    .ThenInclude(c => c!.CountryTranslations)
+                .Include(u => u.EducationLevel)
                     .ThenInclude(e => e!.EducationLevelTranslations)
-                .Include(d => d.EducationLevel)
-                    .ThenInclude(e => e!.Country)
-                        .ThenInclude(c => c!.CountryTranslations)
+                .Include(u => u.Department)
+                    .ThenInclude(d => d!.DepartmentTranslations)
+                .Where(u => u.Status)
                 .AsQueryable();
 
             if (filter.CountryId.HasValue)
-                query = query.Where(d => d.EducationLevel!.CountryId == filter.CountryId.Value);
+                query = query.Where(u => u.CountryId == filter.CountryId.Value);
 
             if (filter.EducationLevelId.HasValue)
-                query = query.Where(d => d.EducationLevelId == filter.EducationLevelId.Value);
+                query = query.Where(u => u.EducationLevelId == filter.EducationLevelId.Value);
 
             if (filter.DepartmentId.HasValue)
-                query = query.Where(d => d.Id == filter.DepartmentId.Value);
+                query = query.Where(u => u.DepartmentId == filter.DepartmentId.Value);
 
             var totalCount = await query.CountAsync();
 
             if (totalCount == 0)
-                return NotFound(new { message = "Sonuç bulunamadı" });
+                return NotFound(new { message = "Nəticə tapılmadı" });
 
             var items = await query
                 .Skip((filter.Page - 1) * filter.PageSize)
                 .Take(filter.PageSize)
                 .ToListAsync();
 
-            var results = items.Select(d => new SearchItemDto
+            var results = items.Select(u =>
             {
-                Country = new ResultCountryDto
+                var t = u.Translations.FirstOrDefault(x => x.Language == lang)
+                    ?? u.Translations.FirstOrDefault(x => x.Language == "az");
+
+                return new SearchItemDto
                 {
-                    Id = d.EducationLevel!.Country!.Id,
-                    Name = d.EducationLevel.Country.CountryTranslations?
-                        .FirstOrDefault(t => t.Language == lang)?.Name
-                },
-                EducationLevel = new ResultEducationLevelDto
-                {
-                    Id = d.EducationLevel.Id,
-                    CountryId = d.EducationLevel.CountryId,
-                    Name = d.EducationLevel.EducationLevelTranslations?
-                        .FirstOrDefault(t => t.Language == lang)?.Name
-                },
-                Department = new ResultDepartmentDto
-                {
-                    Id = d.Id,
-                    EducationLevelId = d.EducationLevelId,
-                    Name = d.DepartmentTranslations?
-                        .FirstOrDefault(t => t.Language == lang)?.Name
-                }
+                    UniversityId = u.Id,
+                    Title = t?.Title,
+                    SubTitle = t?.SubTitle,
+                    Description = t?.Description,
+                    ImageUrl = u.ImageUrl,
+                    Country = new ResultCountryDto
+                    {
+                        Id = u.Country!.Id,
+                        Name = u.Country.CountryTranslations?
+                            .FirstOrDefault(x => x.Language == lang)?.Name
+                            ?? u.Country.CountryTranslations?.FirstOrDefault(x => x.Language == "az")?.Name
+                    },
+                    EducationLevel = new ResultEducationLevelDto
+                    {
+                        Id = u.EducationLevel!.Id,
+                        CountryId = u.EducationLevel.CountryId,
+                        Name = u.EducationLevel.EducationLevelTranslations?
+                            .FirstOrDefault(x => x.Language == lang)?.Name
+                            ?? u.EducationLevel.EducationLevelTranslations?.FirstOrDefault(x => x.Language == "az")?.Name
+                    },
+                    Department = new ResultDepartmentDto
+                    {
+                        Id = u.Department!.Id,
+                        EducationLevelId = u.Department.EducationLevelId,
+                        Name = u.Department.DepartmentTranslations?
+                            .FirstOrDefault(x => x.Language == lang)?.Name
+                            ?? u.Department.DepartmentTranslations?.FirstOrDefault(x => x.Language == "az")?.Name
+                    }
+                };
             }).ToList();
 
             return Ok(new SearchResultDto
