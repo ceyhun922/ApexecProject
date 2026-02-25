@@ -65,11 +65,9 @@ namespace ApexWebAPI.Controllers
                     return BadRequest("Invalid file type. Allowed: jpg, jpeg, png, webp, mp4, webm, mov, avi");
                 }
 
-                // Configured upload path takes priority; fallback to wwwroot under content root
-                var configuredPath = _configuration["App:UploadPath"];
-                var webRoot = !string.IsNullOrWhiteSpace(configuredPath)
-                    ? configuredPath
-                    : Path.Combine(_env.ContentRootPath, "wwwroot");
+                // WebRootPath is always set to {ContentRoot}/wwwroot in .NET 6 regardless of directory existence
+                var webRoot = _env.WebRootPath
+                    ?? Path.Combine(_env.ContentRootPath, "wwwroot");
 
                 var targetDir = Path.Combine(webRoot, folder);
 
