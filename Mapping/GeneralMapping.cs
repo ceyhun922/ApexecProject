@@ -402,7 +402,7 @@ namespace ApexWebAPI.Mapping
             // SocialMedia
             CreateMap<SocialMedia, ResultSocialMediaDto>();
             CreateMap<CreateSocialMediaDto, SocialMedia>();
-            CreateMap<UpdateSocialMediaDto, SocialMedia>();
+            CreateMap<UpdateSocialMediaDto, SocialMedia>(); 
 
             // Language
             CreateMap<Language, ResultLanguageDto>()

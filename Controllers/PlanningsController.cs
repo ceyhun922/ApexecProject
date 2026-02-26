@@ -28,23 +28,20 @@ namespace ApexWebAPI.Controllers
         {
             var items = await _context.Plannings!
                 .Include(p => p.Translations)
+                .Where(p => p.Status)
                 .ToListAsync();
 
-            var result = items.Select(item =>
+            var result = items.Select(p => new ResultPlanningDto
             {
-                var t = item.Translations?
-                    .FirstOrDefault(x => x.Language == lang)
-                    ?? item.Translations?.FirstOrDefault(x => x.Language == "az");
-
-                return new ResultPlanningDto
-                {
-                    Id = item.Id,
-                    Status = item.Status,
-                    CreatedDate = item.CreatedDate,
-                    Badge = t?.Badge,
-                    Title = t?.Title,
-                    SubTitle = t?.SubTitle
-                };
+                Id = p.Id,
+                Status = p.Status,
+                CreatedDate = p.CreatedDate,
+                Badge = p.Translations?.FirstOrDefault(t => t.Language == lang)?.Badge
+                    ?? p.Translations?.FirstOrDefault(t => t.Language == "az")?.Badge,
+                Title = p.Translations?.FirstOrDefault(t => t.Language == lang)?.Title
+                    ?? p.Translations?.FirstOrDefault(t => t.Language == "az")?.Title,
+                SubTitle = p.Translations?.FirstOrDefault(t => t.Language == lang)?.SubTitle
+                    ?? p.Translations?.FirstOrDefault(t => t.Language == "az")?.SubTitle
             }).ToList();
 
             return Ok(result);
@@ -54,13 +51,6 @@ namespace ApexWebAPI.Controllers
         [ProducesResponseType(201)]
         public async Task<IActionResult> Create([FromBody] CreatePlanningDto dto)
         {
-            var existing = await _context.Plannings!
-                .Include(p => p.Translations)
-                .FirstOrDefaultAsync();
-
-            if (existing != null)
-                _context.Plannings.Remove(existing);
-
             var item = new Planning
             {
                 Status = dto.Status,
