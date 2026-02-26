@@ -5,6 +5,7 @@ using ApexWebAPI.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using AutoMapper;
 
 namespace ApexWebAPI.Controllers
 {
@@ -13,12 +14,15 @@ namespace ApexWebAPI.Controllers
     public class PlanningsController : ControllerBase
     {
         private readonly ApexDbContext _context;
+        private readonly IMapper _mapper;
+
         private readonly IStringLocalizer<PlanningsController> _localizer;
 
-        public PlanningsController(ApexDbContext context, IStringLocalizer<PlanningsController> localizer)
+        public PlanningsController(ApexDbContext context, IStringLocalizer<PlanningsController> localizer, IMapper mapper)
         {
             _context = context;
             _localizer = localizer;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -31,18 +35,19 @@ namespace ApexWebAPI.Controllers
                 .Where(p => p.Status)
                 .ToListAsync();
 
-            var result = items.Select(p => new ResultPlanningDto
+           var result = items.Select(p =>
             {
-                Id = p.Id,
-                Status = p.Status,
-                CreatedDate = p.CreatedDate,
-                Badge = p.Translations?.FirstOrDefault(t => t.Language == lang)?.Badge
-                    ?? p.Translations?.FirstOrDefault(t => t.Language == "az")?.Badge,
-                Title = p.Translations?.FirstOrDefault(t => t.Language == lang)?.Title
-                    ?? p.Translations?.FirstOrDefault(t => t.Language == "az")?.Title,
-                SubTitle = p.Translations?.FirstOrDefault(t => t.Language == lang)?.SubTitle
-                    ?? p.Translations?.FirstOrDefault(t => t.Language == "az")?.SubTitle
-            }).ToList();
+                var dto = _mapper.Map<ResultPlanningDto>(p);
+                dto.Badge = p.Translations.FirstOrDefault(t => t.Language == lang)?.Badge
+                    ?? p.Translations.FirstOrDefault(t => t.Language == "az")?.Badge;
+
+                dto.Title =p.Translations.FirstOrDefault(t=>t.Language ==lang)?.Title
+                    ?? p.Translations.FirstOrDefault(t=>t.Language ==lang)?.Title;
+                dto.SubTitle =p.Translations.FirstOrDefault(t=>t.Language ==lang)?.SubTitle
+                    ?? p.Translations.FirstOrDefault(t=>t.Language ==lang)?.SubTitle;
+
+                return dto;
+            });
 
             return Ok(result);
         }
