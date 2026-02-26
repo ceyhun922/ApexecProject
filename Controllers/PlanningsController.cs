@@ -23,30 +23,31 @@ namespace ApexWebAPI.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [ProducesResponseType(typeof(ResultPlanningDto), 200)]
-        [ProducesResponseType(404)]
-        public async Task<ActionResult<ResultPlanningDto>> Get([FromRoute] string lang)
+        [ProducesResponseType(typeof(IEnumerable<ResultPlanningDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ResultPlanningDto>>> GetAll([FromRoute] string lang)
         {
-            var item = await _context.Plannings!
+            var items = await _context.Plannings!
                 .Include(p => p.Translations)
-                .FirstOrDefaultAsync();
+                .ToListAsync();
 
-            if (item == null)
-                return NotFound(new { message = _localizer["NotFound"].Value });
-
-            var t = item.Translations?
-                .FirstOrDefault(x => x.Language == lang)
-                ?? item.Translations?.FirstOrDefault(x => x.Language == "az");
-
-            return Ok(new ResultPlanningDto
+            var result = items.Select(item =>
             {
-                Id = item.Id,
-                Status = item.Status,
-                CreatedDate = item.CreatedDate,
-                Badge = t?.Badge,
-                Title = t?.Title,
-                SubTitle = t?.SubTitle
+                var t = item.Translations?
+                    .FirstOrDefault(x => x.Language == lang)
+                    ?? item.Translations?.FirstOrDefault(x => x.Language == "az");
+
+                return new ResultPlanningDto
+                {
+                    Id = item.Id,
+                    Status = item.Status,
+                    CreatedDate = item.CreatedDate,
+                    Badge = t?.Badge,
+                    Title = t?.Title,
+                    SubTitle = t?.SubTitle
+                };
             });
+
+            return Ok(result);
         }
 
         [HttpPost]
