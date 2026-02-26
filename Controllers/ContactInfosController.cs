@@ -23,6 +23,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(ResultContactInfoDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<ResultContactInfoDto>> Get()
