@@ -39,17 +39,34 @@
 | Auth | `api/auth` | Giriş, token yeniləmə, profil idarəetməsi |
 | Heroes | `api/{lang}/heroes` | Əsas səhifə hero bölməsi |
 | Abouts | `api/{lang}/abouts` | Haqqımızda bölməsi |
+| AboutCounters | `api/{lang}/aboutcounters` | Haqqımızda sayğac bölməsi |
+| AboutVideoSections | `api/{lang}/aboutvideosections` | Haqqımızda video bölməsi |
 | Countries | `api/{lang}/countries` | Ölkələr |
 | Education Levels | `api/{lang}/educationlevels` | Təhsil səviyyələri (ölkəyə görə filterlənir) |
 | Departments | `api/{lang}/departments` | Şöbələr (təhsil səviyyəsinə görə filterlənir) |
+| Universities | `api/{lang}/universities` | Universitetlər |
 | Summer Schools | `api/{lang}/summerschools` | Yay məktəbləri |
+| Languages | `api/{lang}/languages` | Dillər |
+| LanguageCourses | `api/{lang}/languagecourses` | Dil kursları |
+| Courses | `api/{lang}/courses` | Kurslar |
+| Plannings | `api/{lang}/plannings` | Planlaşdırma bölməsi |
 | Testimonials | `api/{lang}/testimonials` | Rəylər |
 | FAQs | `api/{lang}/faqs` | Tez-tez verilən suallar |
+| Statistics | `api/{lang}/statistics` | Statistika bölməsi |
+| FivePProgramCounters | `api/{lang}/fivepprogramcounters` | 5P proqram sayğacı |
+| ContactHeaders | `api/{lang}/contactheaders` | Əlaqə başlığı |
+| CountryHeaders | `api/{lang}/countryheaders` | Ölkə başlığı |
+| CoursesHeaders | `api/{lang}/coursesheaders` | Kurs başlığı |
+| SummerSchoolHeaders | `api/{lang}/summerschoolheaders` | Yay məktəbi başlığı |
+| FivePProgramHeaders | `api/{lang}/fivepprogramheaders` | 5P proqram başlığı |
+| LanguageCoursesHeaders | `api/{lang}/languagecoursesheaders` | Dil kursu başlığı |
+| Layouts | `api/{lang}/layouts` | Layout (logo, footer) |
+| SocialMedias | `api/{lang}/socialmedias` | Sosial media linklər |
+| ContactInfos | `api/{lang}/contactinfos` | Əlaqə məlumatları |
+| HomeVideoSections | `api/{lang}/homevideosections` | Əsas səhifə video bölməsi |
 | Search | `api/{lang}/search` | Ölkə → Təhsil səviyyəsi → Şöbə filterli axtarış |
-| Contacts | `api/contacts` | Əlaqə məlumatları (sosial şəbəkə, telefon) |
 | Messages | `api/messages` | Ziyarətçi mesajları |
 | Informations | `api/informations` | Müraciət məlumatları |
-| Footers | `api/footers` | Footer məlumatları |
 | File Upload | `api/fileimage` | Şəkil yükləmə xidməti |
 
 ---
@@ -102,6 +119,13 @@ dotnet run
   },
   "App": {
     "BaseUrl": "https://api.apexec.az"
+  },
+  "EmailSettings": {
+    "SmtpHost": "smtp.gmail.com",
+    "SmtpPort": 587,
+    "SenderEmail": "noreply@apexec.az",
+    "SenderPassword": "APP_PASSWORD",
+    "ReceiverEmail": "admin@apexec.az"
   }
 }
 ```
@@ -184,6 +208,8 @@ Layihə işə düşdükdə Swagger UI avtomatik açılır:
 ```
 https://localhost:{PORT}/swagger
 ```
+
+> **Qeyd:** Production mühitində Swagger deaktiv edilib.
 
 ---
 
