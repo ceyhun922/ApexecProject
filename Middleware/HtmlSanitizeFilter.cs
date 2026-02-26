@@ -48,13 +48,13 @@ namespace ApexWebAPI.Middleware
 
             foreach (var prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                // Skip indexed properties (indexers) - GetValue would throw TargetParameterCountException
                 if (prop.GetIndexParameters().Length > 0) continue;
-
                 if (!prop.CanRead || !prop.CanWrite) continue;
-
-                // Skip IFormFile and Stream typed properties
                 if (_skipTypes.Any(t => t.IsAssignableFrom(prop.PropertyType))) continue;
+
+                // [SkipSanitize] ile işaretli proplar CKEditor alanlarıdır;
+                // controller'da SanitizeDescription() ile ayrıca işlenirler.
+                if (prop.IsDefined(typeof(SkipSanitizeAttribute), inherit: false)) continue;
 
                 object? value;
                 try { value = prop.GetValue(obj); }
