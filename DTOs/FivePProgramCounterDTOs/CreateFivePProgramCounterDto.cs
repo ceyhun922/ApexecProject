@@ -6,10 +6,10 @@ namespace ApexWebAPI.DTOs.FivePProgramCounterDTOs
     {
         [DefaultValue(true)]
         public bool Status { get; set; } = true;
-        public int Count1 { get; set; }
-        public int Count2 { get; set; }
-        public int Count3 { get; set; }
-        public int Count4 { get; set; }
+        public string? Count1 { get; set; }
+        public string? Count2 { get; set; }
+        public string? Count3 { get; set; }
+        public string? Count4 { get; set; }
         public string? Text1Az { get; set; }
         public string? Text1En { get; set; }
         public string? Text1Ru { get; set; }

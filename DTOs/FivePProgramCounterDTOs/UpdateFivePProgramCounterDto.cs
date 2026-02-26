@@ -3,10 +3,10 @@ namespace ApexWebAPI.DTOs.FivePProgramCounterDTOs
     public class UpdateFivePProgramCounterDto
     {
         public int Id { get; set; }
-        public int Count1 { get; set; }
-        public int Count2 { get; set; }
-        public int Count3 { get; set; }
-        public int Count4 { get; set; }
+        public string? Count1 { get; set; }
+        public string? Count2 { get; set; }
+        public string? Count3 { get; set; }
+        public string? Count4 { get; set; }
         public bool Status { get; set; }
         public string? Text1Az { get; set; }
         public string? Text1En { get; set; }
