@@ -79,6 +79,8 @@ namespace ApexWebAPI.Concrete
         public DbSet<AboutVideoSectionTranslation>? AboutVideoSectionTranslations { get; set; }
         public DbSet<University>? Universities { get; set; }
         public DbSet<UniversityTranslation>? UniversityTranslations { get; set; }
+        public DbSet<Course>? Courses { get; set; }
+        public DbSet<CourseTranslation>? CourseTranslations { get; set; }
         public object Contacts { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -29,6 +29,7 @@ using ApexWebAPI.DTOs.ContactInfoDTOs;
 using ApexWebAPI.DTOs.LanguageDTOs;
 using ApexWebAPI.DTOs.LanguageCourseDTOs;
 using ApexWebAPI.DTOs.UniversityDTOs;
+using ApexWebAPI.DTOs.CourseDTOs;
 
 namespace ApexWebAPI.Mapping
 {
@@ -428,6 +429,16 @@ namespace ApexWebAPI.Mapping
             CreateMap<University, GetByIdUniversityDto>()
                 .ForMember(dest => dest.Title, opt => opt.Ignore())
                 .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
+
+            // Course
+            CreateMap<Course, ResultCourseDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
+                .ForMember(dest => dest.Description, opt => opt.Ignore());
+            CreateMap<Course, GetByIdCourseDto>()
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore())
+                .ForMember(dest => dest.Description, opt => opt.Ignore());
 
             // Layout
             CreateMap<Layout, ResultLayoutDto>()
