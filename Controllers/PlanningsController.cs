@@ -52,6 +52,30 @@ namespace ApexWebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(ResultPlanningDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<ResultPlanningDto>> GetById([FromRoute] string lang, int id)
+        {
+            var item = await _context.Plannings!
+                .Include(p => p.Translations)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (item == null)
+                return NotFound(new { message = _localizer["NotFound"].Value });
+
+            var dto = _mapper.Map<ResultPlanningDto>(item);
+            dto.Badge = item.Translations?.FirstOrDefault(t => t.Language == lang)?.Badge
+                ?? item.Translations?.FirstOrDefault(t => t.Language == "az")?.Badge;
+            dto.Title = item.Translations?.FirstOrDefault(t => t.Language == lang)?.Title
+                ?? item.Translations?.FirstOrDefault(t => t.Language == "az")?.Title;
+            dto.SubTitle = item.Translations?.FirstOrDefault(t => t.Language == lang)?.SubTitle
+                ?? item.Translations?.FirstOrDefault(t => t.Language == "az")?.SubTitle;
+
+            return Ok(dto);
+        }
+
         [HttpPost]
         [ProducesResponseType(201)]
         public async Task<IActionResult> Create([FromBody] CreatePlanningDto dto)
