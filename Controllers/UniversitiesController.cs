@@ -126,10 +126,10 @@ namespace ApexWebAPI.Controllers
                 CreatedDate = DateTime.UtcNow,
                 Translations = new List<UniversityTranslation>
                 {
-                    new() { Language = "az", Title = dto.TitleAz, SubTitle = dto.SubTitleAz, Description = _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionAz) },
-                    new() { Language = "en", Title = dto.TitleEn, SubTitle = dto.SubTitleEn, Description = _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionEn) },
-                    new() { Language = "ru", Title = dto.TitleRu, SubTitle = dto.SubTitleRu, Description = _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionRu) },
-                    new() { Language = "tr", Title = dto.TitleTr, SubTitle = dto.SubTitleTr, Description = _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionTr) }
+                    new() { Language = "az", Title = dto.TitleAz, SubTitle = dto.SubTitleAz, Description = _htmlSanitizerService.SanitizeDescription(dto.DescriptionAz) },
+                    new() { Language = "en", Title = dto.TitleEn, SubTitle = dto.SubTitleEn, Description = _htmlSanitizerService.SanitizeDescription(dto.DescriptionEn) },
+                    new() { Language = "ru", Title = dto.TitleRu, SubTitle = dto.SubTitleRu, Description = _htmlSanitizerService.SanitizeDescription(dto.DescriptionRu) },
+                    new() { Language = "tr", Title = dto.TitleTr, SubTitle = dto.SubTitleTr, Description = _htmlSanitizerService.SanitizeDescription(dto.DescriptionTr) }
                 }
             };
 
@@ -159,10 +159,10 @@ namespace ApexWebAPI.Controllers
 
             var langs = new[]
             {
-                ("az", dto.TitleAz, dto.SubTitleAz, _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionAz)),
-                ("en", dto.TitleEn, dto.SubTitleEn, _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionEn)),
-                ("ru", dto.TitleRu, dto.SubTitleRu, _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionRu)),
-                ("tr", dto.TitleTr, dto.SubTitleTr, _htmlSanitizerService.SanitizeHtmlContent(dto.DescriptionTr))
+                ("az", dto.TitleAz, dto.SubTitleAz, _htmlSanitizerService.SanitizeDescription(dto.DescriptionAz)),
+                ("en", dto.TitleEn, dto.SubTitleEn, _htmlSanitizerService.SanitizeDescription(dto.DescriptionEn)),
+                ("ru", dto.TitleRu, dto.SubTitleRu, _htmlSanitizerService.SanitizeDescription(dto.DescriptionRu)),
+                ("tr", dto.TitleTr, dto.SubTitleTr, _htmlSanitizerService.SanitizeDescription(dto.DescriptionTr))
             };
 
             foreach (var (l, title, subTitle, description) in langs)

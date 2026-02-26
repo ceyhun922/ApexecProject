@@ -10,7 +10,7 @@ namespace ApexWebAPI.Infrastructure.Services
         {
             _sanitizer = new HtmlSanitizer();
 
-            // CKEditor tagları
+            // CKEditor tags
             _sanitizer.AllowedTags.Add("figure");
             _sanitizer.AllowedTags.Add("figcaption");
             _sanitizer.AllowedTags.Add("iframe");
@@ -50,7 +50,7 @@ namespace ApexWebAPI.Infrastructure.Services
             _sanitizer.AllowedTags.Add("a");
             _sanitizer.AllowedTags.Add("img");
 
-            // CKEditor atributları
+            // CKEditor attributes
             _sanitizer.AllowedAttributes.Add("class");
             _sanitizer.AllowedAttributes.Add("style");
             _sanitizer.AllowedAttributes.Add("src");
@@ -58,20 +58,33 @@ namespace ApexWebAPI.Infrastructure.Services
             _sanitizer.AllowedAttributes.Add("alt");
             _sanitizer.AllowedAttributes.Add("title");
             _sanitizer.AllowedAttributes.Add("target");
+            _sanitizer.AllowedAttributes.Add("rel");
             _sanitizer.AllowedAttributes.Add("width");
             _sanitizer.AllowedAttributes.Add("height");
+            _sanitizer.AllowedAttributes.Add("loading");
             _sanitizer.AllowedAttributes.Add("allowfullscreen");
             _sanitizer.AllowedAttributes.Add("frameborder");
             _sanitizer.AllowedAttributes.Add("allow");
             _sanitizer.AllowedAttributes.Add("colspan");
             _sanitizer.AllowedAttributes.Add("rowspan");
+            // CKEditor data-* attributes
             _sanitizer.AllowedAttributes.Add("data-image");
+            _sanitizer.AllowedAttributes.Add("data-oembed-url");
+            _sanitizer.AllowedAttributes.Add("data-cke-saved-src");
+            _sanitizer.AllowedAttributes.Add("data-widget");
+            _sanitizer.AllowedAttributes.Add("data-alignment");
+            _sanitizer.AllowedAttributes.Add("data-linked-resource-id");
+            _sanitizer.AllowedAttributes.Add("data-linked-resource-type");
+            _sanitizer.AllowedAttributes.Add("data-linked-resource-version");
 
-            // iframe üçün xüsusi icazə (YouTube, Vimeo)
+            // Allow https and http schemes (iframe, img, a)
             _sanitizer.AllowedSchemes.Add("https");
+            _sanitizer.AllowedSchemes.Add("http");
         }
 
-        public string SanitizeHtmlContent(string content)
+        // Yalnızca Translation entity'lerindeki Description (CKEditor) alanları üçün istifadə olunur.
+        // SummerSchoolTranslation, UniversityTranslation, CourseTranslation, LanguageCourseTranslation
+        public string? SanitizeDescription(string? content)
         {
             if (string.IsNullOrWhiteSpace(content))
                 return content;
