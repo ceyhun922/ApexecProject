@@ -24,7 +24,6 @@ namespace ApexWebAPI.Controllers
 
 
         [HttpGet("information-list")]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(List<ResultInformationDto>), 200)]
         public async Task<ActionResult<List<ResultInformationDto>>> GetMessages()
         {
@@ -36,7 +35,6 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(GetByIdInformationDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<GetByIdInformationDto>> GetByIdMessage(int id)
@@ -51,6 +49,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpPost("information-create")]
+        [AllowAnonymous]
         [ProducesResponseType(201)]
         public async Task<IActionResult> SubmitMessage([FromBody] CreateInformationDto informationDto)
         {

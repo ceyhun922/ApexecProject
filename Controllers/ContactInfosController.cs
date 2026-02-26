@@ -23,7 +23,6 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(ResultContactInfoDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<ResultContactInfoDto>> Get()
@@ -37,6 +36,8 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
+
         [ProducesResponseType(201)]
         public async Task<IActionResult> Create(CreateContactInfoDto dto)
         {

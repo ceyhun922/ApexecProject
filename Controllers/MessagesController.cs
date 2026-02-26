@@ -53,6 +53,7 @@ namespace ApexWebAPI.Controllers
         }
 
         [HttpPost("message-create")]
+        [AllowAnonymous]
         [ProducesResponseType(201)]
         public async Task<IActionResult> SubmitMessage([FromBody] CreateMessageDto messageDto)
         {
