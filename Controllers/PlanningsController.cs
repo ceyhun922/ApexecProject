@@ -45,7 +45,7 @@ namespace ApexWebAPI.Controllers
                     Title = t?.Title,
                     SubTitle = t?.SubTitle
                 };
-            });
+            }).ToList();
 
             return Ok(result);
         }
