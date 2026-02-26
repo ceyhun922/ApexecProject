@@ -395,16 +395,9 @@ namespace ApexWebAPI.Mapping
 
             // Planning
             CreateMap<Planning, ResultPlanningDto>()
-                .ForMember(dest => dest.Option1Title, opt => opt.Ignore())
-                .ForMember(dest => dest.Option2Title, opt => opt.Ignore())
-                .ForMember(dest => dest.Option3Title, opt => opt.Ignore())
-                .ForMember(dest => dest.Option4Title, opt => opt.Ignore());
-
-            CreateMap<CreatePlanningDto, Planning>()
-                .ForMember(dest => dest.Translations, opt => opt.Ignore());
-
-            CreateMap<UpdatePlanningDto, Planning>()
-                .ForMember(dest => dest.Translations, opt => opt.Ignore());
+                .ForMember(dest => dest.Badge, opt => opt.Ignore())
+                .ForMember(dest => dest.Title, opt => opt.Ignore())
+                .ForMember(dest => dest.SubTitle, opt => opt.Ignore());
 
             // SocialMedia
             CreateMap<SocialMedia, ResultSocialMediaDto>();

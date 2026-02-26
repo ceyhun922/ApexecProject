@@ -4,28 +4,20 @@ namespace ApexWebAPI.DTOs.PlanningDTOs
     {
         public int Id { get; set; }
         public bool Status { get; set; }
-        public string? Option1 { get; set; }
-        public string? Option2 { get; set; }
-        public string? Option3 { get; set; }
-        public string? Option4 { get; set; }
-        public bool Checkbox1 { get; set; }
-        public bool Checkbox2 { get; set; }
-        public bool Checkbox3 { get; set; }
-        public string? Option1TitleAz { get; set; }
-        public string? Option1TitleEn { get; set; }
-        public string? Option1TitleRu { get; set; }
-        public string? Option1TitleTr { get; set; }
-        public string? Option2TitleAz { get; set; }
-        public string? Option2TitleEn { get; set; }
-        public string? Option2TitleRu { get; set; }
-        public string? Option2TitleTr { get; set; }
-        public string? Option3TitleAz { get; set; }
-        public string? Option3TitleEn { get; set; }
-        public string? Option3TitleRu { get; set; }
-        public string? Option3TitleTr { get; set; }
-        public string? Option4TitleAz { get; set; }
-        public string? Option4TitleEn { get; set; }
-        public string? Option4TitleRu { get; set; }
-        public string? Option4TitleTr { get; set; }
+
+        public string? BadgeAz { get; set; }
+        public string? BadgeEn { get; set; }
+        public string? BadgeRu { get; set; }
+        public string? BadgeTr { get; set; }
+
+        public string? TitleAz { get; set; }
+        public string? TitleEn { get; set; }
+        public string? TitleRu { get; set; }
+        public string? TitleTr { get; set; }
+
+        public string? SubTitleAz { get; set; }
+        public string? SubTitleEn { get; set; }
+        public string? SubTitleRu { get; set; }
+        public string? SubTitleTr { get; set; }
     }
 }
