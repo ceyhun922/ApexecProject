@@ -41,10 +41,10 @@ namespace ApexWebAPI.Controllers
                 dto.Badge = p.Translations.FirstOrDefault(t => t.Language == lang)?.Badge
                     ?? p.Translations.FirstOrDefault(t => t.Language == "az")?.Badge;
 
-                dto.Title =p.Translations.FirstOrDefault(t=>t.Language ==lang)?.Title
-                    ?? p.Translations.FirstOrDefault(t=>t.Language ==lang)?.Title;
-                dto.SubTitle =p.Translations.FirstOrDefault(t=>t.Language ==lang)?.SubTitle
-                    ?? p.Translations.FirstOrDefault(t=>t.Language ==lang)?.SubTitle;
+                dto.Title = p.Translations.FirstOrDefault(t => t.Language == lang)?.Title
+                    ?? p.Translations.FirstOrDefault(t => t.Language == "az")?.Title;
+                dto.SubTitle = p.Translations.FirstOrDefault(t => t.Language == lang)?.SubTitle
+                    ?? p.Translations.FirstOrDefault(t => t.Language == "az")?.SubTitle;
 
                 return dto;
             });
